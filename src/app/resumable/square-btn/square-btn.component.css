@@ -1,0 +1,37 @@
+/* *navigate month btns* */
+.btn-scrollUp,
+.btn-scrollDown {
+    display: block;
+    height: 20px;
+
+    .btn-svg {
+        position: relative;
+        transform: translateY(-10%);
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: .7;
+            width: 10px;
+            height: 10px;
+            transition: 300ms ease-in-out;
+        }
+    }
+
+    .btn-svg:hover {
+        background-color: var(--color-grey);
+    }
+
+    .btn-svg:hover svg {
+        opacity: 1;
+    }
+}
+
+.btn-scrollUp .btn-svg svg {
+    transform: translate(50%, 50%);
+}
+
+.btn-scrollDown .btn-svg svg {
+    transform: translate(50%, 50%) rotate(180deg);
+}
