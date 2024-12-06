@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { SquareBtnComponent } from './resumable/square-btn/square-btn.component';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SquareBtnComponent],
+  imports: [RouterOutlet, SquareBtnComponent],  
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
