@@ -13,10 +13,20 @@
 
 .btn-cal-container {
     display: flex;
-    width: 50px;
+    width: 45px;
     height: 20px;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
+}
+
+.router-container {
+    position: absolute;
+    left: 9em;
+    transition: var(--animation-smooth);
+}
+
+.router-outlet-active {
+    left: 0;
 }
 
 /* ------------------------------------- */
@@ -28,6 +38,8 @@
     background-color: var(--color-dark-dark);
     display: grid;
     grid-template-rows: repeat(11, 1fr);
+    z-index: 1;
+    transition: var(--animation-smooth);
 
     & > section {
         display: block;
@@ -53,7 +65,24 @@
 /* ------------------------------------- */
 
 /* *side bar button* */
+.sb-btn-sec {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: var(--section-padding);
+    z-index: 10;
+    
+    .sb-btn-container {
+        width: 20px;
+        height: 20px;
+    }
+}
+
 #sb-btn {
+    span {
+        position: relative;
+    }
+
     & > g > path {
         transition: var(--animation-fast);
     }
@@ -61,6 +90,10 @@
     &:hover > g > path {
         stroke-width: 2.2;
     }
+}
+
+.sb-active {
+    transform: translateX(-100%);
 }
 
 /* *side bar calendario* */
@@ -140,8 +173,7 @@
     flex-direction: column;
     justify-content: space-evenly;
     height: 100%;
-    font-size: 12px;
-    text-transform: uppercase;
+    font-size: 13px;
     text-align: center;
     background-color: var(--color-dark-bg);
     border-radius: 10px;
@@ -156,7 +188,7 @@
             cursor: pointer;
             transition: var(--animation-fast);
 
-            p {
+            a {
                 letter-spacing: 1px;
             }
         }
@@ -164,7 +196,7 @@
 }
 
 .op:hover {
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .btn-account-container {

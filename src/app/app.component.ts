@@ -10,15 +10,25 @@ import { SquareBtnComponent } from './resumable/square-btn/square-btn.component'
 
 export class AppComponent {
     title = 'calendario';
-    isClassAdded = false;
+    activeButtonId: string | null = null;
     
-    toggleClass(event: Event) {
-        this.isClassAdded = !this.isClassAdded;
+    handleButtonClick(event: Event, buttonId: string) {
+        if (this.activeButtonId === buttonId) {
+            this.activeButtonId = null;
+        } else {
+            this.activeButtonId = buttonId;
+        }
         event.stopPropagation();
     }
 
     @HostListener('document:click', ['$event'])
     onDocumentClick(event: Event) {
-        this.isClassAdded = false;
+        if (this.activeButtonId !== "sb-shower") {
+            this.activeButtonId = null;
+        }
+    }
+
+    isButtonActive(buttonId: string): boolean {
+        return this.activeButtonId === buttonId;
     }
 }
