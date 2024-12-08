@@ -1,0 +1,31 @@
+/* ------------------------------------- */
+/* ?CALENDAR CONTAINER? */
+/* ------------------------------------- */
+
+.header-cal-sec {
+    grid-row: 1 / span 1;
+}
+
+.header-cal {
+    display: block;
+    height: 100%;
+}
+
+.header-util-container,
+.header-date-container {
+    display: flex;
+    height: 50%;
+    align-items: center;
+}
+
+.header-util-container {
+    width: 100%;
+    justify-content: end;
+}
+
+.util-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    min-width: 10rem;
+}

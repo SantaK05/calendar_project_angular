@@ -52,7 +52,6 @@ body {
     font-size: 18px;
     text-rendering: optimizeLegibility;
     max-height: 100dvh;
-    overflow-x: hidden;
     scrollbar-width: none;
     scroll-behavior: smooth;
     cursor: default;
@@ -110,6 +109,22 @@ button {
     width: 20px;
     height: 20px;
     transition: 100ms ease-in-out;
+
+    &:hover {
+        background-color: var(--color-grey);
+    }
+}
+
+.highlight-week {
+    background-color: var(--color-grey);
+}
+
+.trasp-cella {
+    color: var(--color-text-cell-dark);
+}
+
+.today {
+    background-color: var(--color-selected-red);
 }
 
 /* !------Img------! */

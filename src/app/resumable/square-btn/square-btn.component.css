@@ -19,10 +19,6 @@
         }
     }
 
-    .btn-svg:hover {
-        background-color: var(--color-grey);
-    }
-
     .btn-svg:hover svg {
         opacity: 1;
     }
