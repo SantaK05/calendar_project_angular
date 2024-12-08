@@ -19,7 +19,7 @@
     
     <section class="calendar-side-info section" [class.sb-active]="isButtonActive('sb-shower')">
         <!-- ?SECTION CALENDAR SIDEBAR? -->
-        <section class="sb-cal-sec">
+        <section class="sb-cal-sec">            
             <div class="sb-btn-cal-sec">
                 <div class="btn-cal-container">
                     <square-btn [className]="'btn-scrollUp'"></square-btn>
@@ -42,12 +42,21 @@
                             </tr>
                         </thead>
                         <tbody class="rdp-body" id="rdp-body">
-                            <tr class="rdp-body_row" id="rdp-body_row"></tr>
-                            <tr class="rdp-body_row" id="rdp-body_row"></tr>
-                            <tr class="rdp-body_row" id="rdp-body_row"></tr>
-                            <tr class="rdp-body_row" id="rdp-body_row"></tr>
-                            <tr class="rdp-body_row" id="rdp-body_row"></tr>
-                            <tr class="rdp-body_row" id="rdp-body_row"></tr>
+                            @for (settimana of listGiorni; track $index) {
+                                <tr class="rdp-body_row" [class.highlight-week]="" id="rdp-body_row">
+                                    @for (giorno of settimana; track $index) {
+                                        <td class="rdp-cell" role="presentation">
+                                            <button class="btn-svg"  
+                                                [class.trasp-cella]="giorno[1][1]" 
+                                                [class.today]="giorno[1][0]">
+                                                <div>
+                                                    <span>{{ giorno.at(0) }}</span>
+                                                </div>
+                                            </button>
+                                        </td>
+                                    }
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -82,7 +91,7 @@
         </section>
     </section>
 
-    <div class="router-container" [class.router-outlet-active]="isButtonActive('sb-shower')">
+    <section class="router-container section">
         <router-outlet></router-outlet>
-    </div>
+    </section>
 </main>
