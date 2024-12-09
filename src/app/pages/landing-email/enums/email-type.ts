@@ -1,0 +1,6 @@
+export enum EmailType {
+    VERIFY = "VERIFY",
+	ACCESS = "ACCESS",
+	FORGOT_PASSWORD = "FORGOT_PASSWORD",
+	USER = "USER"
+}
