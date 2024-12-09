@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { Email } from './landing-email/interfaces/email';
-import { EmailType } from './landing-email/enums/email-type';
+import { Email } from './interfaces/email';
+import { EmailType } from './enums/email-type';
 
 @Injectable({
   providedIn: 'root'

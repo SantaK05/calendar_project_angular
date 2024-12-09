@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Email } from '../interfaces/email';
 import { EmailType } from '../enums/email-type';
-import { EmailService } from '../../email.service';
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-list',
