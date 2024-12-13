@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { User } from '../../../interfaces/backoffice';
+import { Stato, User } from '../../../interfaces/backoffice';
+import { Role } from '../../../interfaces/backoffice';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,7 +14,26 @@ import { MessageService } from '../message.service';
   styleUrl: './user.component.css',
 })
 export class UserComponent {
-  current!: User;
+  current: User = {
+    id: 0,
+    nome: '',
+    cognome: '',
+    username: '',
+    password: '',
+    email: '',
+    ruolo: {
+      id: 0,
+      nome: '',
+      descrizione: '',
+    },
+    gruppo: {
+      id: 0,
+      nome: '',
+      utenti: {} as User,
+      ruoli: {} as Role,
+    },
+    stato: {} as Stato,
+  };
 
   triggerNavigation: boolean = false;
 
