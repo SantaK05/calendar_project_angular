@@ -1,1 +1,27 @@
-<p>role-list works!</p>
+<div class="row">
+    <div class="col">
+        <button class="btn btn-sm btn-primary me-3" type="button"><a href="/role">Aggiungi nuovo ruolo</a></button>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Descrizione</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (role of arrayRole; track $index) {
+                    <tr>
+                        <td>{{role.id}}</td>
+                        <td>{{role.nome}}</td>
+                        <td>{{role.descrizione}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-3" type="button" (click) = "edit(role)">Modifica</button>
+                            <button class="btn btn-sm btn-danger" type="button" (click) = "delete(role)">Elimina</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

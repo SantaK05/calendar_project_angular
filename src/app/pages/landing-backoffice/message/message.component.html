@@ -1,1 +1,7 @@
-<p>message works!</p>
+@if(payload) {
+
+    <div class="alert" [ngClass]="getBootstrapAlertClass()">
+        {{ payload.content }}
+        <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+}
