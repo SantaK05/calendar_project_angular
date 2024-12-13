@@ -6,7 +6,7 @@ import { LandingBackofficeComponent } from './pages/landing-backoffice/landing-b
 import { UserComponent } from './pages/landing-backoffice/user/user.component';
 import { ListUserComponent } from './pages/landing-backoffice/user-list/user-list.component';
 import { RoleComponent } from './pages/landing-backoffice/role/role.component';
-import { RoleListComponent } from './pages/landing-backoffice/role-list/role-list.component';
+import { ListRoleComponent } from './pages/landing-backoffice/role-list/role-list.component';
 import { GroupsComponent } from './pages/landing-backoffice/group/group.component';
 import { GroupsListComponent } from './pages/landing-backoffice/group-list/group-list.component';
 
@@ -18,7 +18,7 @@ export const routes: Routes = [
   { path: 'backoffice', component: LandingBackofficeComponent },
   { path: 'backoffice/users', component: ListUserComponent },
   { path: 'backoffice/users/:id', component: UserComponent },
-  { path: 'backoffice/roles', component: RoleListComponent },
+  { path: 'backoffice/roles', component: ListRoleComponent },
   { path: 'backoffice/roles/:id', component: RoleComponent },
   { path: 'backoffice/groups', component: GroupsListComponent },
   { path: 'backoffice/groups/:id', component: GroupsComponent },

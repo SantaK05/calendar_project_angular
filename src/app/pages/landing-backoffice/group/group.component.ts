@@ -7,10 +7,10 @@ import { Group, Role, Stato, User } from '../../../interfaces/backoffice';
 import { GroupService } from '../group.service';
 
 @Component({
-  selector: 'app-groups',
+  selector: 'app-group',
   imports: [FormsModule],
-  templateUrl: './groups.component.html',
-  styleUrl: './groups.component.css',
+  templateUrl: './group.component.html',
+  styleUrl: './group.component.css',
 })
 export class GroupsComponent {
   current: Group = {
