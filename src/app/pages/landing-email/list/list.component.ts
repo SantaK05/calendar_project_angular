@@ -23,9 +23,11 @@ export class EmailListComponent {
   startPages: Array<number> = [];
   dots: Array<string> = [];
   endPages: Array<number> = [];
-  stringLength: number = 30;
+  stringLength: number = 25;
 
   constructor(private service: EmailService){
+
+    let body = document.getElementsByTagName("body");
 
     this.service.numberOfPagesSubject.subscribe(pageNumber =>{
       if(pageNumber < 7){
