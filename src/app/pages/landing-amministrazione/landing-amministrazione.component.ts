@@ -32,14 +32,7 @@ export class LandingAmministrazioneComponent {
         map((data) => {
           if (data.get('slots') === 'view') {
             this.isSlotView = true;
-            this.service.slots
-              .pipe(
-                catchError((err) => {
-                  console.log('Errore', err);
-                  return throwError(err);
-                })
-              )
-              .subscribe((data) => (this.arraySlots = data));
+            this.service.slots.subscribe((data) => (this.arraySlots = data));
           } else if (data.get('slots') === null) {
             this.isSlotView = false;
             this.arraySlots = undefined;
