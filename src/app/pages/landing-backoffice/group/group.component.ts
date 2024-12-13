@@ -3,61 +3,83 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../message.service';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
-import { Group, Role, User } from '../../../interfaces/backoffice';
+import { Group, Role, Stato, User } from '../../../interfaces/backoffice';
 import { GroupService } from '../group.service';
 
 @Component({
   selector: 'app-groups',
   imports: [FormsModule],
   templateUrl: './groups.component.html',
-  styleUrl: './groups.component.css'
+  styleUrl: './groups.component.css',
 })
 export class GroupsComponent {
-
-  ut!: User;
-
-  rl!: Role;
-
   current: Group = {
     id: 0,
-    nome: "",
-    utenti: this.ut,
-    ruoli: this.rl
+    nome: '',
+    utenti: {
+      id: 0,
+      nome: '',
+      cognome: '',
+      username: '',
+      password: '',
+      email: '',
+      ruolo: {
+        id: 0,
+        nome: '',
+        descrizione: '',
+      },
+      gruppo: {
+        id: 0,
+        nome: '',
+        utenti: {} as User,
+        ruoli: {} as Role,
+      },
+      stato: {} as Stato,
+    },
+    ruoli: {
+      id: 0,
+      nome: '',
+      descrizione: '',
+    },
   };
 
   triggerNavigation: boolean = false;
 
-  constructor(private service: GroupService, private messageService: MessageService,
-    private router: Router, private activatedRoute: ActivatedRoute){
+  constructor(
+    private service: GroupService,
+    private messageService: MessageService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
+    let id = this.activatedRoute.snapshot.paramMap.get('id');
 
-      let id = this.activatedRoute.snapshot.paramMap.get('id');
-
-      if (id){
-
-        this.service.load(id).pipe(
-          tap(data => {
+    if (id) {
+      this.service
+        .load(id)
+        .pipe(
+          tap((data) => {
             console.log('ottenuti dati ruoli');
             console.log(data);
             this.current = data;
           }),
-          catchError(err => {
+          catchError((err) => {
             console.log(err);
             this.messageService.publishError('Errore caricamento dati.');
-            return throwError(()=> err);
+            return throwError(() => err);
           })
-        ).subscribe();
-      }
+        )
+        .subscribe();
     }
+  }
 
-    save() {
-      this.service.save(this.current).pipe(
-        switchMap((response) => {
-          return this.service.findAll();
-        }),
-        tap((data:any) => {
-          this.router.navigateByUrl('/list-group')
-        })
-      )
-    }
-
+  save() {
+    this.service.save(this.current).pipe(
+      switchMap((response) => {
+        return this.service.findAll();
+      }),
+      tap((data: any) => {
+        this.router.navigateByUrl('/list-group');
+      })
+    );
+  }
 }
