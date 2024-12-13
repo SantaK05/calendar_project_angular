@@ -1,1 +1,16 @@
-<p>role works!</p>
+<div class="container">
+    <div class="row">
+        <form>
+            <div class="mb-3 grid gap-3">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" id="nome" name="nome" class="form-control" >
+            </div>
+            <div>
+                <label for="descrizione" class="form-label">Descrizione:</label>
+                <input type="text" id="descrizione" name="descrizione" class="form-control" >
+            </div>
+            <button class="btn btn-primary" type="button" 
+                (click)="save()">Salva </button>
+        </form>
+    </div>
+</div>
