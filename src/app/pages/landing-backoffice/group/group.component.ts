@@ -1,11 +1,63 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from '../message.service';
+import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { Group, Role, User } from '../../../interfaces/backoffice';
+import { GroupService } from '../group.service';
 
 @Component({
-  selector: 'app-group',
-  imports: [],
-  templateUrl: './group.component.html',
-  styleUrl: './group.component.css'
+  selector: 'app-groups',
+  imports: [FormsModule],
+  templateUrl: './groups.component.html',
+  styleUrl: './groups.component.css'
 })
-export class GroupComponent {
+export class GroupsComponent {
+
+  ut!: User;
+
+  rl!: Role;
+
+  current: Group = {
+    id: 0,
+    nome: "",
+    utenti: this.ut,
+    ruoli: this.rl
+  };
+
+  triggerNavigation: boolean = false;
+
+  constructor(private service: GroupService, private messageService: MessageService,
+    private router: Router, private activatedRoute: ActivatedRoute){
+
+      let id = this.activatedRoute.snapshot.paramMap.get('id');
+
+      if (id){
+
+        this.service.load(id).pipe(
+          tap(data => {
+            console.log('ottenuti dati ruoli');
+            console.log(data);
+            this.current = data;
+          }),
+          catchError(err => {
+            console.log(err);
+            this.messageService.publishError('Errore caricamento dati.');
+            return throwError(()=> err);
+          })
+        ).subscribe();
+      }
+    }
+
+    save() {
+      this.service.save(this.current).pipe(
+        switchMap((response) => {
+          return this.service.findAll();
+        }),
+        tap((data:any) => {
+          this.router.navigateByUrl('/list-group')
+        })
+      )
+    }
 
 }
