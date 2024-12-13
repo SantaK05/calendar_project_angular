@@ -78,7 +78,7 @@ export class GroupsComponent {
         return this.service.findAll();
       }),
       tap((data: any) => {
-        this.router.navigateByUrl('/list-group');
+        this.router.navigateByUrl('backoffice/group-list');
       })
     );
   }

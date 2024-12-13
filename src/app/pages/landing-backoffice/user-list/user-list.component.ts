@@ -18,7 +18,7 @@ export class ListUserComponent {
   }
 
   edit(user: User) {
-    this.router.navigateByUrl(`/form/${user.id}`);
+    this.router.navigateByUrl(`backoffice/user/${user.id}`);
   }
 
   delete(user: User) {

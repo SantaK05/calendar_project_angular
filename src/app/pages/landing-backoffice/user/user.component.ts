@@ -77,7 +77,7 @@ export class UserComponent {
           return this.service.findAll();
         }),
         tap((data: any) => {
-          this.router.navigateByUrl('/list-user');
+          this.router.navigateByUrl('backoffice/user-list');
         })
       )
       .subscribe();
