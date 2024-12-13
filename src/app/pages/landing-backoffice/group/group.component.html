@@ -1,20 +1,46 @@
 <div class="container">
-    <div class="row">
-        <form>
-            <div class="mb-3 grid gap-3">
-                <label for="nome" class="form-label">Nome:</label>
-                <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="current.nome" >
-            </div>
-            <div>
-                <label for="utenti" class="form-label">Utenti:</label>
-                <input type="text" id="utenti" name="utenti" class="form-control" [(ngModel)]="current.utenti">
-            </div>
-            <div>
-                <label for="ruoli" class="form-label">Ruoli:</label>
-                <input type="text" id="ruoli" name="ruoli" class="form-control" [(ngModel)]="current.ruoli">
-            </div>
-            <button class="btn btn-primary" type="button" 
-                (click)="save()">Salva </button>
-        </form>
-    </div>
+  <div class="row">
+    <form>
+      <div class="mb-3 grid gap-3">
+        <label for="nome" class="form-label">Nome:</label>
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          class="form-control"
+          [(ngModel)]="current.nome"
+        />
+      </div>
+      <div>
+        <label for="utenti" class="form-label">Utenti:</label>
+        <div id="utenti" class="form-check" *ngFor="let user of users">
+          <input
+            type="checkbox"
+            id="utenti"
+            name="utenti"
+            class="form-check-input"
+            [(ngModel)]="current.utenti"
+            [value]="utenti"
+          />
+        </div>
+      </div>
+      <div>
+        <label for="ruoli" class="form-label">Ruoli:</label>
+        <div id="ruoli" class="form-check" *ngFor="let role of roles">
+          <input
+            type="checkbox"
+            id="ruoli"
+            name="ruoli"
+            class="form-check-input"
+            [(ngModel)]="current.ruoli"
+            [value]="role"
+          />
+          <label for="role" class="form-check-label">{{ role }}</label>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="button" (click)="save()">
+        Salva
+      </button>
+    </form>
+  </div>
 </div>

@@ -31,6 +31,10 @@ export class RoleService {
     );
   }
 
+  getRoles(): Role[] {
+    return this.arrayRole;
+  }
+
   load(id: string): Observable<Role> {
     return this.httpClient.get<Role>(`${this.BASE_URL}/${id}`).pipe(
       catchError((err) => {

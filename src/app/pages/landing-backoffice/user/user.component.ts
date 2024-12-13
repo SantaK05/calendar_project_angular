@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { Stato, User } from '../../../interfaces/backoffice';
+import { Group, Stato, User } from '../../../interfaces/backoffice';
 import { Role } from '../../../interfaces/backoffice';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, switchMap, tap, throwError } from 'rxjs';
 import { MessageService } from '../message.service';
+import { RoleService } from '../role.service';
+import { GroupService } from '../group.service';
 
 @Component({
   selector: 'app-user',
@@ -14,6 +16,9 @@ import { MessageService } from '../message.service';
   styleUrl: './user.component.css',
 })
 export class UserComponent {
+  avaibleRoles: Role[] = [];
+  avaibleGroups: Group[] = [];
+
   current: User = {
     id: 0,
     nome: '',
@@ -21,17 +26,8 @@ export class UserComponent {
     username: '',
     password: '',
     email: '',
-    ruolo: {
-      id: 0,
-      nome: '',
-      descrizione: '',
-    },
-    gruppo: {
-      id: 0,
-      nome: '',
-      utenti: {} as User,
-      ruoli: {} as Role,
-    },
+    ruolo: this.avaibleRoles,
+    gruppo: this.avaibleGroups,
     stato: {} as Stato,
   };
 
@@ -40,6 +36,8 @@ export class UserComponent {
   constructor(
     private service: UserService,
     private messageService: MessageService,
+    private groupService: GroupService,
+    private roleService: RoleService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
@@ -67,6 +65,8 @@ export class UserComponent {
         )
         .subscribe();
     }
+    this.avaibleRoles = this.roleService.arrayRole;
+    this.avaibleGroups = this.groupService.arrayGroup;
   }
 
   save() {

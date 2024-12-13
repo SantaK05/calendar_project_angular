@@ -5,6 +5,8 @@ import { MessageService } from '../message.service';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
 import { Group, Role, Stato, User } from '../../../interfaces/backoffice';
 import { GroupService } from '../group.service';
+import { RoleService } from '../role.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-group',
@@ -13,41 +15,21 @@ import { GroupService } from '../group.service';
   styleUrl: './group.component.css',
 })
 export class GroupsComponent {
+  availableRoles: Role[] = [];
+  avaibleUsers: User[] = [];
+
   current: Group = {
     id: 0,
     nome: '',
-    utenti: {
-      id: 0,
-      nome: '',
-      cognome: '',
-      username: '',
-      password: '',
-      email: '',
-      ruolo: {
-        id: 0,
-        nome: '',
-        descrizione: '',
-      },
-      gruppo: {
-        id: 0,
-        nome: '',
-        utenti: {} as User,
-        ruoli: {} as Role,
-      },
-      stato: {} as Stato,
-    },
-    ruoli: {
-      id: 0,
-      nome: '',
-      descrizione: '',
-    },
+    utenti: this.avaibleUsers,
+    ruoli: this.availableRoles,
   };
-
-  triggerNavigation: boolean = false;
 
   constructor(
     private service: GroupService,
     private messageService: MessageService,
+    private roleService: RoleService,
+    private userService: UserService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
@@ -70,6 +52,9 @@ export class GroupsComponent {
         )
         .subscribe();
     }
+
+    this.availableRoles = this.roleService.arrayRole;
+    this.avaibleUsers = this.userService.arrayUser;
   }
 
   save() {
