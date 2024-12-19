@@ -7,10 +7,11 @@ import { Group, Role, Stato, User } from '../../../interfaces/backoffice';
 import { GroupService } from '../group.service';
 import { RoleService } from '../role.service';
 import { UserService } from '../user.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-group',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './group.component.html',
   styleUrl: './group.component.css',
 })

@@ -8,10 +8,11 @@ import { catchError, of, switchMap, tap, throwError } from 'rxjs';
 import { MessageService } from '../message.service';
 import { RoleService } from '../role.service';
 import { GroupService } from '../group.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
 })
@@ -31,8 +32,6 @@ export class UserComponent {
     stato: {} as Stato,
   };
 
-  triggerNavigation: boolean = false;
-
   constructor(
     private service: UserService,
     private messageService: MessageService,
@@ -44,21 +43,19 @@ export class UserComponent {
     let id = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (id) {
-      console.log(`richiamo il caricamento dell'item ${id}`);
+      console.log(`richiamo il caricamento dell'utente ${id}`);
 
       this.service
         .load(id)
         .pipe(
           tap((data) => {
-            console.log(`ottenuti i dati dell'item`);
+            console.log(`ottenuti i dati dell'utente`);
             console.log(data);
             this.current = data as User;
           }),
           catchError((err) => {
             console.log(err);
-            this.messageService.publishError(
-              `Errore caricamento dati. Contattare l'amministratore`
-            );
+            this.messageService.publishError(`Errore caricamento dati.`);
 
             return throwError(() => err);
           })
