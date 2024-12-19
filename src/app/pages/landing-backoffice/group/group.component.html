@@ -13,20 +13,20 @@
       </div>
       <div>
         <label for="utenti" class="form-label">Utenti:</label>
-        <div id="utenti" class="form-check" *ngFor="let user of users">
+        <div id="utenti" class="form-check" *ngFor="let user of avaibleUsers">
           <input
             type="checkbox"
             id="utenti"
             name="utenti"
             class="form-check-input"
             [(ngModel)]="current.utenti"
-            [value]="utenti"
+            [value]="user"
           />
         </div>
       </div>
       <div>
         <label for="ruoli" class="form-label">Ruoli:</label>
-        <div id="ruoli" class="form-check" *ngFor="let role of roles">
+        <div id="ruoli" class="form-check" *ngFor="let role of availableRoles">
           <input
             type="checkbox"
             id="ruoli"
