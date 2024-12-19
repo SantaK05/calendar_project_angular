@@ -41,16 +41,16 @@
                                 <th class="rdp-head_cell">Su</th>
                             </tr>
                         </thead>
-                        <tbody class="rdp-body" id="rdp-body">
-                            @for (settimana of listGiorni; track $index) {
-                                <tr class="rdp-body_row" [class.highlight-week]="" id="rdp-body_row">
+                        <tbody class="rdp-body">
+                            @for (settimana of listGiorni; track $index) {                                
+                                <tr class="rdp-body_row" [class.highlight-week]="isHighlightWeek(settimana)">
                                     @for (giorno of settimana; track $index) {
                                         <td class="rdp-cell" role="presentation">
                                             <button class="btn-svg"  
                                                 [class.trasp-cella]="giorno[1][1]" 
                                                 [class.today]="giorno[1][0]">
                                                 <div>
-                                                    <span>{{ giorno.at(0) }}</span>
+                                                    <span>{{ giorno[0] }}</span>
                                                 </div>
                                             </button>
                                         </td>
@@ -91,7 +91,7 @@
         </section>
     </section>
 
-    <section class="router-container section">
+    <section class="router-container">
         <router-outlet></router-outlet>
     </section>
 </main>

@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CalendarioService } from '../../pages/landing-calendario/calendario.service';
 
 @Component({
   selector: 'square-btn',
@@ -9,4 +10,6 @@ import { Component, Input } from '@angular/core';
 
 export class SquareBtnComponent {
     @Input() className!: string;
+
+    constructor(private service: CalendarioService) { }
 }

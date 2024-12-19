@@ -2,8 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SquareBtnComponent } from './resumable/square-btn/square-btn.component';
 import { CalendarioService } from './pages/landing-calendario/calendario.service';
-import { groupBy, Observable } from 'rxjs';
-import { Calendario, ListaCelle } from './interfaces/calendario';
+import { Observable } from 'rxjs';
+import { Calendario, ListaCelle } from './pages/landing-calendario/interfaces/calendario';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, SquareBtnComponent],  
@@ -58,9 +58,20 @@ export class AppComponent implements OnInit {
         return meseAttuale !== mese;
     }
 
+    isHighlightWeek(settimana: Map<number, boolean[]>): boolean {
+        for (const giorno of settimana.values()) {
+            if (giorno[0]) { // giorno[0] rappresenta `isToday`
+                return true;
+            }
+        }
+        return false;
+    }
+
     dataObj = new Date();
     obsCalendar!: Observable<Calendario>; 
     result!: Calendario;
+
+    //passare un indice come parametro di mese e anno modificabili cliccando sui bottoni delle freccette
     getCalendarioCompleto() {
         console.log('Caricamento calendario side bar');
 
@@ -86,7 +97,7 @@ export class AppComponent implements OnInit {
             const isToday = this.isOggi(giorno, mese, anno);
             const traspDay = this.isGiornoDelMese(mese);
             this.gruppo.set(giorno, [isToday, traspDay]);
-            
+
             if (this.gruppo.size === 7) {
                 this.listGiorni.push(new Map(this.gruppo));
                 this.gruppo.clear();

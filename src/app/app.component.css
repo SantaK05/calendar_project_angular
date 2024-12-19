@@ -21,12 +21,9 @@
 }
 
 .router-container {
-    /* position: absolute; */
-    /* width: calc(100% - 9em); */
     width: 100%;
     height: 100%;
     transition: var(--animation-smooth);
-    /* transform: translateX(9em); */
 }
 
 .router-outlet-active {
@@ -39,7 +36,7 @@
 /* ------------------------------------- */
 
 .calendar-side-info {
-    width: 9em;
+    width: 11em;
     background-color: var(--color-dark-dark);
     display: grid;
     grid-template-rows: repeat(11, 1fr);
@@ -50,18 +47,6 @@
         width: 100%;
         max-width: 180.4px;
     }
-}
-
-.calendar-container {
-    display: grid;
-    grid-template-rows: repeat(11, 1fr);
-    width: 100%;
-    border-left: var(--divider-border);
-    border-right: var(--divider-border);
-}
-
-.calendar-side-utils {
-    min-width: 11.5em;
 }
 
 /* ------------------------------------- */
@@ -101,7 +86,7 @@
 
     .sb-cal-sec,
     .sb-user-sec {
-        transform: translateX(-9em);
+        transform: translateX(-11em);
     }
 }
 
