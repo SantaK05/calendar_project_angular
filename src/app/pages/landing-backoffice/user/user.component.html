@@ -63,17 +63,17 @@
     </div>
     <div>
       <label for="ruoli" class="form-label">Ruoli:</label>
-      <div id="ruoli" class="form-check" *ngFor="let role of avaibleRoles">
-        <input
-          type="checkbox"
-          id="role-{{ role }}"
-          name="ruoli"
-          class="form-check-input"
-          [(ngModel)]="current.ruolo"
-          [value]="role"
-        />
-        <label for="role-{{ role }}" class="form-check-label">{{ role }}</label>
-      </div>
+      @for (role of avaibleRoles; track $index) {
+      <input
+        type="checkbox"
+        id="ruoli"
+        name="ruoli"
+        class="form-check-input"
+        [(ngModel)]="current.ruolo"
+        [value]="role"
+      />
+      <p>{{ role.nome }}</p>
+      }
     </div>
     <button class="btn btn-primary" type="button" (click)="save()">
       Salva

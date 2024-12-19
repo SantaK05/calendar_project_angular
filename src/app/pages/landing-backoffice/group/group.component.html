@@ -26,7 +26,9 @@
       </div>
       <div>
         <label for="ruoli" class="form-label">Ruoli:</label>
-        <div id="ruoli" class="form-check" *ngFor="let role of availableRoles">
+        @for (role of availableRoles; track $index) {
+        <div id="ruoli" class="form-check">
+          <p>{{ role.nome }}</p>
           <input
             type="checkbox"
             id="ruoli"
@@ -35,8 +37,8 @@
             [(ngModel)]="current.ruoli"
             [value]="role"
           />
-          <label for="role" class="form-check-label">{{ role }}</label>
         </div>
+        }
       </div>
       <button class="btn btn-primary" type="button" (click)="save()">
         Salva
