@@ -18,7 +18,7 @@ import { MessageService } from './message.service';
 export class UserService {
   arrayUser: User[] = [];
 
-  BASE_URL = 'http://localhost:8081/users';
+  BASE_URL = 'http://localhost:8081/user';
 
   constructor(
     private httpClient: HttpClient,

@@ -9,7 +9,7 @@ import { Role } from '../../interfaces/backoffice';
 export class RoleService {
   arrayRole: Role[] = [];
 
-  BASE_URL = 'http://localhost:8082/role';
+  BASE_URL = 'http://localhost:8081/roles';
 
   constructor(
     private httpClient: HttpClient,
