@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../../interfaces/backoffice';
 import {
-  switchMap,
   catchError,
-  of,
-  merge,
   tap,
   Observable,
   throwError,
@@ -18,7 +15,7 @@ import { MessageService } from './message.service';
 export class UserService {
   arrayUser: User[] = [];
 
-  BASE_URL = 'http://localhost:8081/user';
+  BASE_URL = 'http://localhost:8081/users';
 
   constructor(
     private httpClient: HttpClient,
@@ -52,9 +49,6 @@ export class UserService {
   save(current: User): Observable<User> {
     console.log('richiamato metodo save');
 
-    // TODO attenzione: manca la validazione dei dati
-
-    // cerco nella lista se trovo un elemento con lo stesso id
     let user = this.arrayUser.find((e) => e.id == current.id);
     if (user) {
       // devo modificare solo gli attributi dell'oggetto trovato
@@ -65,7 +59,6 @@ export class UserService {
       user.email = current.email;
       user.ruolo = current.ruolo;
       user.gruppo = current.gruppo;
-      user.stato = current.stato;
 
       return this.httpClient
         .put<User>(`${this.BASE_URL}/${user.id}`, user)
@@ -76,7 +69,6 @@ export class UserService {
           })
         );
     } else {
-      // devo creare il nuovo oggetto da inserire nella lista
       user = {
         id: 0,
         nome: current.nome,
@@ -86,13 +78,11 @@ export class UserService {
         email: current.email,
         ruolo: current.ruolo,
         gruppo: current.gruppo,
-        stato: current.stato,
+        stato: current.stato
       };
       console.log('inserisco evento di salvataggio');
 
       return this.httpClient.post<User>(`${this.BASE_URL}`, user).pipe(
-        // gestisco gli eventuali errori,
-        // ATTENZIONE se non gestiti bene il flusso viene chiuso e non accetterà più nuovi eventi
         catchError((err) => {
           this.messageService.publishError('Errore creazione user');
           return throwError(() => err);

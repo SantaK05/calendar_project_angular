@@ -29,7 +29,7 @@ export class UserComponent {
     email: '',
     ruolo: this.avaibleRoles,
     gruppo: this.avaibleGroups,
-    stato: {} as Stato,
+    stato: Stato.REGISTRAZIONE,
   };
 
   constructor(
@@ -40,6 +40,7 @@ export class UserComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
+    
     let id = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (id) {
@@ -67,6 +68,7 @@ export class UserComponent {
   }
 
   save() {
+
     this.service
       .save(this.current)
       .pipe(
@@ -76,7 +78,6 @@ export class UserComponent {
         tap((data: any) => {
           this.router.navigateByUrl('backoffice/user-list');
         })
-      )
-      .subscribe();
+      ).subscribe();
   }
 }
