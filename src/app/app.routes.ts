@@ -21,6 +21,7 @@ export const routes: Routes = [
   { path: 'backoffice/user/:id', component: UserComponent },
   { path: 'backoffice/role-list', component: ListRoleComponent },
   { path: 'backoffice/role', component: RoleComponent },
+  { path: 'backoffice/role/:id', component:RoleComponent},
   { path: 'backoffice/group-list', component: GroupsListComponent },
   { path: 'backoffice/group', component: GroupsComponent },
   { path: 'backoffice/group/:id', component: GroupsComponent },

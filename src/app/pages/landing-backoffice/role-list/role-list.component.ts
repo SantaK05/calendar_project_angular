@@ -19,7 +19,7 @@ export class ListRoleComponent {
   }
 
   edit(role: Role) {
-    this.router.navigateByUrl(`/role/${role.id}`);
+    this.router.navigateByUrl(`backoffice/role/${role.id}`);
   }
 
   delete(role: Role) {

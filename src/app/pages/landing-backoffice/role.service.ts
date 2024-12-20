@@ -60,7 +60,7 @@ export class RoleService {
         );
     } else {
       role = {
-        id: current.id,
+        id: current.id=0,
         nome: current.nome,
         descrizione: current.descrizione,
       };
