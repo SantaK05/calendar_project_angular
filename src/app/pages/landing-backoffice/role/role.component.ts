@@ -15,8 +15,8 @@ import { catchError, switchMap, tap, throwError } from 'rxjs';
 export class RoleComponent {
   current: Role = {
     id: 0,
-    nome: 'nome',
-    descrizione: 'descrizione',
+    nome: '',
+    descrizione: '',
   };
 
   triggerNavigation: boolean = false;
@@ -54,8 +54,8 @@ export class RoleComponent {
         return this.service.findAll();
       }),
       tap((data: any) => {
-        this.router.navigateByUrl('/list-role');
+        this.router.navigateByUrl('backoffice/role-list');
       })
-    );
+    ).subscribe();
   }
 }
