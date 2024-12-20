@@ -3,10 +3,11 @@ import { RoleService } from '../role.service';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Role } from '../../../interfaces/backoffice';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-list-role',
-  imports: [],
+  imports: [NavbarComponent],
   templateUrl: './role-list.component.html',
   styleUrl: './role-list.component.css',
 })

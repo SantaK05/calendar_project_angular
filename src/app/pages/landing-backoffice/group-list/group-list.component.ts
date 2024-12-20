@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { GroupService } from '../group.service';
 import { Group } from '../../../interfaces/backoffice';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-list-gruop',
-  imports: [],
+  imports: [NavbarComponent],
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.css',
 })

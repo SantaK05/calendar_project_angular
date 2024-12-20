@@ -9,10 +9,11 @@ import { MessageService } from '../message.service';
 import { RoleService } from '../role.service';
 import { GroupService } from '../group.service';
 import { CommonModule } from '@angular/common';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-user',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NavbarComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
 })

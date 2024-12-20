@@ -5,10 +5,11 @@ import { Role } from '../../../interfaces/backoffice';
 import { MessageService } from '../message.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-role',
-  imports: [FormsModule],
+  imports: [FormsModule, NavbarComponent],
   templateUrl: './role.component.html',
   styleUrl: './role.component.css',
 })

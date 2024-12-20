@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { UserService } from '../user.service';
 import { User } from '../../../interfaces/backoffice';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-user-list',
-  imports: [],
+  imports: [NavbarComponent],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
 })

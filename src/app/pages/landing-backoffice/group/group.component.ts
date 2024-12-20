@@ -8,10 +8,11 @@ import { GroupService } from '../group.service';
 import { RoleService } from '../role.service';
 import { UserService } from '../user.service';
 import { CommonModule } from '@angular/common';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-group',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NavbarComponent],
   templateUrl: './group.component.html',
   styleUrl: './group.component.css',
 })
