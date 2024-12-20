@@ -15,78 +15,30 @@ import { MessageCalendarioComponent } from './message-calendario/message-calenda
 
 export class LandingCalendarioComponent implements OnInit {
     calendario!: Calendario;
-    dataObj = new Date();
-    monthNum!: number;
-    yearNum!: number;
 
-    constructor(private readonly service: CalendarioService, private router: Router) {
-        this.monthNum = this.dataObj.getUTCMonth() + 1;
-        this.yearNum = this.dataObj.getUTCFullYear();
-    }
+    monthLong: string = '';
+    year: number = 0;
+    
+
+    constructor(private readonly service: CalendarioService, private router: Router) { }
     
     ngOnInit(): void {
         console.log('caricamento DOM');
-        this.getCalendarioCompleto(this.yearNum, this.monthNum);
+        this.getCalendarioCompleto(this.service.yearNum, this.service.monthNum);
     }
-
-    obsCalendar!: Observable<Calendario>; 
-    result!: Calendario;
-    year: number = 0;
-    monthLong: string = '';
 
     getCalendarioCompleto(year: number, month: number) {
-        // Chimata per ricevere il calendario
-        this.obsCalendar = this.service.getCalendarioJSON(year, month);
-        this.obsCalendar.subscribe((data) => {
-            this.result = data;
-            console.info(`Data del calendario selezionato: ${this.result.data}`);
-        });
+        this.service.getCalendarioCompleto(year, month);
 
-        this.dataObj = new Date(this.result.data);
-        this.year = this.dataObj.getFullYear();
-        this.monthLong = new Intl.DateTimeFormat("en-US", { month: 'long' }).format(this.dataObj);
-    
-        this.caricaCalendarioMin(this.result.listaCelle);
+        this.listGiorni = this.service.listGiorni;
+        this.monthLong = this.service.monthLong;
+        this.year = this.service.year;
     }
 
-    // ?Caricamento calendario
-    isOggi(giorno: number, mese: number, anno: number): boolean {
-        const oggi = new Date(); // Data corrente
-        return (
-            oggi.getFullYear() === anno &&
-            oggi.getMonth() === mese &&
-            oggi.getDate() === giorno
-        );
-    }
-
-    isGiornoDelMese(mese: number): boolean {
-        const meseAttuale = new Date().getUTCMonth();
-        return meseAttuale !== mese;
-    }
-
-    gruppo: Map<number, boolean[]> = new Map<number, boolean[]>();
     listGiorni: Array<Map<number, boolean[]>> = [];
-    
-    caricaCalendarioMin(listaCelle: ListaCelle[]) {
-        listaCelle.forEach((element) => {
-            this.dataObj = new Date(element.data);
-            let giorno: number = this.dataObj.getUTCDate();
-            let mese: number = this.dataObj.getUTCMonth();
-            let anno: number = this.dataObj.getUTCFullYear();
-            
-            const isToday = this.isOggi(giorno, mese, anno);
-            const traspDay = this.isGiornoDelMese(mese);
-            this.gruppo.set(giorno, [isToday, traspDay]);
-
-            if (this.gruppo.size === 7) {
-                this.listGiorni.push(new Map(this.gruppo));
-                this.gruppo.clear();
-            }
-        });
-    }
 
     visualCella(giorno: number): void {
         console.log('visual cella');
-        this.router.navigateByUrl(`/d/${this.dataObj.getUTCFullYear()}/${this.dataObj.getUTCMonth()}/${giorno}`);
+        this.router.navigateByUrl(`/d/${this.service.dataObj.getUTCFullYear()}/${this.service.dataObj.getUTCMonth()}/${giorno}`);
     }
 }

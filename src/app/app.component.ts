@@ -44,20 +44,6 @@ export class AppComponent implements OnInit {
     }
 
     // ?Caricamento calendario esterno
-    isOggi(giorno: number, mese: number, anno: number): boolean {
-        const oggi = new Date(); // Data corrente
-        return (
-            oggi.getFullYear() === anno &&
-            oggi.getMonth() === mese &&
-            oggi.getDate() === giorno
-        );
-    }
-
-    isGiornoDelMese(mese: number): boolean {
-        const meseAttuale = new Date().getUTCMonth();
-        return meseAttuale !== mese;
-    }
-
     isHighlightWeek(settimana: Map<number, boolean[]>): boolean {
         for (const giorno of settimana.values()) {
             if (giorno[0]) { // giorno[0] rappresenta `isToday`
@@ -67,41 +53,12 @@ export class AppComponent implements OnInit {
         return false;
     }
 
-    dataObj = new Date();
-    obsCalendar!: Observable<Calendario>; 
-    result!: Calendario;
-
     //passare un indice come parametro di mese e anno modificabili cliccando sui bottoni delle freccette
     getCalendarioCompleto() {
-        console.log('Caricamento calendario side bar');
+        this.service.getCalendarioCompleto(this.service.dataObj.getFullYear(), this.service.dataObj.getMonth() + 1);
 
-        // Chimata per ricevere il calendario
-        this.obsCalendar = this.service.getCalendarioJSON(this.dataObj.getFullYear(), this.dataObj.getMonth() + 1);
-        this.obsCalendar.subscribe((data) => {
-            this.result = data;
-        });
-
-        this.caricaCalendarioMin(this.result.listaCelle);
+        this.listGiorni = this.service.listGiorni;
     }
 
-    gruppo: Map<number, boolean[]> = new Map<number, boolean[]>();
     listGiorni: Array<Map<number, boolean[]>> = [];
-    
-    caricaCalendarioMin(listaCelle: ListaCelle[]) {
-        listaCelle.forEach((element) => {
-            this.dataObj = new Date(element.data);
-            let giorno: number = this.dataObj.getUTCDate();
-            let mese: number = this.dataObj.getUTCMonth();
-            let anno: number = this.dataObj.getUTCFullYear();
-            
-            const isToday = this.isOggi(giorno, mese, anno);
-            const traspDay = this.isGiornoDelMese(mese);
-            this.gruppo.set(giorno, [isToday, traspDay]);
-
-            if (this.gruppo.size === 7) {
-                this.listGiorni.push(new Map(this.gruppo));
-                this.gruppo.clear();
-            }
-        });
-    }
 }

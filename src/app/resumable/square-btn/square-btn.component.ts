@@ -9,7 +9,15 @@ import { CalendarioService } from '../../pages/landing-calendario/calendario.ser
 })
 
 export class SquareBtnComponent {
-    @Input() className!: string;
+  @Input() className!: string;
 
-    constructor(private service: CalendarioService) { }
+  constructor(private service: CalendarioService) { }
+
+  incMese() {
+    this.service.incMese();
+  }
+
+  decMese() {
+    this.service.decMese();
+  }
 }
