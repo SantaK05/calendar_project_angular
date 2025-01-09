@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { MessagePayload, MessageService } from '../message.service';
 import { tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { MessagePayload, MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-message',

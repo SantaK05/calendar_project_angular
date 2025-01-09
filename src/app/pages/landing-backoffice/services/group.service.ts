@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap, Observable, throwError } from 'rxjs';
 import { MessageService } from './message.service';
-import { Group } from '../../interfaces/backoffice';
+import { Group } from '../../../interfaces/backoffice';
 
 @Injectable({
   providedIn: 'root'
@@ -84,7 +84,7 @@ export class GroupService {
   }
 
   delete(group: Group): Observable<Group> | void {
-  
+
     let index = this.arrayGroup.findIndex(e => e.id == group.id);
     if (index > -1) {
 

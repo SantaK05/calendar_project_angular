@@ -18,8 +18,8 @@ export interface User {
   username: string;
   password: string;
   email: string;
-  ruolo: Role[];
-  gruppo: Group[];
+  ruoli: Role[];
+  gruppi: Group[];
   stato: Stato;
 }
 

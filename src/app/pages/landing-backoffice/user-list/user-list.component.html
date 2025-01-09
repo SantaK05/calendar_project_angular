@@ -20,8 +20,18 @@
                         <td>{{user.nome}}</td>
                         <td>{{user.cognome}}</td>
                         <td>{{user.username}}</td>
-                        <td>{{user.ruolo}}</td>
-                        <td>{{user.gruppo}}</td>
+                        <td>
+
+                          @for(ruolo of user.ruoli; track $index) {
+                            {{ruolo.nome}},
+                          }
+                        </td>
+                        <td>
+
+                          @for(gruppo of user.gruppi; track $index) {
+                          {{gruppo.nome}}
+                        }
+                      </td>
                         <td>
                             <button class="btn btn-sm btn-primary me-3" type="button" (click) = "edit(user)">Modifica</button>
                             <button class="btn btn-sm btn-danger" type="button" (click) = "delete(user)">Elimina</button>
@@ -30,6 +40,7 @@
                 }
             </tbody>
         </table>
+
     </div>
 </div>
 

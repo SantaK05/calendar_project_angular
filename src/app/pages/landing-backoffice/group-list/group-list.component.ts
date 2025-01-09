@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { GroupService } from '../group.service';
 import { Group } from '../../../interfaces/backoffice';
 import { NavbarComponent } from "../navbar/navbar.component";
+import { GroupService } from '../services/group.service';
 
 @Component({
   selector: 'app-list-gruop',
