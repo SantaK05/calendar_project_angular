@@ -55,15 +55,15 @@
       <label for="ruoli" class="form-label">Ruoli:</label>
     </div>
       <div class="mb-3" *ngFor="let role of avaibleRoles; let i=index" >
-        <input type="checkbox" id="ruoli" name="ruoli" class="form-check-input" [(ngModel)]="current.ruolo[i]" [value]="role"/> {{ role.nome }}
+        <input type="checkbox" id="ruoli" name="ruoli" class="form-check-input" [(ngModel)]="current.ruoli[i]" [value]="role"/> {{ role.nome }}
       </div>
       <div>
         <label for="gruppi" class="form-label">Gruppi:</label>
       </div>
         <div class="mb-3" *ngFor="let group of avaibleGroups; let i=index" >
-          <input type="checkbox" id="gruppi" name="gruppi" class="form-check-input" [(ngModel)]="current.gruppo[i]" [value]="group"/> {{ group.nome }}
+          <input type="checkbox" id="gruppi" name="gruppi" class="form-check-input" [(ngModel)]="current.gruppi[i]" [value]="group"/> {{ group.nome }}
         </div>
-    
+
     <button class="btn btn-primary" type="button" (click)="save()">
       Salva
     </button>

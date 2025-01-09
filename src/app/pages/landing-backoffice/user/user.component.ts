@@ -2,14 +2,15 @@ import { Component } from '@angular/core';
 import { Group, Stato, User } from '../../../interfaces/backoffice';
 import { Role } from '../../../interfaces/backoffice';
 import { FormsModule } from '@angular/forms';
-import { UserService } from '../user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, switchMap, tap, throwError } from 'rxjs';
-import { MessageService } from '../message.service';
-import { RoleService } from '../role.service';
-import { GroupService } from '../group.service';
+
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../navbar/navbar.component";
+import { GroupService } from '../services/group.service';
+import { MessageService } from '../services/message.service';
+import { RoleService } from '../services/role.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user',
@@ -28,8 +29,8 @@ export class UserComponent {
     username: '',
     password: '',
     email: '',
-    ruolo: this.avaibleRoles,
-    gruppo: this.avaibleGroups,
+    ruoli: this.avaibleRoles,
+    gruppi: this.avaibleGroups,
     stato: Stato.REGISTRAZIONE,
   };
 
@@ -41,7 +42,7 @@ export class UserComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    
+
     let id = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (id) {
