@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, switchMap, tap, throwError } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from "../navbar/navbar.component";
+import { NavbarComponent } from '../navbar/navbar.component';
 import { GroupService } from '../services/group.service';
 import { MessageService } from '../services/message.service';
 import { RoleService } from '../services/role.service';
@@ -29,10 +29,13 @@ export class UserComponent {
     username: '',
     password: '',
     email: '',
-    ruoli: this.avaibleRoles,
-    gruppi: this.avaibleGroups,
+    ruoli: [],
+    gruppi: [],
     stato: Stato.REGISTRAZIONE,
   };
+
+  selectedRole: Set<number> = new Set();
+  selectedGroup: Set<number> = new Set();
 
   constructor(
     private service: UserService,
@@ -42,7 +45,6 @@ export class UserComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-
     let id = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (id) {
@@ -55,6 +57,11 @@ export class UserComponent {
             console.log(`ottenuti i dati dell'utente`);
             console.log(data);
             this.current = data as User;
+
+            this.selectedRole = new Set(data.ruoli.map((ruolo) => ruolo.id));
+            this.selectedGroup = new Set(
+              data.gruppi.map((gruppo) => gruppo.id)
+            );
           }),
           catchError((err) => {
             console.log(err);
@@ -65,12 +72,17 @@ export class UserComponent {
         )
         .subscribe();
     }
-    this.avaibleRoles = this.roleService.arrayRole;
-    this.avaibleGroups = this.groupService.arrayGroup;
+
+    this.roleService.findAll().subscribe((data) => {
+      this.avaibleRoles = data;
+    });
+
+    this.groupService.findAll().subscribe((data) => {
+      this.avaibleGroups = data;
+    });
   }
 
   save() {
-
     this.service
       .save(this.current)
       .pipe(
@@ -78,8 +90,25 @@ export class UserComponent {
           return this.service.findAll();
         }),
         tap((data: any) => {
-          this.router.navigateByUrl('backoffice/user-list');
+          this.router.navigateByUrl('/backoffice/user-list');
         })
-      ).subscribe();
+      )
+      .subscribe();
+  }
+
+  toggleRole(role: Role) {
+    if (this.selectedRole.has(role.id)) {
+      this.selectedRole.delete(role.id);
+    } else {
+      this.selectedRole.add(role.id);
+    }
+  }
+
+  toggleGroup(group: Group) {
+    if (this.selectedGroup.has(group.id)) {
+      this.selectedGroup.delete(group.id);
+    } else {
+      this.selectedGroup.add(group.id);
+    }
   }
 }
