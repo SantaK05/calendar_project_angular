@@ -6,7 +6,7 @@ import { NavbarComponent } from "../navbar/navbar.component";
 import { GroupService } from '../services/group.service';
 
 @Component({
-  selector: 'app-list-gruop',
+  selector: 'app-list-group',
   imports: [NavbarComponent],
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.css',
@@ -19,7 +19,7 @@ export class GroupsListComponent {
   }
 
   edit(group: Group) {
-    this.router.navigateByUrl(`/form/${group.id}`);
+    this.router.navigateByUrl(`backoffice/group/${group.id}`);
   }
 
   delete(group: Group) {

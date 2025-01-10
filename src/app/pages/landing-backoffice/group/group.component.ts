@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
-import { Group, Role, Stato, User } from '../../../interfaces/backoffice';
-
+import { Group, Role, User } from '../../../interfaces/backoffice';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { GroupService } from '../services/group.service';
@@ -13,7 +12,7 @@ import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-group',
-  imports: [FormsModule, CommonModule, NavbarComponent],
+  imports: [FormsModule, CommonModule, NavbarComponent, RouterModule],
   templateUrl: './group.component.html',
   styleUrl: './group.component.css',
 })
@@ -66,7 +65,7 @@ export class GroupsComponent {
         return this.service.findAll();
       }),
       tap((data: any) => {
-        this.router.navigateByUrl('backoffice/group-list');
+        this.router.navigateByUrl('/backoffice/group-list');
       })
     );
   }
