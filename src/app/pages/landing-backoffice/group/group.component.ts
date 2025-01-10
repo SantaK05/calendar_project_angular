@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
 import { Group, Role, User } from '../../../interfaces/backoffice';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from "../navbar/navbar.component";
+import { NavbarComponent } from '../navbar/navbar.component';
 import { GroupService } from '../services/group.service';
 import { MessageService } from '../services/message.service';
 import { RoleService } from '../services/role.service';
@@ -17,15 +17,18 @@ import { UserService } from '../services/user.service';
   styleUrl: './group.component.css',
 })
 export class GroupsComponent {
-  availableRoles: Role[] = [];
+  avaibleRoles: Role[] = [];
   avaibleUsers: User[] = [];
 
   current: Group = {
     id: 0,
     nome: '',
-    utenti: this.avaibleUsers,
-    ruoli: this.availableRoles,
+    utenti: [],
+    ruoli: [],
   };
+
+  selectedUser: Set<number> = new Set();
+  selectedRole: Set<number> = new Set();
 
   constructor(
     private service: GroupService,
@@ -42,9 +45,12 @@ export class GroupsComponent {
         .load(id)
         .pipe(
           tap((data) => {
-            console.log('ottenuti dati ruoli');
+            console.log('ottenuti dati gruppo');
             console.log(data);
-            this.current = data;
+            this.current = data as Group;
+
+            this.selectedUser = new Set(this.current.utenti.map((u) => u.id));
+            this.selectedRole = new Set(this.current.ruoli.map((r) => r.id));
           }),
           catchError((err) => {
             console.log(err);
@@ -55,11 +61,24 @@ export class GroupsComponent {
         .subscribe();
     }
 
-    this.availableRoles = this.roleService.arrayRole;
-    this.avaibleUsers = this.userService.arrayUser;
+    this.userService.findAll().subscribe((data) => {
+      this.avaibleUsers = data;
+    });
+
+    this.roleService.findAll().subscribe((data) => {
+      this.avaibleRoles = data;
+    });
   }
 
   save() {
+    this.current.utenti = this.avaibleUsers.filter((u) =>
+      this.selectedUser.has(u.id)
+    );
+
+    this.current.ruoli = this.avaibleRoles.filter((r) =>
+      this.selectedRole.has(r.id)
+    );
+
     this.service.save(this.current).pipe(
       switchMap((response) => {
         return this.service.findAll();
@@ -68,5 +87,21 @@ export class GroupsComponent {
         this.router.navigateByUrl('/backoffice/group-list');
       })
     );
+  }
+
+  toggleRole(role: Role) {
+    if (this.selectedRole.has(role.id)) {
+      this.selectedRole.delete(role.id);
+    } else {
+      this.selectedRole.add(role.id);
+    }
+  }
+
+  toggleUser(user: User) {
+    if (this.selectedUser.has(user.id)) {
+      this.selectedUser.delete(user.id);
+    } else {
+      this.selectedUser.add(user.id);
+    }
   }
 }

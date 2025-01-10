@@ -1,68 +1,82 @@
-<div class="bg-group"> 
+<div class="bg-group">
   <app-navbar></app-navbar>
   <div class="container">
     <div class="container mt-5">
       <div class="mt-4 d-flex justify-content-start">
         <button class="btn btn-primary">
-          <a href="/backoffice/group-list" class="text-white text-decoration-none"
-            >Indietro</a>
+          <a
+            href="/backoffice/group-list"
+            class="text-white text-decoration-none"
+            >Indietro</a
+          >
         </button>
       </div>
     </div>
-    <div class="d-flex justify-content-center align-items-center vh-100">
-      <div class="container">
-        <div class="row justify-content-md-center">
-          <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
-            <div class="bg-white p-4 p-md-5 rounded shadow-sm">
-              <div class="row">
-                <form>
-                  <div class="mb-3 grid gap-3">
-                    <label for="nome" class="form-label">Nome:</label>
-                    <input
-                      type="text"
-                      id="nome"
-                      name="nome"
-                      class="form-control"
-                      [(ngModel)]="current.nome"
-                    />
-                  </div>
-                  <div>
-                    <label for="utenti" class="form-label">Utenti:</label>
-                    
-                    <div id="utenti" class="form-check" *ngFor="let user of avaibleUsers; let i = index">
-                      <input
-                        type="checkbox"
-                        id="utenti"
-                        name="utenti"
-                        class="form-check-input"
-                        [(ngModel)]="current.utenti[i]"
-                        [value]="user"
-                      />
-                      <p>{{ user.email }}</p>
-                    </div>
-                  </div>
-                  <div>
-                    <label for="ruoli" class="form-label">Ruoli:</label>
-                    <div id="ruoli" class="form-check" *ngFor="let role of availableRoles; let i = index">
-                      <input 
-                      type="checkbox" 
-                      id="ruoli" name="ruoli" 
-                      class="form-check-input" 
-                      [(ngModel)]="current.ruoli[i]" 
-                      [value]="role"
-                      />
-                      <p>{{ role.nome }}</p>
-                    </div>
-                  </div>
-                  <button class="btn btn-primary" type="button" (click)="save()">
-                    Salva
-                  </button>
-                </form>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+            <form>
+              <div class="mb-3">
+                <label for="nome" class="form-label">Nome:</label>
+                <input
+                  type="text"
+                  id="nome"
+                  name="nome"
+                  class="form-control"
+                  [(ngModel)]="current.nome"
+                />
               </div>
-            </div>
+              <div>
+                <label for="utenti" class="form-check">Utenti:</label>
+              </div>
+              <div class="mb-3" *ngFor="let user of avaibleUsers">
+                <input
+                  type="checkbox"
+                  id="utenti-{{ user.id }}"
+                  name="utenti"
+                  class="form-check-input"
+                  [checked]="selectedUser.has(user.id)"
+                  (change)="toggleUser(user)"
+                />
+                <label class="form-check-label" for="ruoli-{{ user.id }}">
+                  {{ user.username }}
+                </label>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+            <form>
+              <div>
+                <label for="ruoli" class="form-check">Ruoli:</label>
+              </div>
+              <div class="mb-3" *ngFor="let role of avaibleRoles">
+                <input
+                  type="checkbox"
+                  id="ruoli-{{ role.id }}"
+                  name="ruoli"
+                  class="form-check-input"
+                  [checked]="selectedRole.has(role.id)"
+                  (change)="toggleRole(role)"
+                />
+                <label class="form-check-label" for="ruoli-{{ role.id }}">
+                  {{ role.nome }}
+                </label>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
+    <div class="row col-12 mt-4">
+      <div class="col-12 text-center">
+        <button class="btn btn-primary w-100" type="button" (click)="save()">
+          Salva
+        </button>
+      </div>
+    </div>
   </div>
-</div> 
+</div>
