@@ -85,7 +85,7 @@
                 [checked]="selectedRole.has(role.id)"
                 (change)="toggleRole(role)"
               />
-              <label class="form-check-label" for="ruoli-{{ role.id }}">
+              <label class="form-check-label ms-2" for="ruoli-{{ role.id }}">
                 {{ role.nome }}
               </label>
             </div>
@@ -109,7 +109,7 @@
                 [checked]="selectedGroup.has(group.id)"
                 (change)="toggleGroup(group)"
               />
-              <label class="form-check-label" for="gruppi-{{ group.id }}">{{
+              <label class="form-check-label ms-2" for="gruppi-{{ group.id }}">{{
                 group.nome
               }}</label>
             </div>

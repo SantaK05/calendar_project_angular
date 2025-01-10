@@ -1,48 +1,46 @@
 <div class="bg-user-list">
-<app-navbar></app-navbar>
-<div class="row">
-    <div class="col">
-      <a class="btn btn-sm btn-primary mt-3 mb-3 ms-3" href="/backoffice/user">Aggiungi nuovo utente</a>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Cognome</th>
-                    <th>User</th>
-                    <th>Ruolo</th>
-                    <th>Gruppo</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (user of arrayUser; track $index) {
-                    <tr>
-                        <td>{{user.id}}</td>
-                        <td>{{user.nome}}</td>
-                        <td>{{user.cognome}}</td>
-                        <td>{{user.username}}</td>
-                        <td>
-
-                          @for(ruolo of user.ruoli; track $index) {
-                            {{ruolo.nome}},
-                          }
-                        </td>
-                        <td>
-
-                          @for(gruppo of user.gruppi; track $index) {
-                          {{gruppo.nome}}
-                        }
-                      </td>
-                        <td>
-                            <button class="btn btn-sm btn-primary me-3" type="button" (click) = "edit(user)">Modifica</button>
-                            <button class="btn btn-sm btn-danger" type="button" (click) = "delete(user)">Elimina</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
+  <app-navbar></app-navbar>
+  <div class="row">
+    <div class="col-auto">
+      <a class="btn btn-primary mb-3 mt-3 ms-3" href="/backoffice/user">Aggiungi nuovo utente</a>
     </div>
+    <div class="col d-flex justify-content-end">
+      <input type="search" class="form-control mb-3 mt-3 me-3" [(ngModel)]="searchTerm" (input)="searchUsers()" style="width: 300px;" placeholder="🔍"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>User</th>
+            <th>Ruolo</th>
+            <th>Gruppo</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers">
+            <td>{{ user.id }}</td>
+            <td>{{ user.nome }}</td>
+            <td>{{ user.cognome }}</td>
+            <td>{{ user.username }}</td>
+            <td>
+              <span *ngFor="let ruolo of user.ruoli">{{ ruolo.nome }}, </span>
+            </td>
+            <td>
+              <span *ngFor="let gruppo of user.gruppi">{{ gruppo.nome }}</span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-primary me-3" type="button" (click)="edit(user)">Modifica</button>
+              <button class="btn btn-sm btn-danger" type="button" (click)="delete(user)">Elimina</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-

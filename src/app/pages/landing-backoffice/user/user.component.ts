@@ -36,6 +36,7 @@ export class UserComponent {
 
   selectedRole: Set<number> = new Set();
   selectedGroup: Set<number> = new Set();
+ 
 
   constructor(
     private service: UserService,
@@ -104,11 +105,36 @@ export class UserComponent {
       .subscribe();
   }
 
-  toggleRole(role: Role) {
-    if (this.selectedRole.has(role.id)) {
-      this.selectedRole.delete(role.id);
-    } else {
+  toggleRole(role: any) {
+    if (role.nome === 'GUEST') {
+      this.selectedRole.clear();
       this.selectedRole.add(role.id);
+    } else if (role.nome === 'ADMIN') {
+      this.selectedRole.clear();
+      this.avaibleRoles.forEach(r => {
+        if (r.nome !== 'GUEST' && r.nome !== 'OWNER') {
+          this.selectedRole.add(r.id);
+        }
+      });
+      this.selectedRole.add(role.id);
+    } else if (role.nome === 'OWNER') {
+      this.selectedRole.clear();
+      this.avaibleRoles.forEach(r => {
+        if (r.nome !== 'GUEST') {
+          this.selectedRole.add(r.id);
+        }
+      });
+      this.selectedRole.add(role.id);
+    } else {
+      if (this.selectedRole.has(role.id)) {
+        this.selectedRole.delete(role.id);
+      } else {
+        this.selectedRole.add(role.id);
+      }
+      const guestRole = this.avaibleRoles.find(r => r.nome === 'GUEST');
+      if (guestRole && this.selectedRole.has(guestRole.id)) {
+        this.selectedRole.delete(guestRole.id);
+      }
     }
   }
 
@@ -119,4 +145,6 @@ export class UserComponent {
       this.selectedGroup.add(group.id);
     }
   }
+
+  
 }
