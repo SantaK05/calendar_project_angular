@@ -64,24 +64,25 @@ export class GroupService {
     } else {
 
       group = {
-        id: 0,
+        id: current.id = 0,
         nome: current.nome,
-        ruoli: current.ruoli,
-        utenti: current.utenti
+        utenti: current.utenti,
+        ruoli: current.ruoli
+        
         }
       console.log('inserisco evento di salvataggio');
 
       return this.httpClient.post<Group>(`${this.BASE_URL}`, group).pipe(
-
         catchError(err => {
           this.messageService.publishError('Errore creazione gruppo');
           return throwError(() => err);
         })
       );
-
+      
     }
-
-  }
+    
+  } 
+  
 
   delete(group: Group): Observable<Group> | void {
 

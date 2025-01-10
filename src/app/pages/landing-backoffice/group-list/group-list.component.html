@@ -1,29 +1,30 @@
-<app-navbar></app-navbar>
-<div class="row">
-    <div class="col">
-      <a class="btn btn-sm btn-secondary me-3" href="/backoffice/group">Aggiungi nuovo gruppo</a>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Ruoli</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (group of arrayGroup; track $index) {
+<div class="bg-group-list">
+    <app-navbar></app-navbar>
+    <div class="row">
+        <div class="col">
+        <a class="btn btn-sm btn-secondary me-3" href="/backoffice/group">Aggiungi nuovo gruppo</a>
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>{{group.id}}</td>
-                        <td>{{group.nome}}</td>
-                        <td>{{group.ruoli}}</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary me-3" type="button" (click) = "edit(group)">Modifica</button>
-                            <button class="btn btn-sm btn-danger" type="button" (click) = "delete(group)">Elimina</button>
-                        </td>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Ruoli</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @for (group of arrayGroup; track $index) {
+                        <tr>
+                            <td>{{group.id}}</td>
+                            <td>{{group.nome}}</td>
+                            <td>{{group.ruoli}}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary me-3" type="button" (click) = "edit(group)">Modifica</button>
+                                <button class="btn btn-sm btn-danger" type="button" (click) = "delete(group)">Elimina</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-

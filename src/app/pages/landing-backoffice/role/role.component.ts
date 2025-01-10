@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Role } from '../../../interfaces/backoffice';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { MessageService } from '../services/message.service';
@@ -55,7 +55,7 @@ export class RoleComponent {
         return this.service.findAll();
       }),
       tap((data: any) => {
-        this.router.navigateByUrl('backoffice/role-list');
+        this.router.navigateByUrl('/backoffice/role-list');
       })
     ).subscribe();
   }

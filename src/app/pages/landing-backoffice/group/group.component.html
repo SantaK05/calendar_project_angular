@@ -4,7 +4,7 @@
     <div class="container mt-5">
       <div class="mt-4 d-flex justify-content-start">
         <button class="btn btn-primary">
-          <a href="/backoffice/user-list" class="text-white text-decoration-none"
+          <a href="/backoffice/group-list" class="text-white text-decoration-none"
             >Indietro</a>
         </button>
       </div>
@@ -28,32 +28,31 @@
                   </div>
                   <div>
                     <label for="utenti" class="form-label">Utenti:</label>
-                    <div id="utenti" class="form-check" *ngFor="let user of avaibleUsers">
+                    
+                    <div id="utenti" class="form-check" *ngFor="let user of avaibleUsers; let i = index">
                       <input
                         type="checkbox"
                         id="utenti"
                         name="utenti"
                         class="form-check-input"
-                        [(ngModel)]="current.utenti"
+                        [(ngModel)]="current.utenti[i]"
                         [value]="user"
                       />
+                      <p>{{ user.email }}</p>
                     </div>
                   </div>
                   <div>
                     <label for="ruoli" class="form-label">Ruoli:</label>
-                    @for (role of availableRoles; track $index) {
-                    <div id="ruoli" class="form-check">
-                      <p>{{ role.nome }}</p>
-                      <input
-                        type="checkbox"
-                        id="ruoli"
-                        name="ruoli"
-                        class="form-check-input"
-                        [(ngModel)]="current.ruoli"
-                        [value]="role"
+                    <div id="ruoli" class="form-check" *ngFor="let role of availableRoles; let i = index">
+                      <input 
+                      type="checkbox" 
+                      id="ruoli" name="ruoli" 
+                      class="form-check-input" 
+                      [(ngModel)]="current.ruoli[i]" 
+                      [value]="role"
                       />
+                      <p>{{ role.nome }}</p>
                     </div>
-                    }
                   </div>
                   <button class="btn btn-primary" type="button" (click)="save()">
                     Salva
