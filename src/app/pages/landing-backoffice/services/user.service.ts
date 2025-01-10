@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  catchError,
-  tap,
-  Observable,
-  throwError,
-} from 'rxjs';
+import { catchError, tap, Observable, throwError } from 'rxjs';
 import { MessageService } from './message.service';
 import { User } from '../../../interfaces/backoffice';
 
@@ -15,7 +10,7 @@ import { User } from '../../../interfaces/backoffice';
 export class UserService {
   arrayUser: User[] = [];
 
-  BASE_URL = 'http://localhost:8081/users';
+  BASE_URL = 'http://localhost:8081/user';
 
   constructor(
     private httpClient: HttpClient,
@@ -78,7 +73,7 @@ export class UserService {
         email: current.email,
         ruoli: current.ruoli,
         gruppi: current.gruppi,
-        stato: current.stato
+        stato: current.stato,
       };
       console.log('inserisco evento di salvataggio');
 
