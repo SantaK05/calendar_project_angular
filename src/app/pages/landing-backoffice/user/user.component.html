@@ -74,18 +74,20 @@
         <div class="bg-white p-4 p-md-5 rounded shadow-sm">
           <form>
             <div>
-              <label for="ruoli" class="form-label">Ruoli:</label>
+              <label for="ruoli" class="form-check">Ruoli:</label>
             </div>
             <div class="mb-3" *ngFor="let role of avaibleRoles">
               <input
                 type="checkbox"
-                id="ruoli- {{ role.id }}"
+                id="ruoli-{{ role.id }}"
                 name="ruoli"
                 class="form-check-input"
                 [checked]="selectedRole.has(role.id)"
                 (change)="toggleRole(role)"
               />
-              {{ role.nome }}
+              <label class="form-check-label" for="ruoli-{{ role.id }}">
+                {{ role.nome }}
+              </label>
             </div>
           </form>
         </div>
@@ -96,18 +98,20 @@
         <div class="bg-white p-4 p-md-5 rounded shadow-sm">
           <form>
             <div>
-              <label for="gruppi" class="form-label">Gruppi:</label>
+              <label for="gruppi" class="form-check">Gruppi:</label>
             </div>
             <div class="mb-3" *ngFor="let group of avaibleGroups">
               <input
                 type="checkbox"
-                id="gruppi- {{ group.id }}"
+                id="gruppi-{{ group.id }}"
                 name="gruppi"
                 class="form-check-input"
                 [checked]="selectedGroup.has(group.id)"
                 (change)="toggleGroup(group)"
               />
-              {{ group.nome }}
+              <label class="form-check-label" for="gruppi-{{ group.id }}">{{
+                group.nome
+              }}</label>
             </div>
           </form>
         </div>

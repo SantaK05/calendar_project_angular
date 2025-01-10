@@ -83,6 +83,14 @@ export class UserComponent {
   }
 
   save() {
+    this.current.ruoli = this.avaibleRoles.filter((role) =>
+      this.selectedRole.has(role.id)
+    );
+
+    this.current.gruppi = this.avaibleGroups.filter((group) =>
+      this.selectedGroup.has(group.id)
+    );
+
     this.service
       .save(this.current)
       .pipe(
