@@ -35,7 +35,7 @@
         list-style: none;
         margin-right: 1rem;
 
-        li a {
+        a {
             position: relative;
             border-radius: 10px;
             transition: var(--animation-primary);

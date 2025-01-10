@@ -16,15 +16,11 @@
                 <div class="header-util-container">
                     <div class="util-container">
                         <div class="btn-risorse-container">
-                            <li class="magneto-text" id="login-span">
-                                <a><span>Risorse</span></a>
-                            </li>
+                            <a><span>Risorse</span></a>
                         </div>
                         
                         <div class="btn-risorse-container">
-                            <li class="magneto-text" id="login-span">
-                                <a><span>Today</span></a>
-                            </li>
+                            <a (click)="selectToday()"><span>Today</span></a>
                         </div>
     
                         <div class="btn-cal-container">
@@ -38,40 +34,44 @@
 
         <!-- ?SECTION MAIN CALENDAR? -->
         <section class="main-cal-sec">
-            <table class="main-rdp">
-                <thead class="main-rdp-head">
-                    <tr class="main-rdp-head_row">
-                        <th class="main-rdp-head_cell">Mo</th>
-                        <th class="main-rdp-head_cell">Tu</th>
-                        <th class="main-rdp-head_cell">We</th>
-                        <th class="main-rdp-head_cell">Th</th>
-                        <th class="main-rdp-head_cell">Fr</th>
-                        <th class="main-rdp-head_cell">Sa</th>
-                        <th class="main-rdp-head_cell">Su</th>
-                    </tr>
-                </thead>
-                <tbody class="main-rdp-body">
-                    @for (settimana of listGiorni; track $index) {
-                        <tr class="main-rdp-body_row">
-                            @for (giorno of settimana; track $index) {
-                                <td class="main-rdp-cell">
-                                    <div class="container-btn-svg">
-                                        <button class="btn-svg"  
-                                            [class.trasp-cella]="giorno[1][1]" 
-                                            [class.today]="giorno[1][0]"
-                                            (click)="visualCella(giorno[0])">
-                                            <div>
-                                                <span>{{ giorno[0] }}</span>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </td>
-                            }
+            @if (calendario && calendario.tipoVisualizzazione == "MENSILE") {
+
+                <table class="main-rdp">
+                    <thead class="main-rdp-head">
+                        <tr class="main-rdp-head_row">
+                            <th class="main-rdp-head_cell">Mo</th>
+                            <th class="main-rdp-head_cell">Tu</th>
+                            <th class="main-rdp-head_cell">We</th>
+                            <th class="main-rdp-head_cell">Th</th>
+                            <th class="main-rdp-head_cell">Fr</th>
+                            <th class="main-rdp-head_cell">Sa</th>
+                            <th class="main-rdp-head_cell">Su</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-            <!-- <calendar-cell></calendar-cell> -->
+                    </thead>
+                    <tbody class="main-rdp-body">
+                        @for (settimana of listGiorni; track $index) {
+                            <tr class="main-rdp-body_row">
+                                @for (giorno of settimana; track $index) {
+                                    <td class="main-rdp-cell">
+                                        <div class="container-btn-svg">
+                                            <button class="btn-svg"  
+                                                [class.trasp-cella]="giorno[1][0][1]" 
+                                                [class.today]="giorno[1][0][0]"
+                                                (click)="visualCella(giorno[0], giorno[1][1][0], giorno[1][1][1])">
+                                                <div>
+                                                    <span>{{ giorno[0] }}</span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }   @else if (calendario && calendario.tipoVisualizzazione == "GIORNALIERA") {
+                <calendar-cell></calendar-cell>
+            }
         </section>
 
         <!-- ?SECTION HEADER CALENDAR? -->

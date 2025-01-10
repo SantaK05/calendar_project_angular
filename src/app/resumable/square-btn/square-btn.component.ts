@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CalendarioService } from '../../pages/landing-calendario/calendario.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'square-btn',
@@ -11,13 +12,13 @@ import { CalendarioService } from '../../pages/landing-calendario/calendario.ser
 export class SquareBtnComponent {
   @Input() className!: string;
 
-  constructor(private service: CalendarioService) { }
+  constructor(private readonly service: CalendarioService) { }
 
-  incMese() {
-    this.service.incMese();
-  }
+    incMese() {
+        this.service.incMese();
+    }
 
-  decMese() {
-    this.service.decMese();
-  }
+    decMese() {
+        this.service.decMese();
+    }
 }

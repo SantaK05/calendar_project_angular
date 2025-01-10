@@ -1,44 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { Calendario, ListaCelle } from './interfaces/calendario';
+import { Component } from '@angular/core';
+import { Calendario } from './interfaces/calendario';
 import { SquareBtnComponent } from "../../resumable/square-btn/square-btn.component";
 import { CalendarioService } from './calendario.service';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MessageCalendarioComponent } from './message-calendario/message-calendario.component';
+import { CellComponent } from './cell/cell.component';
 @Component({
   selector: 'app-landing-calendario',
-  imports: [CommonModule, SquareBtnComponent, MessageCalendarioComponent],
+  imports: [CommonModule, SquareBtnComponent, CellComponent, MessageCalendarioComponent],
   templateUrl: './landing-calendario.component.html',
   styleUrl: './landing-calendario.component.css'
 })
 
-export class LandingCalendarioComponent implements OnInit {
-    calendario!: Calendario;
-
+export class LandingCalendarioComponent {
+    calendario!: Calendario | null;
     monthLong: string = '';
     year: number = 0;
+    listGiorni: Array<Map<number, [boolean[], number[]]>> = [];  
     
+    constructor(private readonly service: CalendarioService, private readonly router: Router) { 
+        this.service.calendario$.subscribe((updatedCalendario) => {
+            this.calendario = updatedCalendario;
+            this.monthLong = updatedCalendario?.data ? new Intl.DateTimeFormat("en-US", { month: 'long' }).format(new Date(updatedCalendario.data)) : '';
+            this.year = this.service.yearNum;
 
-    constructor(private readonly service: CalendarioService, private router: Router) { }
-    
-    ngOnInit(): void {
-        console.log('caricamento DOM');
-        this.getCalendarioCompleto(this.service.yearNum, this.service.monthNum);
+            if (updatedCalendario?.data) {
+                console.info(`Calendario aggiornato: ${updatedCalendario.data}`);
+            }
+        });
+
+        // Sottoscrizione alla lista di giorni
+        this.service.listGiorni$.subscribe((updatedListGiorni) => {
+            this.listGiorni = updatedListGiorni;
+        });
     }
 
-    getCalendarioCompleto(year: number, month: number) {
-        this.service.getCalendarioCompleto(year, month);
-
-        this.listGiorni = this.service.listGiorni;
-        this.monthLong = this.service.monthLong;
-        this.year = this.service.year;
+    selectToday(): void { 
+        this.service.selectToday();
     }
 
-    listGiorni: Array<Map<number, boolean[]>> = [];
+    visualCella(day: number, month: number, year: number): void {
+        let targetMonth = month + 1;
+        let targetYear = year;
 
-    visualCella(giorno: number): void {
-        console.log('visual cella');
-        this.router.navigateByUrl(`/d/${this.service.dataObj.getUTCFullYear()}/${this.service.dataObj.getUTCMonth()}/${giorno}`);
+        this.router.navigateByUrl(`/calendario/d/${targetYear}/${targetMonth}/${day}`);
     }
 }
