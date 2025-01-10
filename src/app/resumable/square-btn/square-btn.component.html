@@ -1,6 +1,6 @@
 @if (className == 'btn-scrollUp') {
     <div [class]="className">
-        <button type="button" class="btn-svg" id="scrollUp">
+        <button type="button" class="btn-svg" id="scrollUp" (click)="decMese()">
             <svg width="104px" height="104px" viewBox="0 -4.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#afafaf" stroke="#afafaf">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -23,7 +23,7 @@
 
 @if (className == 'btn-scrollDown') {
     <div [class]="className">
-        <button type="button" class="btn-svg" id="scrollDown">
+        <button type="button" class="btn-svg" id="scrollDown" (click)="incMese()">
             <svg width="104px" height="104px" viewBox="0 -4.5 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#afafaf" stroke="#afafaf" transform="rotate(180)">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
