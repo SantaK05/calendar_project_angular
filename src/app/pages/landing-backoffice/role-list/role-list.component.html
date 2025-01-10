@@ -1,28 +1,42 @@
 <app-navbar></app-navbar>
 <div class="row">
-    <div class="col">
-      <a class="btn btn-sm btn-secondary me-3" href="backoffice/role">Aggiungi nuovo ruolo</a>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Descrizione</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (role of arrayRole; track $index) {
-                    <tr>
-                        <td>{{role.id}}</td>
-                        <td>{{role.nome}}</td>
-                        <td>{{role.descrizione}}</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary me-3" type="button" (click) = "edit(role)">Modifica</button>
-                            <button class="btn btn-sm btn-danger" type="button" (click) = "delete(role)">Elimina</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+  <div class="col">
+    <a class="btn btn-sm btn-secondary me-3" href="/backoffice/role"
+      >Aggiungi nuovo ruolo</a
+    >
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nome</th>
+          <th>Descrizione</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (role of arrayRole; track $index) {
+        <tr>
+          <td>{{ role.id }}</td>
+          <td>{{ role.nome }}</td>
+          <td>{{ role.descrizione }}</td>
+          <td>
+            <button
+              class="btn btn-sm btn-primary me-3"
+              type="button"
+              (click)="edit(role)"
+            >
+              Modifica
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              type="button"
+              (click)="delete(role)"
+            >
+              Elimina
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </div>

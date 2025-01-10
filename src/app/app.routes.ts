@@ -15,7 +15,7 @@ export const routes: Routes = [
   { path: 'calendario', component: LandingCalendarioComponent },
   { path: 'email-list', component: EmailListComponent },
   { path: 'template', component: TemplateComponent },
-  { path: 'backoffice', component: LandingBackofficeComponent },
+  { path: 'backoffice', redirectTo: '/backoffice/user-list', pathMatch: 'full' },
   { path: 'backoffice/user-list', component: ListUserComponent },
   { path: 'backoffice/user', component: UserComponent },
   { path: 'backoffice/user/:id', component: UserComponent },
