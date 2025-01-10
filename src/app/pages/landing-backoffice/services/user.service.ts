@@ -10,7 +10,7 @@ import { User } from '../../../interfaces/backoffice';
 export class UserService {
   arrayUser: User[] = [];
 
-  BASE_URL = 'http://localhost:8081/user';
+  BASE_URL = 'http://localhost:8081/users';
 
   constructor(
     private httpClient: HttpClient,
