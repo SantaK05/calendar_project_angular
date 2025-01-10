@@ -3,7 +3,9 @@
   <div class="container mt-5">
     <div class="mt-4 mb-5 d-flex justify-content-start">
       <button class="btn btn-primary">
-        <a href="/backoffice/user-list" class="text-white text-decoration-none">Indietro</a>
+        <a href="/backoffice/user-list" class="text-white text-decoration-none"
+          >Indietro</a
+        >
       </button>
     </div>
   </div>
@@ -15,23 +17,53 @@
           <form>
             <div class="mb-3">
               <label for="nome" class="form-label">Nome:</label>
-              <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="current.nome" />
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                class="form-control"
+                [(ngModel)]="current.nome"
+              />
             </div>
             <div class="mb-3">
               <label for="cognome" class="form-label">Cognome:</label>
-              <input type="text" id="cognome" name="cognome" class="form-control" [(ngModel)]="current.cognome" />
+              <input
+                type="text"
+                id="cognome"
+                name="cognome"
+                class="form-control"
+                [(ngModel)]="current.cognome"
+              />
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email:</label>
-              <input type="text" id="email" name="email" class="form-control" [(ngModel)]="current.email" />
+              <input
+                type="text"
+                id="email"
+                name="email"
+                class="form-control"
+                [(ngModel)]="current.email"
+              />
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password:</label>
-              <input type="password" id="password" name="password" class="form-control" [(ngModel)]="current.password" />
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control"
+                [(ngModel)]="current.password"
+              />
             </div>
             <div class="mb-3">
               <label for="username" class="form-label">Username:</label>
-              <input type="text" id="username" name="username" class="form-control" [(ngModel)]="current.username" />
+              <input
+                type="text"
+                id="username"
+                name="username"
+                class="form-control"
+                [(ngModel)]="current.username"
+              />
             </div>
           </form>
         </div>
@@ -44,8 +76,15 @@
             <div>
               <label for="ruoli" class="form-label">Ruoli:</label>
             </div>
-            <div class="mb-3" *ngFor="let role of avaibleRoles; let i = index">
-              <input type="checkbox" id="ruoli-{{i}}" name="ruoli" class="form-check-input" [(ngModel)]="current.ruoli[i]" [value]="role" />
+            <div class="mb-3" *ngFor="let role of avaibleRoles">
+              <input
+                type="checkbox"
+                id="ruoli- {{ role.id }}"
+                name="ruoli"
+                class="form-check-input"
+                [checked]="selectedRole.has(role.id)"
+                (change)="toggleRole(role)"
+              />
               {{ role.nome }}
             </div>
           </form>
@@ -59,8 +98,15 @@
             <div>
               <label for="gruppi" class="form-label">Gruppi:</label>
             </div>
-            <div class="mb-3" *ngFor="let group of avaibleGroups; let i = index">
-              <input type="checkbox" id="gruppi-{{i}}" name="gruppi" class="form-check-input" [(ngModel)]="current.gruppi[i]" [value]="group" />
+            <div class="mb-3" *ngFor="let group of avaibleGroups">
+              <input
+                type="checkbox"
+                id="gruppi- {{ group.id }}"
+                name="gruppi"
+                class="form-check-input"
+                [checked]="selectedGroup.has(group.id)"
+                (change)="toggleGroup(group)"
+              />
               {{ group.nome }}
             </div>
           </form>
@@ -71,7 +117,9 @@
     <!-- Bottone Salva -->
     <div class="row col-12 mt-4">
       <div class="col-12 text-center">
-        <button class="btn btn-primary w-100" type="button" (click)="save()">Salva</button>
+        <button class="btn btn-primary w-100" type="button" (click)="save()">
+          Salva
+        </button>
       </div>
     </div>
   </div>
