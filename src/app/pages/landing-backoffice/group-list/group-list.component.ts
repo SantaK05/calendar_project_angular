@@ -1,18 +1,31 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Group } from '../../../interfaces/backoffice';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { GroupService } from '../services/group.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-list-group',
-  imports: [NavbarComponent],
+  imports: [NavbarComponent, RouterModule, CommonModule, FormsModule],
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.css',
 })
 export class GroupsListComponent {
+  groups: any[] = [];
+  filteredGroup: any[] = [];
+  searchTerm: string = '';
+
   constructor(private service: GroupService, private router: Router) {}
+
+   ngOnInit() {
+      this.service.findAll().subscribe((data: Group[]) => {
+        this.groups = data;
+        this.filteredGroup = data; // Inizialmente, tutti gli utenti sono mostrati
+      });
+    }
 
   get arrayGroup() {
     return this.service.arrayGroup;
@@ -26,6 +39,18 @@ export class GroupsListComponent {
     let result = this.service.delete(group);
     if (result) {
       result.pipe(switchMap(() => this.service.findAll())).subscribe();
+    }
+  }
+
+  searchGroup() {
+    const term = this.searchTerm.toLowerCase();
+    if (term) {
+      this.filteredGroup = this.groups.filter(groups =>
+        groups.nome.toLowerCase().includes(term)||
+        groups.ruoli.some((role: any) => role.nome.toLowerCase().includes(term))
+      );
+    } else {
+      this.filteredGroup = this.groups;
     }
   }
 }

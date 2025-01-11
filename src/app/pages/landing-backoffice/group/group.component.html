@@ -1,78 +1,75 @@
 <div class="bg-group">
   <app-navbar></app-navbar>
+  <div class="container mt-5">
+    <div class="mt-4 mb-4 d-flex justify-content-start">
+      <button class="btn btn-primary">
+        <a href="/backoffice/group-list" class="text-white text-decoration-none">Indietro</a>
+      </button>
+    </div>
+  </div>
   <div class="container">
-    <div class="container mt-5">
-      <div class="mt-4 d-flex justify-content-start">
-        <button class="btn btn-primary">
-          <a
-            href="/backoffice/group-list"
-            class="text-white text-decoration-none"
-            >Indietro</a
-          >
-        </button>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="bg-white p-4 p-md-5 rounded shadow-sm">
-            <form>
-              <div class="mb-3">
-                <label for="nome" class="form-label">Nome:</label>
-                <input
-                  type="text"
-                  id="nome"
-                  name="nome"
-                  class="form-control"
-                  [(ngModel)]="current.nome"
-                />
-              </div>
-              <div>
-                <label for="utenti" class="form-check">Utenti:</label>
-              </div>
-              <div class="mb-3" *ngFor="let user of avaibleUsers">
-                <input
-                  type="checkbox"
-                  id="utenti-{{ user.id }}"
-                  name="utenti"
-                  class="form-check-input"
-                  [checked]="selectedUser.has(user.id)"
-                  (change)="toggleUser(user)"
-                />
-                <label class="form-check-label" for="ruoli-{{ user.id }}">
-                  {{ user.username }}
-                </label>
-              </div>
-            </form>
-          </div>
+    <div class="row justify-content-center gap-5">
+      <!-- Form per il nome e gli utenti -->
+      <div class="col-md-4 mb-4">
+        <div class="bg-white p-4 p-md-5 rounded shadow-sm" style="height: 500px; width: 500px; overflow-y: 500px;">
+          <form>
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome:</label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                class="form-control"
+                [(ngModel)]="current.nome"
+              />
+            </div>
+            <div>
+              <label for="utenti" class="form-label">Utenti:</label>
+            </div>
+            <div class="mb-3" *ngFor="let user of avaibleUsers">
+              <input
+                type="checkbox"
+                id="utenti-{{ user.id }}"
+                name="utenti"
+                class="form-check-input"
+                [checked]="selectedUser.has(user.id)"
+                (change)="toggleUser(user)"
+              />
+              <label class="form-check-label ms-2" for="utenti-{{ user.id }}">
+                {{ user.username }}
+              </label>
+            </div>
+          </form>
         </div>
+      </div>
 
-        <div class="col-md-4">
-          <div class="bg-white p-4 p-md-5 rounded shadow-sm">
-            <form>
-              <div>
-                <label for="ruoli" class="form-check">Ruoli:</label>
-              </div>
-              <div class="mb-3" *ngFor="let role of avaibleRoles">
-                <input
-                  type="checkbox"
-                  id="ruoli-{{ role.id }}"
-                  name="ruoli"
-                  class="form-check-input"
-                  [checked]="selectedRole.has(role.id)"
-                  (change)="toggleRole(role)"
-                />
-                <label class="form-check-label" for="ruoli-{{ role.id }}">
-                  {{ role.nome }}
-                </label>
-              </div>
-            </form>
-          </div>
+      <!-- Form per i ruoli -->
+      <div class="col-md-4 mb-4">
+        <div class="bg-white p-4 p-md-5 rounded shadow-sm" style="height: 500px; width: 500px; overflow-y: 500px;">
+          <form>
+            <div>
+              <label for="ruoli" class="form-label">Ruoli:</label>
+            </div>
+            <div class="mb-3" *ngFor="let role of avaibleRoles">
+              <input
+                type="checkbox"
+                id="ruoli-{{ role.id }}"
+                name="ruoli"
+                class="form-check-input"
+                [checked]="selectedRole.has(role.id)"
+                (change)="toggleRole(role)"
+              />
+              <label class="form-check-label ms-2" for="ruoli-{{ role.id }}">
+                {{ role.nome }}
+              </label>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-    <div class="row col-12 mt-4">
-      <div class="col-12 text-center">
+
+    <div class="row mt-4 justify-content-center">
+      <div class="col-md-8">
         <button class="btn btn-primary w-100" type="button" (click)="save()">
           Salva
         </button>

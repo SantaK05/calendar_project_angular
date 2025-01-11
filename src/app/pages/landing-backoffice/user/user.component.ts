@@ -36,7 +36,7 @@ export class UserComponent {
 
   selectedRole: Set<number> = new Set();
   selectedGroup: Set<number> = new Set();
- 
+  isEditing: boolean = false;
 
   constructor(
     private service: UserService,
@@ -46,9 +46,13 @@ export class UserComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    let id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.initializeComponent();
+  }
 
+  private initializeComponent() {
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
+      this.isEditing = true;
       console.log(`richiamo il caricamento dell'utente ${id}`);
 
       this.service

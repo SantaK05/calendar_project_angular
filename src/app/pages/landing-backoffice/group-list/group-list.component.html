@@ -1,31 +1,41 @@
 <div class="bg-group-list">
     <app-navbar></app-navbar>
     <div class="row">
-        <div class="col">
-        <a class="btn btn-sm btn-primary mt-3 mb-3 ms-3" href="/backoffice/group">Aggiungi nuovo gruppo</a>
-            <table class="table table-striped">
+        <div class="col-auto">
+            <a class="btn btn-primary mb-3 mt-3 ms-3" href="/backoffice/group">Aggiungi nuovo utente</a>
+          </div>
+          <div class="col d-flex justify-content-end">
+            <input type="search" class="form-control mb-3 mt-3 me-3" [(ngModel)]="searchTerm" (input)="searchGroup()" style="width: 300px;" placeholder="🔍"/>
+          </div>
+          <div class="row">
+            <div class="col">
+              <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nome</th>
-                        <th>Ruoli</th>
-                        <th></th>
-                    </tr>
+                  <tr>
+                    <th>Id</th>
+                    <th>Nome</th> 
+                    <th>Utenti</th> 
+                    <th>Ruolo</th>
+                    <th></th>
+                  </tr>
                 </thead>
                 <tbody>
-                    @for (group of arrayGroup; track $index) {
-                        <tr>
-                            <td>{{group.id}}</td>
-                            <td>{{group.nome}}</td>
-                            <td>{{group.ruoli}}</td>
-                            <td>
-                                <button class="btn btn-sm btn-primary me-3" type="button" (click) = "edit(group)">Modifica</button>
-                                <button class="btn btn-sm btn-danger" type="button" (click) = "delete(group)">Elimina</button>
-                            </td>
-                        </tr>
-                    }
+                  <tr *ngFor="let group of filteredGroup">
+                    <td>{{ group.id }}</td>
+                    <td>
+                        <span *ngFor="let utente of group.utenti">{{ utente.nome }} {{ utente.cognome }}, </span>
+                      </td>
+                    <td>{{ group.nome }}</td>
+                    <td>
+                      <span *ngFor="let ruolo of group.ruoli">{{ ruolo.nome }}, </span>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-primary me-3" type="button" (click)="edit(group)">Modifica</button>
+                      <button class="btn btn-sm btn-danger" type="button" (click)="delete(group)">Elimina</button>
+                    </td>
+                  </tr>
                 </tbody>
-            </table>
-        </div>
-    </div>
+              </table>
+            </div>
+          </div>
 </div>
