@@ -79,14 +79,17 @@ export class GroupsComponent {
       this.selectedRole.has(r.id)
     );
 
-    this.service.save(this.current).pipe(
-      switchMap((response) => {
-        return this.service.findAll();
-      }),
-      tap((data: any) => {
-        this.router.navigateByUrl('/backoffice/group-list');
-      })
-    );
+    this.service
+      .save(this.current)
+      .pipe(
+        switchMap((response) => {
+          return this.service.findAll();
+        }),
+        tap((data: any) => {
+          this.router.navigateByUrl('/backoffice/group-list');
+        })
+      )
+      .subscribe();
   }
 
   toggleRole(role: Role) {
