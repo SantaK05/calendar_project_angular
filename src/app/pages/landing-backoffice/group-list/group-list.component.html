@@ -1,41 +1,46 @@
 <div class="bg-group-list">
-    <app-navbar></app-navbar>
-    <div class="row">
-        <div class="col-auto">
-            <a class="btn btn-primary mb-3 mt-3 ms-3" href="/backoffice/group">Aggiungi nuovo utente</a>
-          </div>
-          <div class="col d-flex justify-content-end">
-            <input type="search" class="form-control mb-3 mt-3 me-3" [(ngModel)]="searchTerm" (input)="searchGroup()" style="width: 300px;" placeholder="🔍"/>
-          </div>
+  <app-navbar></app-navbar>
+  <div class="row mt-5">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-10 col-lg-6 mb-4 ">
+        <div class="bg-white p-3 p-md-4 rounded shadow-sm  ">
           <div class="row">
-            <div class="col">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Id</th>
-                    <th>Nome</th> 
-                    <th>Utenti</th> 
-                    <th>Ruolo</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let group of filteredGroup">
-                    <td>{{ group.id }}</td>
-                    <td>
-                        <span *ngFor="let utente of group.utenti">{{ utente.nome }} {{ utente.cognome }}, </span>
-                      </td>
-                    <td>{{ group.nome }}</td>
-                    <td>
-                      <span *ngFor="let ruolo of group.ruoli">{{ ruolo.nome }}, </span>
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-primary me-3" type="button" (click)="edit(group)">Modifica</button>
-                      <button class="btn btn-sm btn-danger" type="button" (click)="delete(group)">Elimina</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="col-auto">
+              <a class="btn btn-primary mb-3 mt-3 ms-3" href="/backoffice/group">Aggiungi nuovo gruppo</a>
+            </div>
+            <div class="col d-flex justify-content-end">
+              <input type="search" class="form-control mb-3 mt-3 me-3" [(ngModel)]="searchTerm" (input)="searchGroup()" style="width: 300px;" placeholder="🔍"/>
             </div>
           </div>
+          <table class="table table-striped w-100">
+            <thead>
+              <tr>
+                <th class="fs-5">Id</th>
+                <th class="fs-5">Nome</th>
+                <th class="fs-5">Utenti</th>
+                <th class="fs-5">Ruoli</th>
+                <th class="fs-5 text-end">Azioni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let group of filteredGroup">
+                <td class="fs-6">{{ group.id }}</td>
+                <td class="fs-6">{{ group.nome }}</td>
+                <td class="fs-6">
+                  <span *ngFor="let utente of group.utenti">{{ utente.nome }}, </span>
+                </td>
+                <td class="fs-6">
+                  <span *ngFor="let ruolo of group.ruoli">{{ ruolo.nome }}, </span>
+                </td>
+                <td class="fs-6 text-end">
+                  <button class="btn btn-sm btn-primary me-3" type="button" (click)="edit(group)">Modifica</button>
+                  <button class="btn btn-sm btn-danger" type="button" (click)="delete(group)">Elimina</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -53,4 +53,6 @@ export class GroupsListComponent {
       this.filteredGroup = this.groups;
     }
   }
+
+  
 }

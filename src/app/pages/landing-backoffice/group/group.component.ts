@@ -17,8 +17,12 @@ import { UserService } from '../services/user.service';
   styleUrl: './group.component.css',
 })
 export class GroupsComponent {
+  groups: any[] = [];
   avaibleRoles: Role[] = [];
   avaibleUsers: User[] = [];
+  searchTerm: string = '';
+  filteredUsers: any[] = [];
+
 
   current: Group = {
     id: 0,
@@ -67,6 +71,13 @@ export class GroupsComponent {
 
     this.roleService.findAll().subscribe((data) => {
       this.avaibleRoles = data;
+    });
+  }
+
+  ngOnInit() {
+    this.userService.findAll().subscribe((data: User[]) => {
+      this.groups = data;
+      this.filteredUsers = data; // Inizialmente, tutti gli utenti sono mostrati
     });
   }
 
@@ -135,6 +146,17 @@ export class GroupsComponent {
       this.selectedUser.delete(user.id);
     } else {
       this.selectedUser.add(user.id);
+    }
+  }
+
+  searchUsers() {
+    const term = this.searchTerm.toLowerCase();
+    if (term) {
+      this.filteredUsers = this.avaibleUsers.filter(user =>
+        user.username.toLowerCase().includes(term)
+      );
+    } else {
+      this.filteredUsers = this.avaibleUsers;
     }
   }
 }

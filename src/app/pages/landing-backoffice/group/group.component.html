@@ -11,7 +11,7 @@
     <div class="row justify-content-center gap-5">
       <!-- Form per il nome e gli utenti -->
       <div class="col-md-4 mb-4">
-        <div class="bg-white p-4 p-md-5 rounded shadow-sm" style="height: 500px; width: 500px; overflow-y: 500px;">
+        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
           <form>
             <div class="mb-3">
               <label for="nome" class="form-label">Nome:</label>
@@ -23,21 +23,34 @@
                 [(ngModel)]="current.nome"
               />
             </div>
+            <div class="mb-3">
+              <label for="search" class="form-label">Cerca Utenti:</label>
+              <input
+                type="search"
+                id="search"
+                name="search"
+                class="form-control"
+                [(ngModel)]="searchTerm"
+                (input)="searchUsers()"
+              />
+            </div>
             <div>
               <label for="utenti" class="form-label">Utenti:</label>
             </div>
-            <div class="mb-3" *ngFor="let user of avaibleUsers">
-              <input
-                type="checkbox"
-                id="utenti-{{ user.id }}"
-                name="utenti"
-                class="form-check-input"
-                [checked]="selectedUser.has(user.id)"
-                (change)="toggleUser(user)"
-              />
-              <label class="form-check-label ms-2" for="utenti-{{ user.id }}">
-                {{ user.username }}
-              </label>
+            <div class="mb-5" style="height: 160px; overflow-y: auto;">
+              <div *ngFor="let user of filteredUsers">
+                <input
+                  type="checkbox"
+                  id="utenti-{{ user.id }}"
+                  name="utenti"
+                  class="form-check-input mb-3 ms-2"
+                  [checked]="selectedUser.has(user.id)"
+                  (change)="toggleUser(user)"
+                />
+                <label class="form-check-label ms-2" for="utenti-{{ user.id }}">
+                  {{ user.username }}
+                </label>
+              </div>
             </div>
           </form>
         </div>
@@ -45,7 +58,7 @@
 
       <!-- Form per i ruoli -->
       <div class="col-md-4 mb-4">
-        <div class="bg-white p-4 p-md-5 rounded shadow-sm" style="height: 500px; width: 500px; overflow-y: 500px;">
+        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
           <form>
             <div>
               <label for="ruoli" class="form-label">Ruoli:</label>
