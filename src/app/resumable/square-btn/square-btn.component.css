@@ -6,7 +6,6 @@
 
     .btn-svg {
         position: relative;
-        transform: translateY(-10%);
 
         svg {
             position: absolute;

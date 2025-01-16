@@ -1,43 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { Calendario } from '../../interfaces/calendario';
+import { Component } from '@angular/core';
+import { Calendario } from './interfaces/calendario';
 import { SquareBtnComponent } from "../../resumable/square-btn/square-btn.component";
 import { CalendarioService } from './calendario.service';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-
+import { Router } from '@angular/router';
+import { MessageCalendarioComponent } from './message-calendario/message-calendario.component';
+import { CellComponent } from './cell/cell.component';
 @Component({
   selector: 'app-landing-calendario',
-  imports: [CommonModule, SquareBtnComponent],
+  imports: [CommonModule, SquareBtnComponent, CellComponent, MessageCalendarioComponent],
   templateUrl: './landing-calendario.component.html',
   styleUrl: './landing-calendario.component.css'
 })
 
-export class LandingCalendarioComponent implements OnInit {
-    calendario!: Calendario;
-    dataObj = new Date();
-    year: number = 0;
+export class LandingCalendarioComponent {
+    calendario!: Calendario | null;
     monthLong: string = '';
+    year: number = 0;
+    listGiorni: Array<Map<number, [boolean[], number[]]>> = [];  
     
-    constructor(private readonly service: CalendarioService) { }
-    
-    ngOnInit(): void {
-        console.log('caricamento DOM');
-        this.getCalendarioCompleto();
-    }
+    constructor(private readonly service: CalendarioService, private readonly router: Router) { 
+        this.service.calendario$.subscribe((updatedCalendario) => {
+            this.calendario = updatedCalendario;
+            this.monthLong = updatedCalendario?.data ? new Intl.DateTimeFormat("en-US", { month: 'long' }).format(new Date(updatedCalendario.data)) : '';
+            this.year = this.service.yearNum;
 
-    obsCalendar!: Observable<Calendario>; 
-    result!: Calendario;
-    
-    getCalendarioCompleto() {
-        // Chimata per ricevere il calendario
-        this.obsCalendar = this.service.getCalendarioJSON(this.dataObj.getFullYear(), this.dataObj.getMonth() + 1);
-        this.obsCalendar.subscribe((data) => {
-            this.result = data;
-            console.info(`Data del calendario selezionato: ${this.result.data}`);
+            if (updatedCalendario?.data) {
+                console.info(`Calendario aggiornato: ${updatedCalendario.data}`);
+            }
         });
 
-        this.dataObj = new Date(this.result.data);
-        this.year = this.dataObj.getFullYear();
-        this.monthLong = new Intl.DateTimeFormat("en-US", { month: 'long' }).format(this.dataObj);
+        // Sottoscrizione alla lista di giorni
+        this.service.listGiorni$.subscribe((updatedListGiorni) => {
+            this.listGiorni = updatedListGiorni;
+        });
+    }
+
+    selectToday(): void { 
+        this.service.selectToday();
+    }
+
+    visualCella(day: number, month: number, year: number): void {
+        let targetMonth = month + 1;
+        let targetYear = year;
+
+        this.router.navigateByUrl(`/calendario/d/${targetYear}/${targetMonth}/${day}`);
     }
 }

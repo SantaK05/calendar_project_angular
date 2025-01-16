@@ -14,7 +14,9 @@
     --color-dark-weekend: rgb(36, 36, 36);
     --color-grey: rgb(57, 57, 57);
 
-    --alert-error: #ff4444;
+    --alert-info: #3565e7;
+    --alert-warning: #7c7a10;
+    --alert-error: #bd1414;
     --alert-success: #24C958;
     
     --color-border: rgba(63, 63, 63, 0.425);
