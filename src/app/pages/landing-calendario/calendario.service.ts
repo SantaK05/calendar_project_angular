@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Calendario, ListaCelle } from './interfaces/calendario';
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, filter, Observable, Subject, throwError } from 'rxjs';
 import { MessageCalendarioService } from './message-calendario/message-calendario.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,11 @@ export class CalendarioService {
     monthNum!: number;
     yearNum!: number;
 
+    selectedView: Subject<string> = new Subject<string>();
+
+    private readonly pathSubject: BehaviorSubject<string>;
+    public readonly path$: Observable<string>;
+
     private readonly calendarioSubject = new BehaviorSubject<Calendario | null>(null);
     calendario$ = this.calendarioSubject.asObservable();
     obsCalendar!: Observable<Calendario>;
@@ -24,19 +30,33 @@ export class CalendarioService {
     listGiorni$ = this.listGiorniSubject.asObservable();
     gruppo: Map<number, [boolean[], number[]]> = new Map<number, [boolean[], number[]]>();
     listGiorni: Array<Map<number, [boolean[], number[]]>> = [];
-    
-    constructor(private readonly http: HttpClient, private readonly messageService: MessageCalendarioService) {
+
+    constructor(private readonly http: HttpClient, private router: Router, private readonly messageService: MessageCalendarioService) {
+        this.pathSubject = new BehaviorSubject<string>(this.router.url);
+        this.path$ = this.pathSubject.asObservable();
         this.monthNum = this.dataObj.getUTCMonth() + 1;
         this.yearNum = this.dataObj.getUTCFullYear();
-    
-        this.getCalendarioCompleto(this.yearNum, this.monthNum);
+
+        // Ascolta le modifiche di navigazione
+        this.router.events
+            .pipe(filter(event => event instanceof NavigationEnd))
+            .subscribe(() => {
+                this.pathSubject.next(this.router.url);
+            });
+        
+        this.selectedView.subscribe((view) => {
+            localStorage.setItem('selectedView', view); // Salva la vista selezionata
+        });
+        
+        this.getCalendarioCompleto(this.yearNum, this.monthNum, '');
     }
 
-    getCalendarioCompleto(year: number, month: number) {
+    getCalendarioCompleto(year: number, month: number, prov: string) {
         // Chimata per ricevere il calendario
         this.obsCalendar = this.getCalendarioJSON(year, month);
         this.obsCalendar.subscribe((data) => {
             this.result = data;
+            this.result.provenienza = prov;
             this.calendarioSubject.next(this.result); // Notifica i cambiamenti
 
             this.dataObj = new Date(this.result.data);
@@ -58,6 +78,7 @@ export class CalendarioService {
     caricaCalendarioMin(listaCelle: ListaCelle[]) {
         this.listGiorni = [];
         this.gruppo.clear();
+        let i = 0;
 
         listaCelle.forEach((element) => {
             this.dataObj = new Date(element.data);
@@ -66,8 +87,11 @@ export class CalendarioService {
             let anno: number = this.dataObj.getUTCFullYear();
 
             const isToday = this.isOggi(giorno, mese, anno);
+            if (isToday) {
+                localStorage.setItem('today', `${anno}/${mese}/${giorno}`); // Salva la data corrente nel localStorage
+            }
             const traspDay = this.isGiornoDelMese(mese, anno);
-            this.gruppo.set(giorno, [[isToday, traspDay], [mese, anno]]);
+            this.gruppo.set(giorno, [[isToday, traspDay], [mese, anno, i++]]);
 
             if (this.gruppo.size === 7) {
                 this.listGiorni.push(new Map(this.gruppo));
@@ -105,11 +129,12 @@ export class CalendarioService {
             this.monthNum++;
         }
 
-        this.getCalendarioCompleto(this.yearNum, this.monthNum);
+        this.getCalendarioCompleto(this.yearNum, this.monthNum, 'visualBtn');
         console.info(`Mese: ${this.monthNum}, Anno: ${this.yearNum}`);
     }
 
     decMese() {
+        //TODO aggiornare il mese anche con il click su visualCella
         if(this.monthNum == 1) {
             this.monthNum = 12;
             this.yearNum--;
@@ -117,7 +142,7 @@ export class CalendarioService {
             this.monthNum--;
         }
 
-        this.getCalendarioCompleto(this.yearNum, this.monthNum);
+        this.getCalendarioCompleto(this.yearNum, this.monthNum, 'visualBtn');
         console.info(`Mese: ${this.monthNum}, Anno: ${this.yearNum}`);
     }
 
@@ -125,6 +150,12 @@ export class CalendarioService {
         this.dataObj = new Date();
         this.monthNum = this.dataObj.getUTCMonth() + 1;
         this.yearNum = this.dataObj.getUTCFullYear();
-        this.getCalendarioCompleto(this.yearNum, this.monthNum);
+        this.getCalendarioCompleto(this.yearNum, this.monthNum, 'visualCella');
+        this.router.navigateByUrl(`calendario/d/${this.yearNum}/${this.monthNum}/${this.dataObj.getUTCDate()}`);
+    }
+
+    // ?Mofica tipo visualizzazione calendario
+    changeView(view: string) {
+        this.selectedView.next(view);
     }
 }

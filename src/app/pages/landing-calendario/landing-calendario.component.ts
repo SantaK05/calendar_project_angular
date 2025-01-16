@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Calendario } from './interfaces/calendario';
 import { SquareBtnComponent } from "../../resumable/square-btn/square-btn.component";
 import { CalendarioService } from './calendario.service';
@@ -19,31 +19,81 @@ export class LandingCalendarioComponent {
     year: number = 0;
     listGiorni: Array<Map<number, [boolean[], number[]]>> = [];  
     
+    tipoVis: string | null = '';
+    date: string | null = '';
+
     constructor(private readonly service: CalendarioService, private readonly router: Router) { 
         this.service.calendario$.subscribe((updatedCalendario) => {
-            this.calendario = updatedCalendario;
-            this.monthLong = updatedCalendario?.data ? new Intl.DateTimeFormat("en-US", { month: 'long' }).format(new Date(updatedCalendario.data)) : '';
-            this.year = this.service.yearNum;
+            if (this.tipoVis != "GIORNALIERO" || updatedCalendario?.provenienza == '') {
+                this.calendario = updatedCalendario;
+                this.monthLong = updatedCalendario?.data ? new Intl.DateTimeFormat("en-US", { month: 'long' }).format(new Date(updatedCalendario.data)) : '';
+                this.year = updatedCalendario?.data ? new Date(updatedCalendario.data).getFullYear() : 0;
 
+                this.service.listGiorni$.subscribe((updatedListGiorni) => {
+                    this.listGiorni = updatedListGiorni;
+                });
+            }
+            
             if (updatedCalendario?.data) {
                 console.info(`Calendario aggiornato: ${updatedCalendario.data}`);
             }
         });
 
         // Sottoscrizione alla lista di giorni
-        this.service.listGiorni$.subscribe((updatedListGiorni) => {
-            this.listGiorni = updatedListGiorni;
+
+        // Recupera la vista selezionata
+        this.tipoVis = localStorage.getItem('selectedView');
+        this.service.selectedView.subscribe((view) => {
+            this.tipoVis = view;
         });
+
+        this.date = localStorage.getItem('today');
+        if (this.date) {
+            const [yearStr, monthStr, dayStr] = this.date.split('/');
+            const year = parseInt(yearStr, 10);
+            const month = parseInt(monthStr, 10);
+            const day = parseInt(dayStr, 10);
+
+            // Richiama il metodo visualCella
+            this.visualCella(day, month, year);
+        }
     }
 
     selectToday(): void { 
         this.service.selectToday();
     }
 
+    // ?Gestione animazioni e salvataggio menu visualizzazione
+    visMenu: boolean = false;
+    selectedView: string | null = null;
+    
+    handleViewClick(event: Event, view: string) {
+        this.selectedView = view; // Imposta la vista selezionata
+        this.visMenu = false; // Nasconde il menu
+
+        this.service.changeView(view); // Modifica il cambio di vista
+
+        event.stopPropagation(); // Evita che l'evento si propaghi al documento
+    }
+    
+    @HostListener('document:click', ['$event'])
+    onDocumentClick(event: Event) {
+        // Deseleziona se si clicca al di fuori della lista
+        const target = event.target as HTMLElement;
+        if (!target.closest('.menu-handleView')) {
+            this.visMenu = false;
+        }
+    }
+    
+    selectVis(): void {
+        this.visMenu = !this.visMenu;
+    }
+
     visualCella(day: number, month: number, year: number): void {
         let targetMonth = month + 1;
         let targetYear = year;
 
-        this.router.navigateByUrl(`/calendario/d/${targetYear}/${targetMonth}/${day}`);
+        this.service.changeView("GIORNALIERO"); // Notifica il cambio di vista
+        this.router.navigateByUrl(`calendario/d/${targetYear}/${targetMonth}/${day}`);
     }
 }

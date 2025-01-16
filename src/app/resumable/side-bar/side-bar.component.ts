@@ -19,10 +19,12 @@ export class SideBarComponent {
         });
     }
 
-    visualCella(day: number, month: number, year: number): void {
+    visualCella(day: number, month: number, year: number, index: number): void {
         let targetMonth = month + 1;
         let targetYear = year;
 
+        this.service.getCalendarioCompleto(targetYear, targetMonth, 'visualCella');
+        this.service.changeView('GIORNALIERO');
         this.router.navigateByUrl(`/calendario/d/${targetYear}/${targetMonth}/${day}`);
     }
 

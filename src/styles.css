@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap');
-
 :root {
     --color-text-light: rgb(181, 181, 181);
     --color-text-dark: rgb(51, 51, 51);
@@ -33,6 +31,7 @@
     --gap-padding: 0.5em;
 }
 
+
 /* ------------------------------------- */
 /* ?Basic Setup */
 /* ------------------------------------- */
@@ -57,85 +56,4 @@ body {
     scrollbar-width: none;
     scroll-behavior: smooth;
     cursor: default;
-}
-
-/* ------------------------------------- */
-/* ?REUSABLE COMPONENTS? */
-/* ------------------------------------- */
-
-/* !------Headings------! */
-h1,
-h2,
-h3 {
-    font-weight: 800;
-    text-transform: uppercase;
-}
-
-h1 {
-    font-size: 75px;
-}
-
-h2 {
-    font-size: 46px;
-}
-
-h3 {
-    font-size: 38px;
-}
-
-h4 {
-    font-size: clamp(1.55em, 2.3vw, 2.5em);
-    font-weight: 400;
-}
-
-/* !------Buttons------! */
-button {
-    color: var(--color-text-cell);
-    font-family: "Host Grotesk", serif;
-    font-style: normal;
-    font-size: 11px;
-    border: none;
-    overflow: hidden;
-    transition: var(--animation-smooth);
-    cursor: pointer;
-
-    &:hover.today {
-        background-color: var(--color-selected-red);
-    }
-}
-
-.btn-svg {
-    border: none;
-    background: none;
-    border-radius: 20%;
-    width: 20px;
-    height: 20px;
-    transition: 100ms ease-in-out;
-
-    &:hover {
-        background-color: var(--color-grey);
-    }
-}
-
-.highlight-week {
-    background-color: var(--color-grey);
-}
-
-.trasp-cella {
-    color: var(--color-text-cell-dark);
-}
-
-.today {
-    background-color: var(--color-selected-red);
-}
-
-/* !------Img------! */
-svg {
-    width: 100%;
-    height: 100%;
-}
-
-span {
-    width: fit-content;
-    height: fit-content;
 }

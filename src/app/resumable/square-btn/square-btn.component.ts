@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { CalendarioService } from '../../pages/landing-calendario/calendario.service';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'square-btn',
@@ -20,5 +19,13 @@ export class SquareBtnComponent {
 
     decMese() {
         this.service.decMese();
+    }
+
+    incGiorno() {
+        // this.service.incGiorno();
+    }
+
+    decGiorno() {
+        // this.service.decGiorno();
     }
 }
