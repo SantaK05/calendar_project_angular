@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Slot } from '../models/slot.model';
@@ -38,36 +40,48 @@ export class SlotEditComponent {
       if (id) {
         this.slotService.doSingle(id).subscribe((data) => {
           this.currentSlot = data;
-          this.slotForm = new FormGroup({
-            id: new FormControl({ value: this.currentSlot.id, disabled: true }),
-            title: new FormControl(this.currentSlot.title, Validators.required),
-            dateStart: new FormControl(
-              this.currentSlot.dateStart,
-              Validators.required
-            ),
-            dateEnd: new FormControl(
-              this.currentSlot.dateEnd,
-              Validators.required
-            ),
-            note: new FormControl(this.currentSlot.note),
-            free: new FormControl(this.currentSlot.free, Validators.required),
-            resource: new FormControl(
-              this.currentSlot.resource.title,
-              Validators.required
-            ),
-          });
+          this.slotForm = new FormGroup(
+            {
+              id: new FormControl({
+                value: this.currentSlot.id,
+                disabled: true,
+              }),
+              title: new FormControl(
+                this.currentSlot.title,
+                Validators.required
+              ),
+              dateStart: new FormControl(
+                this.currentSlot.dateStart,
+                Validators.required
+              ),
+              dateEnd: new FormControl(
+                this.currentSlot.dateEnd,
+                Validators.required
+              ),
+              note: new FormControl(this.currentSlot.note),
+              free: new FormControl(this.currentSlot.free, Validators.required),
+              resource: new FormControl(
+                this.currentSlot.resource.title,
+                Validators.required
+              ),
+            },
+            { validators: this.dateRangeValidator }
+          );
         });
       } else {
         this.currentTypeOfFrom = 'Salva';
-        this.slotForm = new FormGroup({
-          id: new FormControl({ value: '', disabled: true }),
-          title: new FormControl('', Validators.required),
-          dateStart: new FormControl('', Validators.required),
-          dateEnd: new FormControl('', Validators.required),
-          note: new FormControl(''),
-          free: new FormControl('', Validators.required),
-          resource: new FormControl('', Validators.required),
-        });
+        this.slotForm = new FormGroup(
+          {
+            id: new FormControl({ value: '', disabled: true }),
+            title: new FormControl('', Validators.required),
+            dateStart: new FormControl('', Validators.required),
+            dateEnd: new FormControl('', Validators.required),
+            note: new FormControl(''),
+            free: new FormControl('', Validators.required),
+            resource: new FormControl('', Validators.required),
+          },
+          { validators: this.dateRangeValidator }
+        );
       }
     });
   }
@@ -154,4 +168,18 @@ export class SlotEditComponent {
     });
     this.autocompleteClosed = true;
   }
+
+  dateRangeValidator: ValidatorFn = (
+    control: AbstractControl
+  ): { [key: string]: any } | null => {
+    if (control instanceof FormGroup) {
+      const dateStart = control.get('dateStart')?.value;
+      const dateEnd = control.get('dateEnd')?.value;
+
+      if (dateStart && dateEnd && new Date(dateEnd) < new Date(dateStart)) {
+        return { dateRangeInvalid: true }; // Errore se la data di fine è minore della data di inizio
+      }
+    }
+    return null; // Valido se non ci sono problemi
+  };
 }
