@@ -21,6 +21,7 @@
                 name="nome"
                 class="form-control"
                 [(ngModel)]="current.nome"
+                required
               />
             </div>
             <div class="mb-3">
@@ -32,6 +33,7 @@
                 class="form-control"
                 [(ngModel)]="searchTerm"
                 (input)="searchUsers()"
+                required
               />
             </div>
             <div>
@@ -46,6 +48,7 @@
                   class="form-check-input mb-3 ms-2"
                   [checked]="selectedUser.has(user.id)"
                   (change)="toggleUser(user)"
+                  required
                 />
                 <label class="form-check-label ms-2" for="utenti-{{ user.id }}">
                   {{ user.username }}
@@ -71,6 +74,7 @@
                 class="form-check-input"
                 [checked]="selectedRole.has(role.id)"
                 (change)="toggleRole(role)"
+                required
               />
               <label class="form-check-label ms-2" for="ruoli-{{ role.id }}">
                 {{ role.nome }}

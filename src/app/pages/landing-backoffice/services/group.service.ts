@@ -11,7 +11,7 @@ export class GroupService {
 
   arrayGroup: Group[] = [];
 
-  BASE_URL = 'http://localhost:8081/groups';
+  BASE_URL = 'http://localhost:8082/groups';
 
   constructor(private httpClient: HttpClient, private messageService: MessageService) {
 

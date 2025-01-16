@@ -15,23 +15,23 @@
           <form>
             <div class="mb-3">
               <label for="nome" class="form-label">Nome:</label>
-              <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="current.nome" />
+              <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="current.nome" required/>
             </div>
             <div class="mb-3">
               <label for="cognome" class="form-label">Cognome:</label>
-              <input type="text" id="cognome" name="cognome" class="form-control" [(ngModel)]="current.cognome" />
+              <input type="text" id="cognome" name="cognome" class="form-control" [(ngModel)]="current.cognome" required/>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email:</label>
-              <input type="text" id="email" name="email" class="form-control" [(ngModel)]="current.email" />
+              <input type="text" id="email" name="email" class="form-control" [(ngModel)]="current.email" required/>
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password:</label>
-              <input type="password" id="password" name="password" class="form-control" [(ngModel)]="current.password" />
+              <input type="password" id="password" name="password" class="form-control" [(ngModel)]="current.password" required/>
             </div>
             <div class="mb-3">
               <label for="username" class="form-label">Username:</label>
-              <input type="text" id="username" name="username" class="form-control" [(ngModel)]="current.username" />
+              <input type="text" id="username" name="username" class="form-control" [(ngModel)]="current.username" required/>
             </div>
           </form>
         </div>
@@ -52,6 +52,7 @@
                 class="form-check-input"
                 [checked]="selectedRole.has(role.id)"
                 (change)="toggleRole(role)"
+                required
               />
               <label class="form-check-label ms-2" for="ruoli-{{ role.id }}">
                 {{ role.nome }}
@@ -76,6 +77,7 @@
                 class="form-check-input"
                 [checked]="selectedGroup.has(group.id)"
                 (change)="toggleGroup(group)"
+                required
               />
               <label class="form-check-label ms-2" for="gruppi-{{ group.id }}">
                 {{ group.nome }}

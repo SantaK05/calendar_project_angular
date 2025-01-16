@@ -46,8 +46,9 @@ export class GroupsListComponent {
     const term = this.searchTerm.toLowerCase();
     if (term) {
       this.filteredGroup = this.groups.filter(groups =>
-        groups.nome.toLowerCase().includes(term)||
-        groups.ruoli.some((role: any) => role.nome.toLowerCase().includes(term))
+        groups.nome.toLowerCase().includes(term) ||
+        groups.ruoli.some((role: any) => role.nome.toLowerCase().includes(term)) ||
+        groups.utenti.some((user: any) => user.username.toLowerCase().includes(term))
       );
     } else {
       this.filteredGroup = this.groups;
