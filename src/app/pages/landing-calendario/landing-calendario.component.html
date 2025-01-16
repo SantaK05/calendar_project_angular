@@ -20,12 +20,29 @@
                         </div>
                         
                         <div class="btn-risorse-container">
+                            <a class="menu-handleView" (click)="selectVis()"><span>Visualizzazione</span></a>
+                            
+                            @if (visMenu) {
+                                <ul class="menu-vis">
+                                    <li><a (click)="handleViewClick($event, 'GIORNALIERO')">Giornaliero</a></li>
+                                    <li><a (click)="handleViewClick($event, 'SETTIMANALE')">Settimanale</a></li>
+                                    <li><a (click)="handleViewClick($event, 'MENSILE')">Mensile</a></li>
+                                </ul>
+                            }
+                        </div>
+                        
+                        <div class="btn-risorse-container">
                             <a (click)="selectToday()"><span>Today</span></a>
                         </div>
-    
+
                         <div class="btn-cal-container">
-                            <square-btn [className]="'btn-scrollUp'"></square-btn>
-                            <square-btn [className]="'btn-scrollDown'"></square-btn>
+                            @if (tipoVis == null || tipoVis == "MENSILE") { 
+                                <square-btn [className]="'btn-scrollUp'"></square-btn>
+                                <square-btn [className]="'btn-scrollDown'"></square-btn>
+                            } @else if (tipoVis == "GIORNALIERO") { 
+                                <square-btn [className]="'btn-scrollLeft'"></square-btn>
+                                <square-btn [className]="'btn-scrollRight'"></square-btn>
+                            }
                         </div>
                     </div>
                 </div>
@@ -34,8 +51,7 @@
 
         <!-- ?SECTION MAIN CALENDAR? -->
         <section class="main-cal-sec">
-            @if (calendario && calendario.tipoVisualizzazione == "MENSILE") {
-
+            @if (tipoVis == null || tipoVis == "MENSILE") {
                 <table class="main-rdp">
                     <thead class="main-rdp-head">
                         <tr class="main-rdp-head_row">
@@ -69,7 +85,7 @@
                         }
                     </tbody>
                 </table>
-            }   @else if (calendario && calendario.tipoVisualizzazione == "GIORNALIERA") {
+            }   @else if (tipoVis == "GIORNALIERO") {
                 <calendar-cell></calendar-cell>
             }
         </section>

@@ -1,6 +1,10 @@
+@import url('../style/personal-style.css');
+
 /* *navigate month btns* */
 .btn-scrollUp,
-.btn-scrollDown {
+.btn-scrollDown,
+.btn-scrollLeft,
+.btn-scrollRight {
     display: block;
     height: 20px;
 
@@ -29,4 +33,12 @@
 
 .btn-scrollDown .btn-svg svg {
     transform: translate(50%, 50%) rotate(180deg);
+}
+
+.btn-scrollLeft .btn-svg svg {
+    transform: translate(50%, 50%) rotate(-90deg);
+}
+
+.btn-scrollRight .btn-svg svg {
+    transform: translate(50%, 50%) rotate(90deg);
 }

@@ -1,3 +1,5 @@
+@import url('../../../resumable/style/personal-style.css');
+
 .alert {
     position: relative;
     display: flex;

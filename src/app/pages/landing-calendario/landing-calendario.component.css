@@ -1,3 +1,5 @@
+@import url('../../resumable/style/personal-style.css');
+
 /* ------------------------------------- */
 /* ?CALENDAR CONTAINER? */
 /* ------------------------------------- */
@@ -32,6 +34,7 @@
     justify-content: end;
 
     .btn-risorse-container {
+        position: relative;
         list-style: none;
         margin-right: 1rem;
 
@@ -57,6 +60,26 @@
                 width: 100%;
             }
         }
+    }
+}
+
+.btn-risorse-container .menu-vis {
+    display: flex;
+    position: absolute;
+    top: 150%;
+    width: 200%;
+    height: 7rem;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: var(--gap-padding);
+    border-radius: 10px;
+    background-color: var(--color-dark-dark);
+    list-style: none;
+    transition: var(--animation-primary);
+    z-index: 1;
+
+    li {
+        margin-left: var(--gap-padding);
     }
 }
 
