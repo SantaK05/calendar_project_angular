@@ -1,4 +1,5 @@
 export interface Calendario {
+    provenienza: string
     data: string
     tipoVisualizzazione: string
     listaCelle: ListaCelle[]
