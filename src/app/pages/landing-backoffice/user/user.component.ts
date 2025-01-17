@@ -21,6 +21,11 @@ import { UserService } from '../services/user.service';
 export class UserComponent {
   avaibleRoles: Role[] = [];
   avaibleGroups: Group[] = [];
+  groups: any[] = [];
+  roles: any[] = [];
+  searchTerm: string = '';
+  filteredGroups: any[] = [];
+  filteredRoles: any[] = [];
 
   current: User = {
     id: 0,
@@ -88,6 +93,19 @@ export class UserComponent {
   }
 
   save() {
+
+    if (
+      this.current.nome == '' ||
+      this.current.cognome == '' ||
+      this.current.username == '' ||
+      this.current.password == '' ||
+      this.current.email == '' ||
+      this.current.gruppi == null||
+      this.current.ruoli == null
+    ) {
+      this.messageService.publishError('Errore salvataggio dati.');
+      return;
+    }
     this.current.ruoli = this.avaibleRoles.filter((role) =>
       this.selectedRole.has(role.id)
     );
@@ -150,5 +168,26 @@ export class UserComponent {
     }
   }
 
+  searchGroups() {
+    const term = this.searchTerm.toLowerCase();
+    if (term){
+      this.filteredGroups = this.avaibleGroups.filter(group => 
+        group.nome.toLowerCase().includes(term)
+      );
+    }else {
+      this.filteredGroups = [];
+    }
+  }
+
+  searchRoles(){
+    const term = this.searchTerm.toLowerCase();
+    if (term){
+      this.filteredRoles = this.avaibleRoles.filter(role => 
+        role.nome.toLowerCase().includes(term)
+      );
+    }else {
+      this.filteredRoles = [];
+    }
+  }
   
 }

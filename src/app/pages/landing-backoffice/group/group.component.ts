@@ -82,6 +82,11 @@ export class GroupsComponent {
   }
 
   save() {
+    if (this.current.nome == '' || this.current.utenti == null || this.current.ruoli == null) {
+      this.messageService.publishError('Errore salvataggio dati.');
+      return;
+    } else {
+
     this.current.utenti = this.avaibleUsers.filter((u) =>
       this.selectedUser.has(u.id)
     );
@@ -106,6 +111,7 @@ export class GroupsComponent {
         })
       )
       .subscribe();
+    }
   }
 
   toggleRole(role: any) {

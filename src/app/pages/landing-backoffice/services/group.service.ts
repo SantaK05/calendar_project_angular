@@ -50,6 +50,8 @@ export class GroupService {
     let group = this.arrayGroup.find(e => e.id == current.id);
     if (group) {
 
+      console.log('inserisco evento di modifica');
+
       group.nome = current.nome;
       group.ruoli = current.ruoli;
       group.utenti = current.utenti;

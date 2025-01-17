@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Role } from '../../../interfaces/backoffice';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { catchError, empty, switchMap, tap, throwError } from 'rxjs';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { MessageService } from '../services/message.service';
 import { RoleService } from '../services/role.service';
@@ -50,6 +50,10 @@ export class RoleComponent {
   }
 
   save() {
+    if (this.current.nome == '' || this.current.descrizione == '') {
+      this.messageService.publishError('Errore salvataggio dati.');
+      return;
+    }else {
     this.service.save(this.current).pipe(
       switchMap((response) => {
         return this.service.findAll();
@@ -58,5 +62,6 @@ export class RoleComponent {
         this.router.navigateByUrl('/backoffice/role-list');
       })
     ).subscribe();
+  }
   }
 }

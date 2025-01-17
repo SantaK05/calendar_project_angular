@@ -23,12 +23,11 @@
                       id="nome"
                       name="nome"
                       [(ngModel)]="current.nome"
-                      required
-                    />
+                      [required]="true">
                   </div>
                 </div>
                 <div class="col-12">
-                  <label for="descrizione" class="form-label">Descrizione <span class="text-danger">*</span></label>
+                  <label for="descrizione" class="form-label">Descrizione</label>
                   <div class="input-group">
                     <input
                       type="text"
@@ -37,14 +36,14 @@
                       name="descrizione"
                       [(ngModel)]="current.descrizione"
                       required
-                    />
+                    >
                   </div>
                 </div>
                 <div class="col-12">
                   <div class="d-grid">
                     <button
                       class="btn btn-primary btn-lg"
-                      type="button"
+                      type="submit"
                       (click)="save()"
                     >
                       Salva
