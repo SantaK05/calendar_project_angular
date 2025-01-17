@@ -45,7 +45,7 @@
               </tr>
             </thead>
             <tbody>
-              @for (role of arrayRole; track $index) {
+              @for (role of filteredRole; track $index) {
               <tr>
                 <td>{{ role.id }}</td>
                 <td>{{ role.nome }}</td>
