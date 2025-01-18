@@ -9,7 +9,7 @@ import { catchError, tap, throwError } from 'rxjs';
 @Component({
   selector: 'app-forgot-password',
   imports: [RouterModule, ReactiveFormsModule,FormsModule],
-  templateUrl: './forgot-password.component.html',
+  templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css'
 })
 export class ResetPasswordComponent implements OnInit {
