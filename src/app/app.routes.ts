@@ -23,6 +23,5 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'resetpassword/:uuid', component: ResetPasswordComponent },
     { path: 'verify/:uuid', component: VerifyEmailComponent },
-    { path: '', component: VerifyEmailComponent },
     { path: 'forgotpassword', component: ForgotPasswordComponent }
 ];
