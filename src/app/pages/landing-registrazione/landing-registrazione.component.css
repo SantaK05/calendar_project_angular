@@ -1,0 +1,46 @@
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	background-color: #f8f9fa;
+}
+
+.register-card {
+	width: 100%;
+	max-width: 500px;
+	padding: 2rem;
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-link {
+	display: block;
+	margin-top: 1rem;
+	text-align: center;
+	font-size: 1rem;
+	color: #007bff;
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.custom-link:hover {
+	text-decoration: underline;
+	color: #0056b3;
+}
+
+.error-message {
+	color: #dc3545;
+	font-size: 0.9rem;
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.password-rules li{
+	color: red;
+}
+
+.password-rules li.valid {
+	display: none;
+}
