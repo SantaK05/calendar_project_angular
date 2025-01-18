@@ -1,0 +1,40 @@
+@import url('../../assets/style/personal-style.css');
+
+.res-container {
+    padding: var(--section-padding);
+
+    .title {
+        padding: 0 var(--gap-padding);
+        text-wrap: nowrap;
+        border-top: var(--divider-border);
+        border-bottom: var(--divider-border);
+    }
+}
+
+.form-container {
+    margin-top: var(--gap-padding);
+    width: 100%;
+}
+
+.res-select {
+    width: 100%;
+
+    select {
+        color: var(--color-text-light);
+        background-color: transparent;
+        font-family: "Host Grotesk", serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 18px;
+        width: 100%;
+        border-radius: 5px;
+        padding: var(--section-padding);
+    }
+
+    option {
+        background-color: var(--color-dark-bg);
+        padding: var(--section-padding);
+        border: none;
+    }
+}

@@ -1,20 +1,26 @@
-<main class="cell-sec">
-    <table class="main-rdp">
-        <thead class="main-rdp-head">
-            <tr class="main-rdp-head_row">
-                <th class="main-rdp-head_cell">{{ dayLong }} {{ day }}</th>
-            </tr>
-        </thead>
-        <tbody class="main-rdp-body">
-            @for (hour of hours; track $index) {
-                <tr class="main-rdp-body_row">    
-                    <td class="num-rdp-cell">
-                        {{ hour === 0 ? '' : (hour % 12 === 0 ? 12 : hour % 12) }} 
-                        {{ hour === 0 ? '' : (hour < 12 ? 'AM' : 'PM') }}
-                    </td>
-                    <td class="main-rdp-cell"></td>
+<main class="cell-container">
+    <section class="cell-sec">
+        <table class="main-rdp">
+            <thead class="main-rdp-head">
+                <tr class="main-rdp-head_row">
+                    <th class="main-rdp-head_cell">{{ dayLong }} {{ day }}</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="main-rdp-body">
+                @for (hour of hours; track $index) {
+                    <tr class="main-rdp-body_row">    
+                        <td class="num-rdp-cell">
+                            {{ hour === 0 ? '' : (hour % 12 === 0 ? 12 : hour % 12) }} 
+                            {{ hour === 0 ? '' : (hour < 12 ? 'AM' : 'PM') }}
+                        </td>
+                        <td class="main-rdp-cell"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+    
+    <section>
+        <resources></resources>
+    </section>
 </main>
