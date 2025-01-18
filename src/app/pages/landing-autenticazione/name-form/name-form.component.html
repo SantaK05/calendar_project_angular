@@ -1,0 +1,58 @@
+<div class="card register-card">
+    <div class="card-body">
+        <h3 class="card-title text-center">Registrazione</h3>
+        <form [formGroup]="form" method="dialog">
+            <p class="text-start">Ora inserisci le tue informazioni e scegli un username</p>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input formControlName="nome" type="text" class="form-control" id="nome" placeholder=""
+                            name="nome" required [(ngModel)]="nome">
+                        <label for="nome">Nome*</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input formControlName="cognome" type="text" class="form-control" id="cognome" placeholder=""
+                            name="cognome" required [(ngModel)]="cognome">
+                        <label for="cognome">Cognome*</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-floating mt-4 mb-4">
+                <input formControlName="username" type="username" class="form-control" id="username" placeholder=""
+                    name="username" required [(ngModel)]="username"> <label for="username">Username*</label>
+                <span [ngClass]="form.get('email')?.pending ? 'spinner-border spinner-border-sm' : ''"></span>
+                <div class="container d-flex validation-message-container align-items-center"
+                    [class.show]="usernameErrors?.['usernameExists']">
+                    <i class="bx bxs-error-circle" style="color:#fa0101;"></i>
+                    <p class="text-danger m-0">Username non disponibile</p>
+                </div>
+                <div class="container d-flex validation-message-container align-items-center"
+                    [class.show]="usernameErrors?.['required'] && form.get('username')?.dirty">
+                    <i class="bx bxs-error-circle" style="color:#fa0101;"></i>
+                    <p class="text-danger m-0">Inserisci un username valido</p>
+                </div>
+                <div class="container d-flex validation-message-container align-items-center" [class.show]="form.get('username')?.valid">
+                    <i class="bx bxs-check-circle" style="color:#5cb85c;"></i>
+                    <p class="text-success m-0">Username disponibile</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <button class="invisible-button" (click)="changeComponent('email-component')"> <i
+                                class='bx bx-md bx-left-arrow-circle'></i> </button>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <div class="form-floating">
+                        <button class="invisible-button" (click)="changeComponent('password-component')"
+                            [disabled]="!form.valid"> <i class='bx bx-md bx-right-arrow-circle'></i> </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

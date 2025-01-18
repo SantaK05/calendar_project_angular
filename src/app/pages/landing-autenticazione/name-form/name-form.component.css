@@ -1,0 +1,60 @@
+.invisible-button {
+    background: none; /* Rimuove lo sfondo */
+    border: none;     /* Rimuove il bordo */
+    color: inherit;   /* Mantiene il colore del testo */
+    padding: 0;       /* Rimuove il padding */
+    margin: 0;        /* Rimuove il margine */
+    font: inherit;    /* Mantiene il font */
+    cursor: pointer;  /* Mantiene il cursore a forma di mano */
+}
+
+.register-card {
+	width: 100%;
+	max-width: 800px;
+	padding: 2rem;
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.invisible-button:disabled {
+    background: none; /* Rimuove lo sfondo */
+    border: none;     /* Rimuove il bordo */
+    color: inherit;   /* Mantiene il colore del testo */
+    padding: 0;       /* Rimuove il padding */
+    margin: 0;        /* Rimuove il margine */
+    font: inherit;    /* Mantiene il font */
+}
+
+.invisible-button:hover {
+    background: none; /* Rimuove lo sfondo */
+    border: none;     /* Rimuove il bordo */
+    color: inherit;   /* Mantiene il colore del testo */
+    padding: 0;       /* Rimuove il padding */
+    margin: 0;        /* Rimuove il margine */
+    font: inherit;    /* Mantiene il font */
+    cursor: pointer;  /* Mantiene il cursore a forma di mano */
+}
+
+.invisible-button:disabled:hover {
+    cursor: default;  /* Mantiene il cursore a forma di mano */
+}
+
+.invisible-button i{
+color: #0d6efd;
+}
+.invisible-button:disabled i{
+    color: #6da1ee;
+}
+
+
+.validation-message-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.validation-message-container.show {
+    max-height: 50px; /* Imposta una dimensione massima per il messaggio */
+    opacity: 1;
+}

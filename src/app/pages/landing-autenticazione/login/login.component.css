@@ -1,10 +1,9 @@
-body {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	margin: 0;
-	background-color: #f8f9fa;
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
 }
 
 .login-card {
@@ -25,7 +24,7 @@ body {
 	font-weight: 500;
 }
 
-.custom-link:hover {
+.custom-link:hover,.custom-pwd-link:hover {
 	text-decoration: underline;
 	color: #0056b3;
 }

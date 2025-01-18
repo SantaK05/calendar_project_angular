@@ -1,0 +1,22 @@
+<div class="center-wrapper">
+	<div class="card login-card">
+		<form class="card-body">
+			<h3 class="card-title text-center mb-4">Login</h3>
+			<form #form="ngForm">
+				<div class="form-floating mb-3">
+					<input [(ngModel)]="email" type="email" class="form-control" id="email" placeholder="" name="email"
+						value="" required> <label for="email">Email</label>
+				</div>
+				<div class="form-floating mb-1 mt-4">
+					<input [(ngModel)]="password" type="password" class="form-control" id="password" name="password"
+						placeholder="" required> <label for="password">Password</label>
+				</div>
+				<div class="d-grid mt-4">
+					<button class="btn btn-primary" [disabled]="!form.valid" (click)="login()">Login</button>
+				</div>
+			</form>
+			<a [routerLink]="'/register'" class="custom-link">Registrati</a>
+			<a [routerLink]="'/forgotpassword'" class="custom-link">Password dimenticata?</a>
+		</form>
+	</div>
+</div>
