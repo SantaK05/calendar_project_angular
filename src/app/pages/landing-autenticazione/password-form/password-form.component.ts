@@ -50,9 +50,6 @@ export class PasswordFormComponent implements OnInit {
   }
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      // il primo parametro è il valore di default
-      // il secondo parametro è un array di validazioni
-      // il terzo parametro è un array di validazioni asincrone
       password: ['', [Validators.compose([
         Validators.required,
         Validators.minLength(8),
@@ -62,7 +59,6 @@ export class PasswordFormComponent implements OnInit {
       ])]],
       confirmPassword: ['', [Validators.required]]
     },
-      // inserisco un validatore personalizzato da applicare a tutto il form
       { validators: CustomValidators.passwordMatchValidator('password', 'confirmPassword') }
     )
   }

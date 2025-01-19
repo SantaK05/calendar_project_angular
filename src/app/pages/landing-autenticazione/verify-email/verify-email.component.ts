@@ -10,7 +10,7 @@ import { catchError, tap, throwError } from 'rxjs';
   templateUrl: './verify-email.component.html',
   styleUrl: './verify-email.component.css'
 })
-export class VerifyEmailComponent implements OnInit{
+export class VerifyEmailComponent implements OnInit {
   uuid = ""
   constructor(private client: HttpClient, private messageService: MessageService, private activatedRoute: ActivatedRoute, private router: Router) {
     let id = this.activatedRoute.snapshot.paramMap.get('uuid');

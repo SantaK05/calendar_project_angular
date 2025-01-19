@@ -8,21 +8,21 @@ import { catchError, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [RouterModule, ReactiveFormsModule,FormsModule],
+  imports: [RouterModule, ReactiveFormsModule, FormsModule],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css'
 })
 export class ResetPasswordComponent implements OnInit {
 
-  password="";
+  password = "";
 
-  uuid=""
-  constructor(private formBuilder: FormBuilder,private activatedRoute: ActivatedRoute,private messageService:MessageService,private client:HttpClient,private router:Router) {
+  uuid = ""
+  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private messageService: MessageService, private client: HttpClient, private router: Router) {
     let id = this.activatedRoute.snapshot.paramMap.get('uuid');
-    if(id==null){
+    if (id == null) {
       messageService.publishError("Link non valido");
-    }else{
-      this.uuid=id;
+    } else {
+      this.uuid = id;
     }
   }
 
@@ -54,17 +54,17 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   confirm() {
-    this.client.post("http://localhost:8080/forgotpassword/"+this.uuid,{password:this.password}).pipe(
-      catchError((err)=>{
-        if(err.status==401){
+    this.client.post("http://localhost:8080/forgotpassword/" + this.uuid, { password: this.password }).pipe(
+      catchError((err) => {
+        if (err.status == 401) {
           this.messageService.publishError("Link scaduto, ripeti la procedura di recupero password");
           this.router.navigateByUrl("/login");
-        }else{
+        } else {
           this.messageService.publishError("Problema interno, riprova più tardi");
         }
-        return throwError(()=>err);
+        return throwError(() => err);
       }),
-      tap(()=>{
+      tap(() => {
         this.messageService.publishInfo("Password cambiata con successo");
         this.router.navigateByUrl("/login");
       })

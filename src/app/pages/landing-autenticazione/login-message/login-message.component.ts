@@ -32,9 +32,9 @@ export class LoginMessageComponent {
 
   getAlertClass() {
 
-    if(this.payload) {
+    if (this.payload) {
 
-      switch(this.payload.type) {
+      switch (this.payload.type) {
         case 'info': return 'background: #7cbc94';
         case 'warn': return 'background: #fffcec';
         case 'err': return 'background: #EF665B';
@@ -43,10 +43,10 @@ export class LoginMessageComponent {
     return '';
   }
 
-  getIconClass(){
-    if(this.payload) {
+  getIconClass() {
+    if (this.payload) {
 
-      switch(this.payload.type) {
+      switch (this.payload.type) {
         case 'info': return 'bx bxs-check-circle';
         case 'warn': return 'bx bx-error';
         case 'err': return 'bx bxs-error-circle';

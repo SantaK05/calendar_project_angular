@@ -12,7 +12,7 @@ export class RegisterService {
     return this.client.get(`http://localhost:5000/users/email/${email}`);
   }
 
-  checkUsernameExists(username:string){
+  checkUsernameExists(username: string) {
     return this.client.get(`http://localhost:5000/users/username/${username}`);
   }
 
@@ -20,7 +20,7 @@ export class RegisterService {
 
   }
 
-  register(){
+  register() {
     console.log(this.email);
     return this.client.get("http://localhost:5000/register",/*{email:this.email,nome:this.nome,cognome:this.cognome,username:this.username,password:this.password}*/);
   }

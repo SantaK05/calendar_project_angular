@@ -18,21 +18,4 @@ export class RegisterComponent {
   constructor(service: RegisterService) {
     service.subject.subscribe(component => this.activeComponent = component);
   }
-
-
 }
-
-/*
-app.MapGet("/utenti/{email}", (string email) =>
-{
-    Thread.Sleep(3000);
-    if (email == "test@gmail.com")
-    {
-        return Results.Ok(new Utente() { Email = email, Nome = "test" });
-    }
-    else
-    {
-        return Results.NotFound();
-    }
-});
-*/

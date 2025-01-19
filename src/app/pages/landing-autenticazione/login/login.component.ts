@@ -15,22 +15,23 @@ export class LoginComponent {
   email = "";
   password = "";
 
-  constructor(private messageService: MessageService,private client:HttpClient,private router:Router) {
+  constructor(private messageService: MessageService, private client: HttpClient, private router: Router) {
 
   }
 
   login() {
-    this.client.post("http://localhost:8080/login",{email:this.email,password:this.password},{ responseType: "text" }).pipe(
-      catchError((err)=>{
-        if(err.status==401){
+    this.client.post("http://localhost:8080/login", { email: this.email, password: this.password }, { responseType: "text" }).pipe(
+      catchError((err) => {
+        if (err.status === 401) {
           this.messageService.publishError("Credenziali non valide");
-          this.password="";
-        }else{
+          this.password = "";
+        } else {
           this.messageService.publishError("Errore nell'autenticazione, riprova più tardi");
         }
-        return throwError(()=>err);
+        return throwError(() => err);
       }),
-      tap(()=>{
+      tap((data) => {
+        localStorage.setItem("jwt",data as string);
         this.router.navigateByUrl("/calendario")
       })
     ).subscribe();

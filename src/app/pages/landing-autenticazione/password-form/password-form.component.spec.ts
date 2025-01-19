@@ -10,7 +10,7 @@ describe('PasswordFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PasswordFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PasswordFormComponent);
     component = fixture.componentInstance;

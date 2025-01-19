@@ -6,10 +6,11 @@ import { CustomValidators } from '../CustomValidators';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-email-form',
-  imports: [CommonModule, ReactiveFormsModule,RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './email-form.component.html',
   styleUrl: './email-form.component.css'
 })
@@ -17,11 +18,11 @@ export class EmailFormComponent {
 
   form!: FormGroup;
 
-  constructor(private service:RegisterService,private formBuilder: FormBuilder) {
+  constructor(private service: RegisterService, private formBuilder: FormBuilder,private messageService:MessageService) {
     service.subject.subscribe()
   }
 
-email="";
+  email = "";
 
   changeComponent() {
     this.service.email = this.email;
@@ -31,22 +32,8 @@ email="";
   ngOnInit(): void {
 
     this.form = this.formBuilder.group({
-      // il primo parametro è il valore di default
-      // il secondo parametro è un array di validazioni
-      // il terzo parametro è un array di validazioni asincrone
-      email: ['', [Validators.compose([Validators.required, Validators.email])],[CustomValidators.checkEmailExists(this.service)]]/*,
-      password: ['', [Validators.compose([
-        Validators.required, 
-        Validators.minLength(8),
-        PasswordValidators.containsLowerCase(),
-        PasswordValidators.containsUpperCase(),
-        PasswordValidators.containsSpecialCharacter()
-      ])]],
-      confirmPassword: ['', [Validators.required]]*/
+      email: ['', [Validators.compose([Validators.required, Validators.email])], [CustomValidators.checkEmailExists(this.service,this.messageService)]]
     },
-    // inserisco un validatore personalizzato da applicare a tutto il form
-
-    /*{ validators: PasswordValidators.passwordMatchValidator('password', 'confirmPassword') }*/
     )
     this.email = this.service.email;
   }

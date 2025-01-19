@@ -29,16 +29,21 @@
                     <p class="text-danger m-0">Username non disponibile</p>
                 </div>
                 <div class="container d-flex validation-message-container align-items-center"
+                    [class.show]="usernameErrors?.['serverError'] && form.get('email')?.dirty">
+                    <i class="bx bxs-error-circle" style="color:#fa0101;"></i>
+                    <p class="text-danger m-0">Errore interno, riproava più tardi</p>
+                </div>
+                <div class="container d-flex validation-message-container align-items-center"
                     [class.show]="usernameErrors?.['required'] && form.get('username')?.dirty">
                     <i class="bx bxs-error-circle" style="color:#fa0101;"></i>
                     <p class="text-danger m-0">Inserisci un username valido</p>
                 </div>
-                <div class="container d-flex validation-message-container align-items-center" [class.show]="form.get('username')?.valid">
+                <div class="container d-flex validation-message-container align-items-center"
+                    [class.show]="form.get('username')?.valid">
                     <i class="bx bxs-check-circle" style="color:#5cb85c;"></i>
                     <p class="text-success m-0">Username disponibile</p>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-floating">

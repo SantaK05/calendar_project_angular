@@ -21,7 +21,7 @@ export class MessageService {
       content: message,
       type: 'info'
     });
-  }  
+  }
 
   publishWarning(message: string) {
 

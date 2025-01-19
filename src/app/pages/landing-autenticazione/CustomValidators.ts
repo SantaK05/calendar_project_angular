@@ -2,9 +2,10 @@ import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from
 import { RegisterService } from "./register.service";
 import { catchError, map, Observable, of, throwError } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
+import { MessageService } from "./message.service";
 
-export class CustomValidators{
-static containsLowerCase(): ValidatorFn {
+export class CustomValidators {
+    static containsLowerCase(): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             const value = control.value || '';
             return /[a-z]/.test(value) ? null : { containsLowerCase: true };
@@ -37,7 +38,7 @@ static containsLowerCase(): ValidatorFn {
         };
     }
 
-    static checkEmailExists(service: RegisterService) : AsyncValidatorFn {
+    static checkEmailExists(service: RegisterService, messageService: MessageService): AsyncValidatorFn {
         return (control: AbstractControl): Observable<ValidationErrors | null> => {
             console.log(`check email exists ${control.value}`);
             const value = control.value;
@@ -45,19 +46,19 @@ static containsLowerCase(): ValidatorFn {
                 return of(null);
             }
             return service.checkEmailExists(value).pipe(
+                map((response: any) => response ? { emailExists: true } : null),
                 catchError((e) => {
-                    if(e.status === 404){
-                        console.log("entrato nel 404");
+                    if (e.status === 404) {
                         return of(null)
                     }
-                    return throwError(() => e);
+                    messageService.publishError("Errore interno, riprovare più tardi");
+                    return of({ serverError: true });
                 }),
-                map((response:any) => response ? { emailExists: true } : null)
             );
         };
     }
 
-    static checkUsernameExists(service: RegisterService) : AsyncValidatorFn {
+    static checkUsernameExists(service: RegisterService, messageService: MessageService): AsyncValidatorFn {
         return (control: AbstractControl): Observable<ValidationErrors | null> => {
             console.log(`check username exists ${control.value}`);
             const value = control.value;
@@ -65,13 +66,14 @@ static containsLowerCase(): ValidatorFn {
                 return of(null);
             }
             return service.checkUsernameExists(value).pipe(
+                map((response: any) => response ? { usernameExists: true } : null),
                 catchError((e) => {
-                    if(e.status === 404){
+                    if (e.status === 404) {
                         return of(null)
                     }
-                    return throwError(() => e);
+                    messageService.publishError("Errore interno, riprovare più tardi");
+                    return of({ serverError: true });
                 }),
-                map((response:any) => response ? { usernameExists: true } : null)
             );
         };
     }
