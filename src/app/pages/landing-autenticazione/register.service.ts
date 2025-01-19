@@ -22,7 +22,7 @@ export class RegisterService {
 
   register() {
     console.log(this.email);
-    return this.client.get("http://localhost:5000/register",/*{email:this.email,nome:this.nome,cognome:this.cognome,username:this.username,password:this.password}*/);
+    return this.client.post("http://localhost:8082/auth/registration",{email:this.email,nome:this.nome,cognome:this.cognome,username:this.username,password:this.password});
   }
 
 

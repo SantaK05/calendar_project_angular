@@ -27,7 +27,6 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.form = this.formBuilder.group({
       password: ['', [Validators.compose([
         Validators.required,
@@ -40,7 +39,6 @@ export class ResetPasswordComponent implements OnInit {
     },
       { validators: CustomValidators.passwordMatchValidator('password', 'confirmPassword') }
     )
-
   }
 
   form!: FormGroup;
@@ -54,7 +52,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   confirm() {
-    this.client.post("http://localhost:8080/forgotpassword/" + this.uuid, { password: this.password }).pipe(
+    this.client.post("http://localhost:8082/auth/resetPassword/update", { password: this.password, token: this.uuid }).pipe(
       catchError((err) => {
         if (err.status == 401) {
           this.messageService.publishError("Link scaduto, ripeti la procedura di recupero password");

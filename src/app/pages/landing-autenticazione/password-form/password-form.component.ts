@@ -23,6 +23,7 @@ export class PasswordFormComponent implements OnInit {
     this.display = "none";
     this.changeComponent("email-component");
   }
+  
   register() {
     this.service.register().pipe(
       catchError(e => {

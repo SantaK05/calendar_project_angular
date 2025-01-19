@@ -17,7 +17,7 @@ export class ForgotPasswordComponent {
   }
   email = "";
   conferma() {
-    this.client.post("http://localhost:8081/resetemail", {}).pipe(
+    this.client.post("http://localhost:8082/auth/resetPassword/request", {email:this.email}).pipe(
       catchError(err => {
         if (err.status == 400) {
           this.messageService.publishError("Email non valida");

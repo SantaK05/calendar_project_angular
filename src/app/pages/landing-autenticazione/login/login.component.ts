@@ -20,7 +20,7 @@ export class LoginComponent {
   }
 
   login() {
-    this.client.post("http://localhost:8080/login", { email: this.email, password: this.password }, { responseType: "text" }).pipe(
+    this.client.post("http://localhost:8082/auth/login", { email: this.email, password: this.password }, { responseType: "text" }).pipe(
       catchError((err) => {
         if (err.status === 401) {
           this.messageService.publishError("Credenziali non valide");
