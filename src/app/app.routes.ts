@@ -14,7 +14,7 @@ export const routes: Routes = [
     {
         path: 'calendario', component: LandingCalendarioComponent,
         children: [
-            { path: 'd/:year/:month/:day', component: CellComponent },
+            { path: ':year/:month/:day', component: CellComponent },
         ]
     },
     { path: 'email-list', component: EmailListComponent },

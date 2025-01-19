@@ -13,10 +13,9 @@
 
 .cell-sec {
     height: 100%;
-    overflow-y: auto;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     width: 0.65rem;
 }
 
@@ -27,7 +26,7 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: var(--color-border); 
-}
+} */
 
 .main-rdp {
     border-collapse: collapse;
@@ -41,13 +40,13 @@
     }
     
     .main-rdp-body {
-        display: grid;
-        grid-template-rows: repeat(24, 3em);
         width: 100%;
+        height: 100%;
         
         .main-rdp-body_row {
             display: flex;
             width: 100%;
+            height: 3.5em;
 
             .num-rdp-cell {
                 display: flex;
@@ -56,7 +55,7 @@
                 min-width: 4rem;
                 height: 100%;
                 padding-right: 0.2rem;
-                font-size: 9px;
+                font-size: 11px;
                 text-wrap: nowrap;
                 transform: translateY(-50%);
             }
@@ -64,7 +63,7 @@
             .main-rdp-cell {
                 border-bottom: var(--divider-border);
                 width: calc(100% - 5rem);
-            
+
                 &:hover {
                     border-radius: 10px;
                     background-color: var(--color-dark-weekend);
