@@ -5,12 +5,11 @@ import { TemplateComponent } from './pages/landing-email/template/template.compo
 import { CellComponent } from './pages/landing-calendario/cell/cell.component';
 
 export const routes: Routes = [
-    { path: '',   redirectTo: '/calendario', pathMatch: 'full' },
+    { path: '',   redirectTo: '/template', pathMatch: 'full' },
     { path: 'calendario', component: LandingCalendarioComponent, 
         children: [
             { path: 'd/:year/:month/:day', component: CellComponent },
         ] 
     },
-    { path: 'email-list', component: EmailListComponent },
     { path: 'template', component: TemplateComponent },
 ];
