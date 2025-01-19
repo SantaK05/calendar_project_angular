@@ -1,6 +1,10 @@
 <main class="container-app">
-    <side-bar></side-bar>
-    
+    @if (showBar) {
+        <side-bar></side-bar>
+    }
+
+    <login-message></login-message>
+
     <section class="router-container">
         <router-outlet></router-outlet>
     </section>

@@ -1,0 +1,61 @@
+.invisible-button {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 800px;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.invisible-button:disabled {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+}
+
+.invisible-button:hover {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.invisible-button:disabled:hover {
+    cursor: default;
+}
+
+.invisible-button i {
+    color: #0d6efd;
+}
+
+.invisible-button:disabled i {
+    color: #6da1ee;
+}
+
+
+.validation-message-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.validation-message-container.show {
+    max-height: 50px;
+    opacity: 1;
+}
