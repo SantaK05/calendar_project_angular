@@ -8,7 +8,7 @@ export const routes: Routes = [
     { path: '',   redirectTo: '/calendario', pathMatch: 'full' },
     { path: 'calendario', component: LandingCalendarioComponent, 
         children: [
-            { path: 'd/:year/:month/:day', component: CellComponent },
+            { path: ':year/:month/:day', component: CellComponent },
         ]
     },
     { path: 'email-list', component: EmailListComponent },
