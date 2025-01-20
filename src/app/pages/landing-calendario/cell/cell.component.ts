@@ -62,6 +62,13 @@ export class CellComponent implements OnInit {
     }
     
     ngOnInit() {
+        const prenotazioni = this.calendario?.listaCelle?.[this.cellIndex]?.prenotazioneList || [];
+        prenotazioni.forEach((prenotazione) => {
+            if (prenotazione.id) {
+                this.getPrenotazione(prenotazione.id);
+            }
+        });
+        
         this.service.calendario$.subscribe((updatedCalendario) => {
             this.isLoaded = false;
             if (updatedCalendario?.provenienza === 'visualCella') {
@@ -112,5 +119,16 @@ export class CellComponent implements OnInit {
         this.cal.showTabRes = true;
         this.showTabRes = true;
         this.serviceReservation.load(index);
+    }
+
+    getPrenotazione(index: number) {
+        this.serviceReservation.findPrenotazione(index).subscribe({
+            next: (prenotazione) => {
+                this.listSlotPrenotazioni.push(prenotazione);
+            },
+            error: (err) => {
+                console.error('Errore durante il recupero della prenotazione:', err);
+            }
+        });
     }
 }

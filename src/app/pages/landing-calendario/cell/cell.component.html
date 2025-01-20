@@ -17,7 +17,7 @@
                                 <td class="main-rdp-cell" (click)="getSlotPrenotazioneSing(slot.id)">
                                     <div class="info-pren">
                                         <ul>
-                                            <li *ngFor="let prenotazione of calendario?.listaCelle?.[cellIndex]?.prenotazioneList">
+                                            <li *ngFor="let prenotazione of listSlotPrenotazioni" >
                                                 Prenotazione ID: {{ prenotazione.id }},
                                                 Utente: {{ prenotazione.idUtente }},
                                                 Orario: {{ prenotazione.oraInizio | date: 'shortTime' }} - 

@@ -28,7 +28,7 @@ export const routes: Routes = [
     path: 'calendario',
     component: LandingCalendarioComponent,
     children: [{ path: ':year/:month/:day', component: CellComponent }],
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   { path: 'template', component: TemplateComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },

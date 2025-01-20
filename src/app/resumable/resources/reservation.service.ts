@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageCalendarioService } from '../../pages/landing-calendario/message-calendario/message-calendario.service';
-import { SlotPrenotazioneList } from '../../pages/landing-calendario/interfaces/calendario';
+import { PrenotazioneList, SlotPrenotazioneList } from '../../pages/landing-calendario/interfaces/calendario';
 import { BehaviorSubject, catchError, Observable, skip, tap, throwError } from 'rxjs';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { BehaviorSubject, catchError, Observable, skip, tap, throwError } from '
 })
 
 export class ReservationService {
+    listPrenotazioni: Array<PrenotazioneList> = [];
     listSlotPrenotazioni: Array<SlotPrenotazioneList> = [];
     private slotSingoloSubject = new BehaviorSubject<SlotPrenotazioneList>({
         id: 0,
@@ -40,6 +41,15 @@ export class ReservationService {
         this.listSlotPrenotazioni = listSP;
     }
 
+    findPrenotazione(id: number) {
+        return this.http.get<PrenotazioneList>(`${this.BASE_URL}/${id}`).pipe(
+            catchError(err => {
+                this.messageService.publishError('Errore find single reservation');
+                return throwError(() => err);
+            })
+        );
+    }
+
     load(id: number): void {
         let slot = this.listSlotPrenotazioni.find(e => e.id === id);
         if (slot) {
@@ -47,39 +57,56 @@ export class ReservationService {
         }
     }
 
-    save(current: SlotPrenotazioneList): Observable<SlotPrenotazioneList> {
+    save(current: PrenotazioneList): Observable<PrenotazioneList> {
         console.info('richiamato metodo save');
 
-        let slot = this.listSlotPrenotazioni.find(e => e.id == current.id);
-        if (slot) {
-            slot.risorsa = current.risorsa;
-            slot.nome = current.nome;
-            slot.dataInizio = current.dataInizio;
-            slot.dataFine = current.dataFine;
-            slot.libero = current.libero;
-            slot.note = current.note;
-        } else {
-            return throwError(() => new Error('Slot not found'));
-        }
+        let prenotazione = this.listPrenotazioni.find(e => e.id == current.id);
+        if (prenotazione) {
 
-        return this.http.post<SlotPrenotazioneList>(`${this.BASE_URL}`, slot).pipe(
-            catchError(err => {
-                this.messageService.publishError('Errore salvataggio prenotazione');
-                return throwError(() => err);
-            }),
-            tap(() => {
-                this.messageService.publishInfo('Prenotazione effettuata')
-            })
-        );
+            // devo modificare solo gli attributi dell'oggetto trovato
+            prenotazione.data = current.data;
+            prenotazione.idSlotPrenotazione = current.idSlotPrenotazione;
+            prenotazione.idUtente = current.idUtente;
+            prenotazione.oraInizio = current.oraInizio;
+            prenotazione.oraFine = current.oraFine;
+
+            return this.http.put<PrenotazioneList>(`${this.BASE_URL}/${prenotazione.id}`, prenotazione).pipe(
+                catchError(err => {
+                    this.messageService.publishError('Errore modifica prenotazione');
+                    return throwError(() => err);
+                })
+            );
+        
+        } else {
+
+            // devo creare il nuovo oggetto da inserire nella lista
+            prenotazione = {
+                id: 0,
+                data: '',
+                idSlotPrenotazione: 0,
+                idUtente: 0,
+                oraInizio: '',
+                oraFine: ''
+            }
+            console.log('inserisco evento di salvataggio');
+            
+            return this.http.post<PrenotazioneList>(`${this.BASE_URL}`, prenotazione).pipe(
+                catchError(err => {
+                    this.messageService.publishError('Errore creazione prenotazione');
+                    return throwError(() => err);
+                })
+            );
+
+        }
     }
 
-    delete(slot: SlotPrenotazioneList): Observable<SlotPrenotazioneList> | void {
-        let index = this.listSlotPrenotazioni.findIndex(e => e.id == slot.id);
+    delete(prenotazione: PrenotazioneList): Observable<PrenotazioneList> | void {
+        let index = this.listPrenotazioni.findIndex(e => e.id == prenotazione.id);
         if (index > -1) {
 
             if (confirm(`Sei sicuro di voler eliminare la prenotazione?`)) {
                 
-                return this.http.delete<SlotPrenotazioneList>(`${this.BASE_URL}/${slot.id}`).pipe(
+                return this.http.delete<PrenotazioneList>(`${this.BASE_URL}/${prenotazione.id}`).pipe(
                     catchError(err => {
                         this.messageService.publishError('Errore cancellazione prenotazione');
                         return throwError(() => err);

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SlotPrenotazioneList } from '../../pages/landing-calendario/interfaces/calendario';
+import { PrenotazioneList, SlotPrenotazioneList } from '../../pages/landing-calendario/interfaces/calendario';
 import { ReservationService } from './reservation.service';
 import { CommonModule } from '@angular/common';
 import { Subscription, tap } from 'rxjs';
@@ -16,7 +16,7 @@ import { LandingCalendarioComponent } from '../../pages/landing-calendario/landi
 
 export class ResourcesComponent implements OnInit, OnDestroy {
     listSlotPrenotazioni: Array<SlotPrenotazioneList> = [];
-    current: SlotPrenotazioneList = {
+    currentSlot: SlotPrenotazioneList = {
         id: 0,
         risorsa: {
             id: 0,
@@ -36,6 +36,15 @@ export class ResourcesComponent implements OnInit, OnDestroy {
         libero: true,
         note: ''
     }
+
+    currentPrenotazione: PrenotazioneList = {
+        id: 0, 
+        data: '',   
+        idSlotPrenotazione: 0,                  
+        idUtente: 0,
+        oraInizio: '',
+        oraFine: ''
+    }
     private subscription!: Subscription;
 
 
@@ -45,7 +54,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
         this.listSlotPrenotazioni = this.service.listSlotPrenotazioni;
         this.subscription = this.service.slotSingolo$.subscribe(
             (slot) => {
-                this.current = slot;
+                this.currentSlot = slot;
             }
         );
     }
@@ -57,7 +66,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        this.service.save(this.current).pipe(
+        this.service.save(this.currentPrenotazione).pipe(
             tap((data:any) => {
                 console.log('salvataggio')
             })
@@ -68,13 +77,17 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     }
 
     onSlotChange() {
-        const slot = this.listSlotPrenotazioni.find(e => e.nome === this.current.nome);
+        const slot = this.listSlotPrenotazioni.find(e => e.nome === this.currentSlot.nome);
 
         if (slot) {
             // Aggiorna l'oggetto `current` con lo slot trovato
-            this.current = { ...slot };
+            this.currentSlot = { ...slot };
+            this.currentPrenotazione.data = this.currentSlot.dataInizio.split('T')[0];
+            this.currentPrenotazione.idSlotPrenotazione = this.currentSlot.id;
+            this.currentPrenotazione.oraInizio = this.currentSlot.dataInizio;
+            this.currentPrenotazione.oraFine = this.currentSlot.dataFine;
         } else {
-            console.warn('Slot non trovato per il nome selezionato:', this.current.nome);
+            console.warn('Slot non trovato per il nome selezionato:', this.currentSlot.nome);
         }
     }
 }
