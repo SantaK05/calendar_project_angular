@@ -34,7 +34,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'resetpassword/:uuid', component: ResetPasswordComponent },
-  { path: 'backoffice', redirectTo: '/backoffice/user-list', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'backoffice', redirectTo: '/backoffice/user-list', pathMatch: 'full' },
   { path: 'backoffice/user-list', component: ListUserComponent, canActivate: [AuthGuard] },
   { path: 'backoffice/user', component: UserComponent, canActivate: [AuthGuard] },
   { path: 'backoffice/user/:id', component: UserComponent, canActivate: [AuthGuard] },
