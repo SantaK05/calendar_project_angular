@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from './message.service';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { Role } from '../../../interfaces/backoffice';
+import { Role } from '../../landing-calendario/interfaces/backoffice';
 @Injectable({
   providedIn: 'root',
 })

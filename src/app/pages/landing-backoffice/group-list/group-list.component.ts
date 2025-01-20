@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { Group } from '../../../interfaces/backoffice';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { GroupService } from '../services/group.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Group } from '../../landing-calendario/interfaces/backoffice';
 
 @Component({
   selector: 'app-list-group',

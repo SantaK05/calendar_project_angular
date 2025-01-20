@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Group, Stato, User } from '../../../interfaces/backoffice';
-import { Role } from '../../../interfaces/backoffice';
+import { Group, Stato, User, Role } from '../../landing-calendario/interfaces/backoffice';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, switchMap, tap, throwError } from 'rxjs';

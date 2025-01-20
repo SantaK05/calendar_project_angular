@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { Role } from '../../../interfaces/backoffice';
+import { Role } from '../../landing-calendario/interfaces/backoffice';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { RoleService } from '../services/role.service';
 import { CommonModule } from '@angular/common';
