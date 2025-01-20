@@ -16,7 +16,7 @@ import { VerifyEmailComponent } from './pages/landing-autenticazione/verify-emai
 import { ForgotPasswordComponent } from './pages/landing-autenticazione/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/calendario', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'calendario',
     component: LandingCalendarioComponent,

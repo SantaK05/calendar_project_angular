@@ -68,6 +68,7 @@ export class LandingCalendarioComponent {
     }
 
     changeTabRes() {
+        console.log(this.showTabRes)
         this.showTabRes = !this.showTabRes;
         this.service.changeTabRes(this.showTabRes);
     }

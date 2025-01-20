@@ -4,6 +4,7 @@ import { CalendarioService } from '../calendario.service';
 import { CommonModule } from '@angular/common';
 import { ResourcesComponent } from "../../../resumable/resources/resources.component";
 import { ReservationService } from '../../../resumable/resources/reservation.service';
+import { LandingCalendarioComponent } from '../landing-calendario.component';
 
 @Component({
   selector: 'calendar-cell',
@@ -30,7 +31,7 @@ export class CellComponent implements OnInit {
 
     listSlotPrenotazioni: Array<any> = [];
 
-    constructor(private readonly service: CalendarioService, private readonly serviceReservation: ReservationService) {
+    constructor(private readonly service: CalendarioService, private readonly serviceReservation: ReservationService, private readonly cal: LandingCalendarioComponent) {
         this.isLoaded = false;
         
         this.service.path$.subscribe((url: string) => {
@@ -108,6 +109,7 @@ export class CellComponent implements OnInit {
     }
 
     getSlotPrenotazioneSing(index: number): void {
+        this.cal.showTabRes = true;
         this.showTabRes = true;
         this.serviceReservation.load(index);
     }

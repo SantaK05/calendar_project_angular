@@ -70,17 +70,19 @@
                 <ul class="menu-sb">
                     <li class="li-op">
                         <div class="op">
-                            <a>area personale</a>
+                            <a (click)="logout()">Logout</a>
                         </div>
                     </li>
+
                     <li class="li-op">
                         <div class="op">
-                            <a >gestione risorse</a>
+                            <a (click)="navigateToAdministration()">Amministrazione</a>
                         </div>
                     </li>
+
                     <li class="li-op">
                         <div class="op">
-                            <a>gestione utenti</a>
+                            <a (click)="navigateToAdministration()">Backoffice</a>
                         </div>
                     </li>
                 </ul>
