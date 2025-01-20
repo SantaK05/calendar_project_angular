@@ -14,15 +14,16 @@ import { RegisterComponent } from './pages/landing-autenticazione/register/regis
 import { ResetPasswordComponent } from './pages/landing-autenticazione/reset-password/reset-password.component';
 import { VerifyEmailComponent } from './pages/landing-autenticazione/verify-email/verify-email.component';
 import { ForgotPasswordComponent } from './pages/landing-autenticazione/forgot-password/forgot-password.component';
+import { AuthGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/calendario', pathMatch: 'full' },
+  { path: '', redirectTo: '/calendario', pathMatch: 'full', canActivate: [AuthGuard]},
   {
     path: 'calendario',
     component: LandingCalendarioComponent,
     children: [{ path: ':year/:month/:day', component: CellComponent }],
   },
-  { path: 'template', component: TemplateComponent },
+  { path: 'template', component: TemplateComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'resetpassword/:uuid', component: ResetPasswordComponent },
@@ -44,5 +45,6 @@ export const routes: Routes = [
       { path: 'resources/:id/edit', component: ResourceEditComponent },
       { path: 'slots/:id/edit', component: SlotEditComponent },
     ],
+    canActivate: [AuthGuard]
   },
 ];
