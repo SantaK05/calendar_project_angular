@@ -9,7 +9,7 @@ import { Role } from '../../landing-calendario/interfaces/backoffice';
 export class RoleService {
   arrayRole: Role[] = [];
 
-  BASE_URL = 'http://localhost:8082/roles';
+  BASE_URL = 'http://localhost:8082/backoffice/roles';
 
   constructor(
     private httpClient: HttpClient,

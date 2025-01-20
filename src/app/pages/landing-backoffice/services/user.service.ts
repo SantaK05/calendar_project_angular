@@ -10,7 +10,7 @@ import { User } from '../../landing-calendario/interfaces/backoffice';
 export class UserService {
   arrayUser: User[] = [];
 
-  BASE_URL = 'http://localhost:8082/users';
+  BASE_URL = 'http://localhost:8082/backoffice/users';
 
   constructor(
     private httpClient: HttpClient,

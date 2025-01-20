@@ -10,7 +10,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 
 export class CalendarioService  {
-    BASE_URL: string = "http://localhost:8081/";
+    BASE_URL: string = "http://localhost:8080/calendario";
 
     dataObj = new Date();
     monthNum!: number;
