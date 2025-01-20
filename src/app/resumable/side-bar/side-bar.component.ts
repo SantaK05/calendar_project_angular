@@ -28,6 +28,19 @@ export class SideBarComponent {
         this.router.navigateByUrl(`/calendario/${targetYear}/${targetMonth}/${day}`);
     }
 
+    logout(): void {
+        localStorage.removeItem('jwt');
+        this.router.navigate(['/login']);
+    }
+    
+    navigateToAdministration(): void {
+        this.router.navigate(['/amministrazione']);
+    }
+
+    navigateToBackoffice(): void {
+        this.router.navigate(['/backoffice']);
+    }
+
     // ?Gestione animazioni sidebar
     activeButtonId: string | null = null;
     

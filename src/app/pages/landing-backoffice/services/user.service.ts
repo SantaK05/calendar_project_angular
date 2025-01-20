@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap, Observable, throwError } from 'rxjs';
 import { MessageService } from './message.service';
-import { User } from '../../../interfaces/backoffice';
+import { User } from '../../landing-calendario/interfaces/backoffice';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import { User } from '../../../interfaces/backoffice';
 export class UserService {
   arrayUser: User[] = [];
 
-  BASE_URL = 'http://localhost:8082/users';
+  BASE_URL = 'http://localhost:8082/backoffice/users';
 
   constructor(
     private httpClient: HttpClient,

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap, Observable, throwError } from 'rxjs';
 import { MessageService } from './message.service';
-import { Group } from '../../../interfaces/backoffice';
+import { Group } from '../../landing-calendario/interfaces/backoffice';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class GroupService {
 
   arrayGroup: Group[] = [];
 
-  BASE_URL = 'http://localhost:8082/groups';
+  BASE_URL = 'http://localhost:8082/backoffice/groups';
 
   constructor(private httpClient: HttpClient, private messageService: MessageService) {
 

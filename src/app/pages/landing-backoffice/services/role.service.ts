@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from './message.service';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { Role } from '../../../interfaces/backoffice';
+import { Role } from '../../landing-calendario/interfaces/backoffice';
 @Injectable({
   providedIn: 'root',
 })
 export class RoleService {
   arrayRole: Role[] = [];
 
-  BASE_URL = 'http://localhost:8082/roles';
+  BASE_URL = 'http://localhost:8082/backoffice/roles';
 
   constructor(
     private httpClient: HttpClient,

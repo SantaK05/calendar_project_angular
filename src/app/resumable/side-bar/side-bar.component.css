@@ -162,7 +162,7 @@
     justify-content: space-evenly;
     height: 100%;
     padding-left: 0;
-    font-size: 13px;
+    font-size: 14px;
     text-align: center;
     background-color: var(--color-dark-bg);
     border-radius: 10px;
@@ -185,7 +185,7 @@
 }
 
 .op:hover {
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .btn-account-container {
