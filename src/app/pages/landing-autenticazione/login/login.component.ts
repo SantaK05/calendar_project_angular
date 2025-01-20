@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { MessageService } from '../message.service';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap, throwError } from 'rxjs';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +16,12 @@ export class LoginComponent {
   email = "";
   password = "";
 
-  constructor(private messageService: MessageService, private client: HttpClient, private router: Router) {
+  constructor(private messageService: MessageService, private client: HttpClient, private router: Router, private loginService: LoginService) {
 
   }
 
   login() {
-    this.client.post("http://localhost:8082/auth/login", { email: this.email, password: this.password }, { responseType: "text" }).pipe(
+    this.loginService.login(this.email, this.password).pipe(
       catchError((err) => {
         if (err.status === 401) {
           this.messageService.publishError("Credenziali non valide");
@@ -29,10 +30,6 @@ export class LoginComponent {
           this.messageService.publishError("Errore nell'autenticazione, riprova più tardi");
         }
         return throwError(() => err);
-      }),
-      tap((data) => {
-        localStorage.setItem("jwt",data as string);
-        this.router.navigateByUrl("/calendario")
       })
     ).subscribe();
   }

@@ -1,0 +1,105 @@
+<main class="ml-3 mr-3">
+  <h1 class="text-3xl font-bold mt-7 mb-7">{{currentTypeOfFrom}} Slot di Prenotazione</h1>
+
+  @if (slotForm) {
+  <form [formGroup]="slotForm" (ngSubmit)="saveSlot()">
+    <div class="flex flex-col mb-5">
+      <label class="font-medium" for="id">ID</label>
+      <input
+        class="font-medium border-2 rounded-md px-3 py-2"
+        type="number"
+        name="id"
+        id="id"
+        formControlName="id"
+      />
+    </div>
+    <div class="flex flex-col mb-5">
+      <label class="font-medium" for="title">Titolo</label>
+      <input
+        class="font-medium border-2 rounded-md px-3 py-2"
+        type="text"
+        name="title"
+        id="title"
+        formControlName="title"
+      />
+    </div>
+    <div class="flex flex-col mb-5">
+      <label class="font-medium" for="dateStart">Data Inizio</label>
+      <input
+        class="font-medium border-2 rounded-md px-3 py-2"
+        type="datetime-local"
+        name="dateStart"
+        id="dateStart"
+        formControlName="dateStart"
+      />
+    </div>
+    <div class="flex flex-col mb-5">
+      <label class="font-medium" for="dateEnd">Data Fine</label>
+      <input
+        class="font-medium border-2 rounded-md px-3 py-2"
+        type="datetime-local"
+        name="dateEnd"
+        id="dateEnd"
+        formControlName="dateEnd"
+      />
+    </div>
+    <div class="flex flex-col mb-5">
+      <label class="font-medium" for="note">Note</label>
+      <input
+        class="font-medium border-2 rounded-md px-3 py-2"
+        type="text"
+        name="note"
+        id="note"
+        formControlName="note"
+      />
+    </div>
+    <div class="flex flex-col mb-5">
+      <label class="font-medium" for="free">Libero</label>
+      <select
+        class="font-medium border-2 rounded-md px-3 py-2"
+        type="text"
+        name="free"
+        id="free"
+        formControlName="free"
+      >
+        <option value="true">Si</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+    <div class="flex flex-col mb-5">
+      <label class="font-medium" for="resource">Risorse</label>
+      <input
+        #resSearc
+        class="font-medium border-2 rounded-md px-3 py-2"
+        type="text"
+        name="resource"
+        id="resource"
+        formControlName="resource"
+        autocomplete="off"
+        (keyup)="searchResource()"
+      />
+      <div
+        class="p-3 border-2 rounded-md mt-2"
+        [hidden]="autocompleteClosed === true"
+      >
+        @for (res of resourcesResults; track $index) {
+        <div
+          class="hover:bg-slate-100 p-2 rounded-md"
+          (click)="setSelectedValue(res)"
+        >
+          {{ res.title }}
+        </div>
+        }
+      </div>
+    </div>
+
+    <button
+      class="bg-zinc-950 h-11 px-6 text-white rounded-md mb-32"
+      type="submit"
+      [disabled]="!slotForm.valid"
+    >
+      {{currentTypeOfFrom}}
+    </button>
+  </form>
+  }
+</main>
