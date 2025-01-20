@@ -40,7 +40,8 @@
               <label for="utenti" class="form-label">Utenti:</label>
             </div>
             <div class="mb-5" style="height: 160px; overflow-y: auto;">
-              <div *ngFor="let user of filteredUsers">
+              @for (user of filteredUsers; track $index) {
+              <div>
                 <input
                   type="checkbox"
                   id="utenti-{{ user.id }}"
@@ -48,12 +49,12 @@
                   class="form-check-input mb-3 ms-2"
                   [checked]="selectedUser.has(user.id)"
                   (change)="toggleUser(user)"
-                  required
                 />
                 <label class="form-check-label ms-2" for="utenti-{{ user.id }}">
                   {{ user.username }}
                 </label>
               </div>
+              }
             </div>
           </form>
         </div>
