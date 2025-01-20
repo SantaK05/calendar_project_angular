@@ -20,15 +20,16 @@ import { GroupsComponent } from './pages/landing-backoffice/group/group.componen
 import { ListRoleComponent } from './pages/landing-backoffice/role-list/role-list.component';
 import { RoleComponent } from './pages/landing-backoffice/role/role.component';
 import { UserComponent } from './pages/landing-backoffice/user/user.component';
+import { AuthGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/calendario', pathMatch: 'full' },
+  { path: '', redirectTo: '/calendario', pathMatch: 'full', canActivate: [AuthGuard]},
   {
     path: 'calendario',
     component: LandingCalendarioComponent,
     children: [{ path: ':year/:month/:day', component: CellComponent }],
   },
-  { path: 'template', component: TemplateComponent },
+  { path: 'template', component: TemplateComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'resetpassword/:uuid', component: ResetPasswordComponent },
@@ -60,5 +61,6 @@ export const routes: Routes = [
       { path: 'resources/:id/edit', component: ResourceEditComponent },
       { path: 'slots/:id/edit', component: SlotEditComponent },
     ],
+    canActivate: [AuthGuard]
   },
 ];
