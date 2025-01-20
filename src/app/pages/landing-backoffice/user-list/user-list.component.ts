@@ -1,8 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { BrowserModule } from '@angular/platform-browser';
 import { switchMap } from 'rxjs';
-import { User } from '../../../interfaces/backoffice';
+import { User } from '../../landing-calendario/interfaces/backoffice';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';

@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
-import { Group, Role, User } from '../../../interfaces/backoffice';
+
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { GroupService } from '../services/group.service';
 import { MessageService } from '../services/message.service';
 import { RoleService } from '../services/role.service';
 import { UserService } from '../services/user.service';
+import { Group, Role, User } from '../../landing-calendario/interfaces/backoffice';
 
 @Component({
   selector: 'app-group',
