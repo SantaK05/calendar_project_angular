@@ -28,6 +28,6 @@ export class TemplateComponent {
   }
 
   update(){
-    
+    this.service.update(this.current);
   }
 }

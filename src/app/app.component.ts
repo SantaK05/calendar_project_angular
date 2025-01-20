@@ -18,7 +18,7 @@ export class AppComponent {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         let currentPath = event.urlAfterRedirects;
-        this.showBar = !(currentPath == "/login" || currentPath == "/register" || currentPath == "/forgotpassword" || currentPath.includes("resetpassword") || currentPath.includes("verify"));
+        this.showBar = !(currentPath == "/login" || currentPath == "/register" || currentPath == "/forgotpassword" || currentPath.includes("resetpassword") || currentPath.includes("verify") || currentPath == "/template");
       });
   }
 

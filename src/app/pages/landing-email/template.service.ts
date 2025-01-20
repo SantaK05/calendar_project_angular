@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class TemplateService {
-  BASE_URL: string = "http://localhost:8081/template";
+  BASE_URL: string = "http://localhost:8080/api/email-service/template";
 
   currentTemplateSubject: Subject<Template> = new Subject();
 
@@ -19,5 +19,9 @@ export class TemplateService {
     this.client.get<Template>(`${this.BASE_URL}?name=${name}`).subscribe(data => {
       this.currentTemplateSubject.next(data);
     })
+  }
+
+  update(data: Template){
+    this.client.put(`${this.BASE_URL}`, data).subscribe();
   }
 }
