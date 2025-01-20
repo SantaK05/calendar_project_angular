@@ -9,7 +9,7 @@ import { NavigationEnd, Router } from '@angular/router';
     providedIn: 'root'
 })
 
-export class CalendarioService {
+export class CalendarioService  {
     BASE_URL: string = "http://localhost:8081/";
 
     dataObj = new Date();
@@ -17,6 +17,7 @@ export class CalendarioService {
     yearNum!: number;
 
     selectedView: Subject<string> = new Subject<string>();
+    showTabRes: Subject<boolean> = new Subject<boolean>();
 
     private readonly pathSubject: BehaviorSubject<string>;
     public readonly path$: Observable<string>;
@@ -75,6 +76,26 @@ export class CalendarioService {
         );
     }
 
+    getCalendarioGiornaliero(year: number, month: number, day: number): Calendario {
+        // Chimata per ricevere il calendario
+        this.obsCalendar = this.getGiornoJSON(year, month, day);
+        this.obsCalendar.subscribe((data) => {
+            this.result = data;
+            console.log(this.result)
+        });
+
+        return this.result;
+    }
+    
+    getGiornoJSON(year: number, month: number, day: number): Observable<Calendario> {
+        return this.http.get<Calendario>(`${this.BASE_URL}/home/d/${year}/${month}/${day}`).pipe(
+            catchError(err => {
+                this.messageService.publishError('Errore nel caricamento del calendario');
+                return throwError(() => err);
+            })
+        );
+    }
+
     caricaCalendarioMin(listaCelle: ListaCelle[]) {
         this.listGiorni = [];
         this.gruppo.clear();
@@ -90,6 +111,7 @@ export class CalendarioService {
             if (isToday) {
                 localStorage.setItem('today', `${anno}/${mese}/${giorno}`); // Salva la data corrente nel localStorage
             }
+
             const traspDay = this.isGiornoDelMese(mese, anno);
             this.gruppo.set(giorno, [[isToday, traspDay], [mese, anno, i++]]);
 
@@ -134,7 +156,6 @@ export class CalendarioService {
     }
 
     decMese() {
-        //TODO aggiornare il mese anche con il click su visualCella
         if(this.monthNum == 1) {
             this.monthNum = 12;
             this.yearNum--;
@@ -151,11 +172,15 @@ export class CalendarioService {
         this.monthNum = this.dataObj.getUTCMonth() + 1;
         this.yearNum = this.dataObj.getUTCFullYear();
         this.getCalendarioCompleto(this.yearNum, this.monthNum, 'visualCella');
-        this.router.navigateByUrl(`calendario/d/${this.yearNum}/${this.monthNum}/${this.dataObj.getUTCDate()}`);
+        this.router.navigateByUrl(`calendario/${this.yearNum}/${this.monthNum}/${this.dataObj.getUTCDate()}`);
     }
 
     // ?Mofica tipo visualizzazione calendario
     changeView(view: string) {
         this.selectedView.next(view);
+    }
+
+    changeTabRes(showTabRes: boolean) {
+        this.showTabRes.next(showTabRes);
     }
 }

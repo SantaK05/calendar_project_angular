@@ -1,11 +1,11 @@
-@import url('../../../resumable/style/personal-style.css');
+@import url('../../../assets/style/personal-style.css');
 
 .alert {
     position: relative;
     display: flex;
     align-items: center;
     width: 30%;
-    min-width: 15em;
+    min-width: fit-content;
     height: 4em;
     border-radius: 10px;
     padding: var(--gap-padding);

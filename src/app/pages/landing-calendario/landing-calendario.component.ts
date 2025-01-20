@@ -22,9 +22,11 @@ export class LandingCalendarioComponent {
     tipoVis: string | null = '';
     date: string | null = '';
 
+    showTabRes: boolean = false;
+
     constructor(private readonly service: CalendarioService, private readonly router: Router) { 
         this.service.calendario$.subscribe((updatedCalendario) => {
-            if (this.tipoVis != "GIORNALIERO" || updatedCalendario?.provenienza == '') {
+            if (this.tipoVis != "GIORNALIERO" || updatedCalendario?.provenienza !== 'visualBtn') {
                 this.calendario = updatedCalendario;
                 this.monthLong = updatedCalendario?.data ? new Intl.DateTimeFormat("en-US", { month: 'long' }).format(new Date(updatedCalendario.data)) : '';
                 this.year = updatedCalendario?.data ? new Date(updatedCalendario.data).getFullYear() : 0;
@@ -39,8 +41,6 @@ export class LandingCalendarioComponent {
             }
         });
 
-        // Sottoscrizione alla lista di giorni
-
         // Recupera la vista selezionata
         this.tipoVis = localStorage.getItem('selectedView');
         this.service.selectedView.subscribe((view) => {
@@ -48,7 +48,7 @@ export class LandingCalendarioComponent {
         });
 
         this.date = localStorage.getItem('today');
-        if (this.date) {
+        if (this.date && this.tipoVis == 'GIORNALIERO') {
             const [yearStr, monthStr, dayStr] = this.date.split('/');
             const year = parseInt(yearStr, 10);
             const month = parseInt(monthStr, 10);
@@ -57,6 +57,19 @@ export class LandingCalendarioComponent {
             // Richiama il metodo visualCella
             this.visualCella(day, month, year);
         }
+    }
+
+    visualCella(day: number, month: number, year: number): void {
+        let targetMonth = month + 1;
+        let targetYear = year;
+
+        this.service.changeView("GIORNALIERO"); // Notifica il cambio di vista
+        this.router.navigateByUrl(`calendario/${targetYear}/${targetMonth}/${day}`);
+    }
+
+    changeTabRes() {
+        this.showTabRes = !this.showTabRes;
+        this.service.changeTabRes(this.showTabRes);
     }
 
     selectToday(): void { 
@@ -72,6 +85,25 @@ export class LandingCalendarioComponent {
         this.visMenu = false; // Nasconde il menu
 
         this.service.changeView(view); // Modifica il cambio di vista
+        if (view === 'MENSILE') {
+            this.calendario = this.service.result;
+            this.monthLong = this.calendario?.data ? new Intl.DateTimeFormat("en-US", { month: 'long' }).format(new Date(this.calendario.data)) : '';
+        }
+
+        if (this.date && view == 'GIORNALIERO') {
+            /*TODO aggiungere il controllo del path, com'è adesso quando ritorniamo su giornaliero 
+            * visualCella richiama il giorno today
+            */
+            const [yearStr, monthStr, dayStr] = this.date.split('/');
+            const year = parseInt(yearStr, 10);
+            const month = parseInt(monthStr, 10);
+            const day = parseInt(dayStr, 10);
+
+            // Richiama il metodo visualCella
+            this.visualCella(day, month, year);
+        }
+
+        this.showTabRes = false;
 
         event.stopPropagation(); // Evita che l'evento si propaghi al documento
     }
@@ -87,13 +119,5 @@ export class LandingCalendarioComponent {
     
     selectVis(): void {
         this.visMenu = !this.visMenu;
-    }
-
-    visualCella(day: number, month: number, year: number): void {
-        let targetMonth = month + 1;
-        let targetYear = year;
-
-        this.service.changeView("GIORNALIERO"); // Notifica il cambio di vista
-        this.router.navigateByUrl(`calendario/d/${targetYear}/${targetMonth}/${day}`);
     }
 }

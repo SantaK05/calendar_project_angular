@@ -18,7 +18,8 @@
     --alert-success: #24C958;
     
     --color-border: rgba(63, 63, 63, 0.425);
-    --divider-border: 0.1px solid var(--color-border);
+    --divider-border: 1px solid var(--color-border);
+    --element-border: 2px solid #555555;
 
     --border-test: 1px solid red;
 

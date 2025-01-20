@@ -1,0 +1,57 @@
+<main class="res-container">
+    <div class="title">
+        <h3>
+            Seleziona risorsa
+        </h3>
+    </div>
+
+    <form class="form-container">
+        <div class="res-select">
+            <label for="resource" class="form-lbl">Slot:</label>
+            <select name="slot" id="slot" [(ngModel)]="current.nome" (change)="onSlotChange()">
+                @for (slot of listSlotPrenotazioni; track $index) {
+                    <option value="{{ slot.nome }}">{{ slot.nome }}</option>
+                }
+            </select>
+        </div>
+
+        <div class="info">
+            <label for="resource" class="form-lbl">Risorsa:</label>
+            <input type="text" id="resource" name="resource" class="form-inp" disabled [(ngModel)]="current.risorsa.nome">
+        </div>
+
+        <!-- <div class="res-select">
+            <select name="resource" id="resource" [(ngModel)]="current.risorsa.nome">
+                @for (slot of listSlotPrenotazioni; track $index) {
+                    <option value="{{ slot.risorsa.nome }}" [disabled]="slot.risorsa.prenotabile" (click)="load(slot.risorsa.id)">{{ slot.risorsa.nome }}</option>
+                }
+            </select>
+        </div> -->
+
+        <div class="orario-info">
+            <div class="info">
+                <label for="dataInizio" class="form-lbl">Orario inizio:</label>
+                <input type="text" id="dataInizio" name="dataInizio" class="form-inp" [value]="current.dataInizio | date:'shortTime'" disabled>
+            </div>
+
+            <div class="info">
+                <label for="dataFine" class="form-lbl">Orario fine:</label>
+                <input type="text" id="dataFine" name="dataFine" class="form-inp" [value]="current.dataFine | date:'shortTime'" disabled>
+            </div>
+        </div>
+
+        <div class="info">
+            <label for="note" class="form-lbl">Note:</label>
+            <textarea rows="4" id="note" name="note" class="form-txt" disabled [(ngModel)]="current.risorsa.descrizione"></textarea>
+        </div>
+        
+        <div class="info">
+            <label for="descrizione" class="form-lbl">Descrizione:</label>
+            <textarea rows="4" id="descrizione" name="descrizione" class="form-txt" disabled [(ngModel)]="current.risorsa.descrizione"></textarea>
+        </div>
+
+        <div class="form-btn">
+            <button type="submit" (click)="save()">Prenota</button>
+        </div>
+    </form>
+</main>

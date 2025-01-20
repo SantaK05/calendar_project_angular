@@ -9,16 +9,27 @@ import { SlotsComponent } from './pages/landing-amministrazione/slots/slots.comp
 import { ResourcesComponent } from './pages/landing-amministrazione/resources/resources.component';
 import { ResourceEditComponent } from './pages/landing-amministrazione/resource-edit/resource-edit.component';
 import { SlotEditComponent } from './pages/landing-amministrazione/slot-edit/slot-edit.component';
+import { LoginComponent } from './pages/landing-autenticazione/login/login.component';
+import { RegisterComponent } from './pages/landing-autenticazione/register/register.component';
+import { ResetPasswordComponent } from './pages/landing-autenticazione/reset-password/reset-password.component';
+import { VerifyEmailComponent } from './pages/landing-autenticazione/verify-email/verify-email.component';
+import { ForgotPasswordComponent } from './pages/landing-autenticazione/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/calendario', pathMatch: 'full' },
-  {
-    path: 'calendario',
-    component: LandingCalendarioComponent,
-    children: [{ path: 'd/:year/:month/:day', component: CellComponent }],
-  },
+    {
+        path: 'calendario', component: LandingCalendarioComponent,
+        children: [
+            { path: ':year/:month/:day', component: CellComponent },
+        ]
+    },
   { path: 'email-list', component: EmailListComponent },
-  { path: 'template', component: TemplateComponent },
+    { path: 'template', component: TemplateComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'resetpassword/:uuid', component: ResetPasswordComponent },
+    { path: 'verify/:uuid', component: VerifyEmailComponent },
+    { path: 'forgotpassword', component: ForgotPasswordComponent },
   {
     path: 'amministrazione',
     component: LandingAmministrazioneComponent,
@@ -36,4 +47,3 @@ export const routes: Routes = [
       { path: 'slots/:id/edit', component: SlotEditComponent },
     ],
   },
-];

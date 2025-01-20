@@ -1,4 +1,4 @@
-@import url('../../resumable/style/personal-style.css');
+@import url('../../assets/style/personal-style.css');
 
 /* ------------------------------------- */
 /* ?CALENDAR CONTAINER? */
@@ -161,5 +161,5 @@
 .alert-sec {
     position: absolute;
     bottom: 20px;
-    right: -90px;
+    right: 20px;
 }

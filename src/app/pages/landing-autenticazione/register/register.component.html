@@ -1,0 +1,5 @@
+<div [ngSwitch]="activeComponent" class="center-wrapper">
+    <app-email-form *ngSwitchCase="'email-component'"></app-email-form>
+    <app-name-form *ngSwitchCase="'name-component'"></app-name-form>
+    <app-password-form *ngSwitchCase="'password-component'"></app-password-form>
+</div>
