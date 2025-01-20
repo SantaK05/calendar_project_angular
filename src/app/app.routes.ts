@@ -23,26 +23,27 @@ import { UserComponent } from './pages/landing-backoffice/user/user.component';
 import { AuthGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/calendario', pathMatch: 'full', canActivate: [AuthGuard]},
+  { path: '', redirectTo: '/login', pathMatch: 'full'},
   {
     path: 'calendario',
     component: LandingCalendarioComponent,
     children: [{ path: ':year/:month/:day', component: CellComponent }],
+    canActivate: [AuthGuard]
   },
   { path: 'template', component: TemplateComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'resetpassword/:uuid', component: ResetPasswordComponent },
   { path: 'backoffice', redirectTo: '/backoffice/user-list', pathMatch: 'full' },
-  { path: 'backoffice/user-list', component: ListUserComponent },
-  { path: 'backoffice/user', component: UserComponent },
-  { path: 'backoffice/user/:id', component: UserComponent },
-  { path: 'backoffice/role-list', component: ListRoleComponent },
-  { path: 'backoffice/role', component: RoleComponent },
-  { path: 'backoffice/role/:id', component:RoleComponent},
-  { path: 'backoffice/group-list', component: GroupsListComponent },
-  { path: 'backoffice/group', component: GroupsComponent },
-  { path: 'backoffice/group/:id', component: GroupsComponent },
+  { path: 'backoffice/user-list', component: ListUserComponent, canActivate: [AuthGuard] },
+  { path: 'backoffice/user', component: UserComponent, canActivate: [AuthGuard] },
+  { path: 'backoffice/user/:id', component: UserComponent, canActivate: [AuthGuard] },
+  { path: 'backoffice/role-list', component: ListRoleComponent, canActivate: [AuthGuard] },
+  { path: 'backoffice/role', component: RoleComponent, canActivate: [AuthGuard] },
+  { path: 'backoffice/role/:id', component:RoleComponent, canActivate: [AuthGuard]},
+  { path: 'backoffice/group-list', component: GroupsListComponent, canActivate: [AuthGuard] },
+  { path: 'backoffice/group', component: GroupsComponent, canActivate: [AuthGuard] },
+  { path: 'backoffice/group/:id', component: GroupsComponent, canActivate: [AuthGuard] },
   { path: 'verify/:uuid', component: VerifyEmailComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
   {

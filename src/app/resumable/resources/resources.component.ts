@@ -5,6 +5,7 @@ import { ReservationService } from './reservation.service';
 import { CommonModule } from '@angular/common';
 import { Subscription, tap } from 'rxjs';
 import { CellComponent } from '../../pages/landing-calendario/cell/cell.component';
+import { LandingCalendarioComponent } from '../../pages/landing-calendario/landing-calendario.component';
 
 @Component({
   selector: 'resources',
@@ -38,7 +39,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     private subscription!: Subscription;
 
 
-    constructor(private readonly service: ReservationService, private readonly cell: CellComponent) { }
+    constructor(private readonly service: ReservationService, private readonly cell: CellComponent, private readonly cal: LandingCalendarioComponent) { }
     
     ngOnInit(): void {
         this.listSlotPrenotazioni = this.service.listSlotPrenotazioni;
@@ -63,6 +64,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
         ).subscribe()
 
         this.cell.showTabRes = false;
+        this.cal.showTabRes = false;
     }
 
     onSlotChange() {
