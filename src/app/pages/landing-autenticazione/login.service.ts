@@ -14,7 +14,7 @@ export class LoginService {
   }
 
   login(email: string, password: string) {
-    return this.client.post("http://localhost:8080/api/auth-service/auth/login", { email: email, password: password }, { responseType: "text" }).pipe(
+    return this.client.post("http://localhost:8080/auth/login", { email: email, password: password }, { responseType: "text" }).pipe(
       tap((data) => {
         localStorage.setItem("jwt", data as string);
         let payload64 = data.split('.')[1];
