@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { User } from '../../landing-calendario/interfaces/backoffice';
