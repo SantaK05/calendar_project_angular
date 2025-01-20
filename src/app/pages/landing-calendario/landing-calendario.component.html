@@ -1,4 +1,4 @@
-<main class="container">
+<main>
     <!-- !SECTION  MAIN CALENDAR! -->
     <section class="calendar-container section">
         <!-- ?SECTION HEADER CALENDAR? -->
@@ -40,10 +40,11 @@
                             @if (tipoVis == null || tipoVis == "MENSILE") { 
                                 <square-btn [className]="'btn-scrollUp'"></square-btn>
                                 <square-btn [className]="'btn-scrollDown'"></square-btn>
-                            } @else if (tipoVis == "GIORNALIERO") { 
+                            }
+                             <!-- @else if (tipoVis == "GIORNALIERO") { 
                                 <square-btn [className]="'btn-scrollLeft'"></square-btn>
                                 <square-btn [className]="'btn-scrollRight'"></square-btn>
-                            }
+                            } -->
                         </div>
                     </div>
                 </div>

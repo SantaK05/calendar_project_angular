@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { Calendario } from '../interfaces/calendario';
 import { CalendarioService } from '../calendario.service';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { ReservationService } from '../../../resumable/resources/reservation.ser
   styleUrl: './cell.component.css'
 })
 
-export class CellComponent {
+export class CellComponent implements OnInit {
     getUrl = /\/calendario\/(\d{4})\/(\d{1,2})\/(\d{1,2})/;
 
     hours: number[] = Array.from({ length: 24 }, (_, index) => index);
@@ -54,28 +54,27 @@ export class CellComponent {
                 this.dayLong = '';
             }
         });
-
+        
         this.service.showTabRes.subscribe((switchTab) => {
             this.showTabRes = switchTab;
         });
     }
     
     ngOnInit() {
-        this.isLoaded = false;
-
         this.service.calendario$.subscribe((updatedCalendario) => {
+            this.isLoaded = false;
             if (updatedCalendario?.provenienza === 'visualCella') {
                 this.calendario = updatedCalendario;
                 console.log(this.calendario);
                 this.service.listGiorni$.subscribe((updatedListGiorni) => {
                     this.listGiorni = updatedListGiorni;
                 });
-
-                this.cellIndex = this.getCellIndex();
-                this.getSlotPrenotazioni(this.cellIndex);
                 if (this.listSlotPrenotazioni) {
                     this.isLoaded = true;
                 }
+                
+                this.cellIndex = this.getCellIndex();
+                this.getSlotPrenotazioni(this.cellIndex);
             }
         });
     }

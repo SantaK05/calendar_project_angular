@@ -62,7 +62,7 @@ export class ReservationService {
             return throwError(() => new Error('Slot not found'));
         }
 
-        return this.http.post<SlotPrenotazioneList>(`${this.BASE_URL}/${slot.id}`, slot).pipe(
+        return this.http.post<SlotPrenotazioneList>(`${this.BASE_URL}`, slot).pipe(
             catchError(err => {
                 this.messageService.publishError('Errore salvataggio prenotazione');
                 return throwError(() => err);

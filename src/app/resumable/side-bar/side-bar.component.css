@@ -1,5 +1,7 @@
 @import url('../../assets/style/personal-style.css');
 
+
+
 .container-sb {
     height: 100%;
 }
@@ -26,6 +28,7 @@
 .calendar-side-info {
     width: 11em;
     height: 100%;
+    color: var(--color-text-light);
     background-color: var(--color-dark-dark);
     display: grid;
     grid-template-rows: repeat(11, 1fr);
@@ -153,11 +156,12 @@
     transform: translateX(0%);
 }
 
-.menu {
+.menu-sb {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     height: 100%;
+    padding-left: 0;
     font-size: 13px;
     text-align: center;
     background-color: var(--color-dark-bg);

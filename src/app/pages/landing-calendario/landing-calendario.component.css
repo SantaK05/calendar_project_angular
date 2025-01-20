@@ -9,6 +9,8 @@
     grid-template-rows: repeat(11, 1fr);
     width: 100%;
     height: 100dvh;
+    color: var(--color-text-light);
+    background-color: var(--color-dark-bg);
 }
 
 /* *header calendar* */
@@ -41,6 +43,8 @@
         a {
             position: relative;
             border-radius: 10px;
+            color: var(--color-text-light);
+            text-decoration: none;
             transition: var(--animation-primary);
             cursor: pointer;
         
