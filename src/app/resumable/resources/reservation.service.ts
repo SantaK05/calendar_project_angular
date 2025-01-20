@@ -33,7 +33,7 @@ export class ReservationService {
     });
     public slotSingolo$ = this.slotSingoloSubject.asObservable();
 
-    BASE_URL = 'http://localhost:8080/calendario/prenotazione';
+    BASE_URL = 'http://calendario-service:8080/calendario/prenotazione';
 
     constructor(private http: HttpClient, private messageService: MessageCalendarioService) { }
 
