@@ -54,7 +54,6 @@ export class GroupService {
 
       group.nome = current.nome;
       group.ruoli = current.ruoli;
-      group.utenti = current.utenti;
 
       return this.httpClient.put<Group>(`${this.BASE_URL}/${group.id}`, group).pipe(
         catchError(err => {
@@ -68,9 +67,8 @@ export class GroupService {
       group = {
         id: current.id = 0,
         nome: current.nome,
-        utenti: current.utenti,
         ruoli: current.ruoli
-        
+
         }
       console.log('inserisco evento di salvataggio');
 
@@ -80,11 +78,11 @@ export class GroupService {
           return throwError(() => err);
         })
       );
-      
+
     }
-    
-  } 
-  
+
+  }
+
 
   delete(group: Group): Observable<Group> | void {
 

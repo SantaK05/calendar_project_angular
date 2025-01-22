@@ -1,7 +1,6 @@
 export interface Group {
   id: number;
   nome: string;
-  utenti: User[];
   ruoli: Role[];
 }
 
@@ -24,11 +23,12 @@ export interface User {
 }
 
 export enum Stato {
-  ATTIVO,
-  SOSPESO,
-  ERRATO,
-  TOKEN_VALIDATO,
-  PENDING,
-  REGISTRAZIONE,
-  VALIDAZIONE,
+  ATTIVO, //account in uso dall'utente
+	SOSPESO, //account non in uso
+	ERRATO, //boh
+	TOKEN_VALIDATO, //validazione eseguita
+	PENDING, //account sospeso
+	REGISTRAZIONE, //account in registrazione
+	VALIDAZIONE, //richiesta di registrazione avvenuta
+	TEST, //testing
 }
