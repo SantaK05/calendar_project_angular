@@ -28,7 +28,6 @@ export class GroupsComponent {
   current: Group = {
     id: 0,
     nome: '',
-    utenti: [],
     ruoli: [],
   };
 
@@ -53,8 +52,6 @@ export class GroupsComponent {
             console.log('ottenuti dati gruppo');
             console.log(data);
             this.current = data as Group;
-
-            this.selectedUser = new Set(this.current.utenti.map((u) => u.id));
             this.selectedRole = new Set(this.current.ruoli.map((r) => r.id));
           }),
           catchError((err) => {
@@ -83,14 +80,10 @@ export class GroupsComponent {
   }
 
   save() {
-    if (this.current.nome == '' || this.current.utenti == null || this.current.ruoli == null) {
+    if (this.current.nome == '' || this.current.ruoli == null) {
       this.messageService.publishError('Errore salvataggio dati.');
       return;
     } else {
-
-    this.current.utenti = this.avaibleUsers.filter((u) =>
-      this.selectedUser.has(u.id)
-    );
 
     this.current.ruoli = this.avaibleRoles.filter((r) =>
       this.selectedRole.has(r.id)
@@ -152,7 +145,7 @@ export class GroupsComponent {
     if (this.selectedUser.has(user.id)) {
       this.selectedUser.delete(user.id);
     } else {
-      this.selectedUser.add(user.id); 
+      this.selectedUser.add(user.id);
     }
   }
 

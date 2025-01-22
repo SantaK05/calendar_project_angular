@@ -21,6 +21,7 @@ import { ListRoleComponent } from './pages/landing-backoffice/role-list/role-lis
 import { RoleComponent } from './pages/landing-backoffice/role/role.component';
 import { UserComponent } from './pages/landing-backoffice/user/user.component';
 import { AuthGuard } from './guard/auth.guard';
+import { LandingBackofficeComponent } from './pages/landing-backoffice/landing-backoffice.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -34,18 +35,16 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'resetpassword/:uuid', component: ResetPasswordComponent },
-  { path: 'backoffice', redirectTo: '/backoffice/user-list', pathMatch: 'full' },
-  { path: 'backoffice/user-list', component: ListUserComponent, canActivate: [AuthGuard] },
-  { path: 'backoffice/user', component: UserComponent, canActivate: [AuthGuard] },
-  { path: 'backoffice/user/:id', component: UserComponent, canActivate: [AuthGuard] },
-  { path: 'backoffice/role-list', component: ListRoleComponent, canActivate: [AuthGuard] },
-  { path: 'backoffice/role', component: RoleComponent, canActivate: [AuthGuard] },
-  { path: 'backoffice/role/:id', component:RoleComponent, canActivate: [AuthGuard]},
-  { path: 'backoffice/group-list', component: GroupsListComponent, canActivate: [AuthGuard] },
-  { path: 'backoffice/group', component: GroupsComponent, canActivate: [AuthGuard] },
-  { path: 'backoffice/group/:id', component: GroupsComponent, canActivate: [AuthGuard] },
   { path: 'verify/:uuid', component: VerifyEmailComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
+  {
+    path: 'backoffice',
+    loadChildren: () =>
+      import('./pages/landing-backoffice/backoffice.routes').then(
+        (m) => m.BackofficeRoutes
+      ),
+    canActivate: [AuthGuard]
+  },
   {
     path: 'amministrazione',
     component: LandingAmministrazioneComponent,
