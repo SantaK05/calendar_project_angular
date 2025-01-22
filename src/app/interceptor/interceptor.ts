@@ -1,21 +1,72 @@
-import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+// import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+// import { Injectable } from "@angular/core";
+// import { LoginService } from "../pages/landing-autenticazione/login.service";
+
+// @Injectable()
+// export class Interceptor implements HttpInterceptor {
+
+//   constructor(private loginService: LoginService) {}
+
+//   intercept(req: HttpRequest<any>, next: HttpHandler) {
+//     console.log("richiesta intercettata");
+//     this.loginService.checkTokenIsExpired();
+
+//     const authToken = localStorage.getItem("jwt");
+//     console.log("scrivendo token: " + authToken);
+
+//     const authReq = req.clone({ setHeaders: { Authorization: `Bearer ${authToken}` } });
+
+//     return next.handle(authReq);
+//   }
+// }
+
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpHandlerFn, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { LoginService } from "../pages/landing-autenticazione/login.service";
+import { Router } from '@angular/router';
+import { catchError, Observable, throwError } from "rxjs";
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
+  private excludedPaths: string[] = ['/auth/', '/backoffice/users'];
 
-  constructor(private loginService: LoginService) {}
+  constructor(private router: Router) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    console.log("richiesta intercettata");
-    this.loginService.checkTokenIsExpired();
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Controlla se il path deve essere escluso
+    if (this.shouldExclude(request.url)) {
+      return next.handle(request); // Lascia passare senza aggiungere l'header
+    }
 
-    const authToken = localStorage.getItem("jwt");
-    console.log("scrivendo token: " + authToken);
+    // Aggiungi il token alle richieste non escluse
+    const token = localStorage.getItem('jwt');
+    console.log(`token: ${token}`);
 
-    const authReq = req.clone({ setHeaders: { Authorization: `Bearer ${authToken}` } });
+    if (token) {
+      request = request.clone({
+        setHeaders: { 'Authorization': `Bearer ${token}` }
+      });
+    }
 
-    return next.handle(authReq);
+    return next.handle(request).pipe(
+      catchError((err) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 401) {
+            console.warn('Token scaduto. Rimuovo il token e reindirizzo al login.');
+
+            // Rimuove il token scaduto da localStorage
+            localStorage.removeItem('jwt');
+
+            // Reindirizza l'utente alla pagina di login
+            this.router.navigate(['/login']);
+          }
+        }
+        return throwError(err);
+      })
+    );
+  }
+
+  // Funzione per controllare se il path è escluso
+  private shouldExclude(url: string): boolean {
+    return this.excludedPaths.some(path => url.includes(path));
   }
 }

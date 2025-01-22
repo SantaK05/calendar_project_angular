@@ -25,17 +25,21 @@ export class PasswordFormComponent implements OnInit {
   }
   
   register() {
+    this.service.password = this.password;
     this.service.register().pipe(
       catchError(e => {
         this.registrationSuccess = false;
         this.display = "block"
+        console.log(e);
         return throwError(() => e);
       }),
       tap(() => {
         this.registrationSuccess = true;
         this.display = "block"
       })
-    ).subscribe();
+    ).subscribe(data => {
+      console.log(data);
+    });
     this.service.nome = "";
     this.service.cognome = "";
     this.service.email = "";
@@ -45,6 +49,7 @@ export class PasswordFormComponent implements OnInit {
 
   display = "none";
   registrationSuccess = false;
+  password: string = "";
 
   constructor(private service: RegisterService, private formBuilder: FormBuilder, private router: Router) {
     service.subject.subscribe()

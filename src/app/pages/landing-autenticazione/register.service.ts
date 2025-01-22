@@ -7,13 +7,14 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class RegisterService {
+  backofficeUrl: string = "http://localhost:8080/backoffice/users";
 
   checkEmailExists(email: string) {
-    return this.client.get(`http://localhost:5000/users/email/${email}`);
+    return this.client.get(`${this.backofficeUrl}/email/${email}`);
   }
 
   checkUsernameExists(username: string) {
-    return this.client.get(`http://localhost:5000/users/username/${username}`);
+    return this.client.get(`${this.backofficeUrl}/username/${username}`);
   }
 
   constructor(private client: HttpClient) {
@@ -22,7 +23,10 @@ export class RegisterService {
 
   register() {
     console.log(this.email);
-    return this.client.post("http://localhost:8082/auth/registration",{email:this.email,nome:this.nome,cognome:this.cognome,username:this.username,password:this.password});
+    // return this.client.post("http://localhost:8080/auth/registration", {email:this.email, name:this.nome, surname:this.cognome, username:this.username, password:this.password});
+
+    let utente = {"email":this.email, "name":this.nome, "surname":this.cognome, "username":this.username, "password":this.password};
+    return this.client.post("http://localhost:8080/auth/registration", utente);
   }
 
 
