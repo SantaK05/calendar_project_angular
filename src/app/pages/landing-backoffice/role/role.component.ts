@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { catchError, empty, switchMap, tap, throwError } from 'rxjs';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { MessageService } from '../services/message.service';
@@ -10,7 +10,7 @@ import { Role } from '../../landing-calendario/interfaces/backoffice';
 @Component({
   selector: 'app-role',
   standalone:true,
-  imports: [FormsModule, NavbarComponent],
+  imports: [FormsModule, NavbarComponent, RouterModule],
   templateUrl: './role.component.html',
   styleUrl: './role.component.css',
 })

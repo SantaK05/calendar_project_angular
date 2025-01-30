@@ -6,6 +6,7 @@ import { GroupService } from '../services/group.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Group } from '../../landing-calendario/interfaces/backoffice';
+import { Script } from 'node:vm';
 
 @Component({
   selector: 'app-list-group',
@@ -13,6 +14,7 @@ import { Group } from '../../landing-calendario/interfaces/backoffice';
   imports: [NavbarComponent, RouterModule, CommonModule, FormsModule],
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.css',
+
 })
 export class GroupsListComponent {
   groups: any[] = [];
