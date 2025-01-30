@@ -13,6 +13,7 @@ import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user',
+  standalone:true,
   imports: [FormsModule, CommonModule, NavbarComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
@@ -170,7 +171,7 @@ export class UserComponent {
   searchGroups() {
     const term = this.searchTerm.toLowerCase();
     if (term){
-      this.filteredGroups = this.avaibleGroups.filter(group => 
+      this.filteredGroups = this.avaibleGroups.filter(group =>
         group.nome.toLowerCase().includes(term)
       );
     }else {
@@ -181,12 +182,12 @@ export class UserComponent {
   searchRoles(){
     const term = this.searchTerm.toLowerCase();
     if (term){
-      this.filteredRoles = this.avaibleRoles.filter(role => 
+      this.filteredRoles = this.avaibleRoles.filter(role =>
         role.nome.toLowerCase().includes(term)
       );
     }else {
       this.filteredRoles = [];
     }
   }
-  
+
 }

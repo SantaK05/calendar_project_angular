@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list-role',
+  standalone:true,
   imports: [NavbarComponent, FormsModule, CommonModule],
   templateUrl: './role-list.component.html',
   styleUrl: './role-list.component.css',

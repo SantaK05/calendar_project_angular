@@ -8,47 +8,42 @@ import { UserComponent } from "./user/user.component";
 
 export const BackofficeRoutes: Routes = [
   {
-    path: '',
+    path: 'user-list',
     component: ListUserComponent,
-    children: [
-      {path: '', redirectTo: 'user-list', pathMatch: 'full'},
-      {
-        path: 'user-list',
-        component: ListUserComponent,
-      },
-      {
-        path: 'user',
-        component: UserComponent,
-      },
-      {
-        path: 'user/:id',
-        component: UserComponent,
-      },
-      {
-        path: 'role-list',
-        component: ListRoleComponent,
-      },
-      {
-        path: 'role',
-        component: RoleComponent,
-      },
-      {
-        path: 'role/:id',
-        component: RoleComponent,
-      },
-      {
-        path: 'group-list',
-        component: GroupsListComponent,
-      },
-      {
-        path: 'group',
-        component: GroupsComponent,
-      },
-      {
-        path: 'group/:id',
-        component: GroupsComponent,
-      }
-    ],
+  },
+  {
+    path: 'user',
+    component: UserComponent,
+  },
+  {
+    path: 'user/:id',
+    component: UserComponent,
+  },
+  {
+    path: 'role-list',
+    component: ListRoleComponent,
+  },
+  {
+    path: 'role',
+    component: RoleComponent,
+  },
+  {
+    path: 'role/:id',
+    component: RoleComponent,
+  },
+  {
+    path: 'group-list',
+    component: GroupsListComponent,
+  },
+  {
+    path: 'group',
+    component: GroupsComponent,
+  },
+  {
+    path: 'group/:id',
+    component: GroupsComponent,
   }
+
+
 
 ];

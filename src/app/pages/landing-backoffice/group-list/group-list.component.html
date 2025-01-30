@@ -19,7 +19,6 @@
               <tr>
                 <th class="fs-5">Id</th>
                 <th class="fs-5">Nome</th>
-                <th class="fs-5">User</th>
                 <th class="fs-5">Ruoli</th>
                 <th class="fs-5 text-end">Azioni</th>
               </tr>
@@ -28,9 +27,6 @@
               <tr *ngFor="let group of filteredGroup">
                 <td class="fs-6">{{ group.id }}</td>
                 <td class="fs-6">{{ group.nome }}</td>
-                <td class="fs-6 text-truncate" style="max-width: 150px;">
-                  <span *ngFor="let utente of group.utenti">{{ utente.username }}, </span>
-                </td>
                 <td class="fs-6 text-truncate" style="max-width: 150px;">
                   <span *ngFor="let ruolo of group.ruoli">{{ ruolo.nome }}, </span>
                 </td>

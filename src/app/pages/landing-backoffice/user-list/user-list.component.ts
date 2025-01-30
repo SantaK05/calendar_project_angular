@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-list',
+  standalone: true,
   imports: [NavbarComponent, RouterModule, CommonModule, FormsModule],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',

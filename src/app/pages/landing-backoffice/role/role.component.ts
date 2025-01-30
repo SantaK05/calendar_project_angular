@@ -9,6 +9,7 @@ import { Role } from '../../landing-calendario/interfaces/backoffice';
 
 @Component({
   selector: 'app-role',
+  standalone:true,
   imports: [FormsModule, NavbarComponent],
   templateUrl: './role.component.html',
   styleUrl: './role.component.css',

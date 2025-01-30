@@ -13,6 +13,7 @@ import { Group, Role, User } from '../../landing-calendario/interfaces/backoffic
 
 @Component({
   selector: 'app-group',
+  standalone:true,
   imports: [FormsModule, CommonModule, NavbarComponent, RouterModule],
   templateUrl: './group.component.html',
   styleUrl: './group.component.css',

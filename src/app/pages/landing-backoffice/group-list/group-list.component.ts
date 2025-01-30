@@ -9,6 +9,7 @@ import { Group } from '../../landing-calendario/interfaces/backoffice';
 
 @Component({
   selector: 'app-list-group',
+  standalone:true,
   imports: [NavbarComponent, RouterModule, CommonModule, FormsModule],
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.css',
@@ -24,6 +25,7 @@ export class GroupsListComponent {
       this.service.findAll().subscribe((data: Group[]) => {
         this.groups = data;
         this.filteredGroup = data; // Inizialmente, tutti gli utenti sono mostrati
+        console.log(data);
       });
     }
 
@@ -55,5 +57,5 @@ export class GroupsListComponent {
     }
   }
 
-  
+
 }
