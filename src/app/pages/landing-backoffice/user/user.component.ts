@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Group, Stato, User, Role } from '../../landing-calendario/interfaces/backoffice';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { catchError, of, switchMap, tap, throwError } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,8 @@ import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user',
-  imports: [FormsModule, CommonModule, NavbarComponent],
+  standalone:true,
+  imports: [FormsModule, CommonModule, NavbarComponent, RouterModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
 })
@@ -170,7 +171,7 @@ export class UserComponent {
   searchGroups() {
     const term = this.searchTerm.toLowerCase();
     if (term){
-      this.filteredGroups = this.avaibleGroups.filter(group => 
+      this.filteredGroups = this.avaibleGroups.filter(group =>
         group.nome.toLowerCase().includes(term)
       );
     }else {
@@ -181,12 +182,12 @@ export class UserComponent {
   searchRoles(){
     const term = this.searchTerm.toLowerCase();
     if (term){
-      this.filteredRoles = this.avaibleRoles.filter(role => 
+      this.filteredRoles = this.avaibleRoles.filter(role =>
         role.nome.toLowerCase().includes(term)
       );
     }else {
       this.filteredRoles = [];
     }
   }
-  
+
 }

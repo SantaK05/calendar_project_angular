@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { LandingCalendarioComponent } from './pages/landing-calendario/landing-calendario.component';
-import { EmailListComponent } from './pages/landing-email/list/list.component';
 import { TemplateComponent } from './pages/landing-email/template/template.component';
 import { CellComponent } from './pages/landing-calendario/cell/cell.component';
 import { LandingAmministrazioneComponent } from './pages/landing-amministrazione/landing-amministrazione.component';
@@ -14,14 +13,7 @@ import { RegisterComponent } from './pages/landing-autenticazione/register/regis
 import { ResetPasswordComponent } from './pages/landing-autenticazione/reset-password/reset-password.component';
 import { VerifyEmailComponent } from './pages/landing-autenticazione/verify-email/verify-email.component';
 import { ForgotPasswordComponent } from './pages/landing-autenticazione/forgot-password/forgot-password.component';
-import { ListUserComponent } from './pages/landing-backoffice/user-list/user-list.component';
-import { GroupsListComponent } from './pages/landing-backoffice/group-list/group-list.component';
-import { GroupsComponent } from './pages/landing-backoffice/group/group.component';
-import { ListRoleComponent } from './pages/landing-backoffice/role-list/role-list.component';
-import { RoleComponent } from './pages/landing-backoffice/role/role.component';
-import { UserComponent } from './pages/landing-backoffice/user/user.component';
 import { AuthGuard } from './guard/auth.guard';
-import { LandingBackofficeComponent } from './pages/landing-backoffice/landing-backoffice.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -43,7 +35,7 @@ export const routes: Routes = [
       import('./pages/landing-backoffice/backoffice.routes').then(
         (m) => m.BackofficeRoutes
       ),
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'amministrazione',

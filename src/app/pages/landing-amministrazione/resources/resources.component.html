@@ -4,6 +4,9 @@
     <button class="bg-zinc-950 h-11 pr-3 pl-3 text-white rounded-md" [routerLink]="['/amministrazione/resources/null/edit']">
       Nuova Risorsa
     </button>
+    <button class="bg-zinc-950 h-11 pr-3 pl-3 text-white rounded-md" (click)="openSucsessExportModal()">
+      Task Export
+    </button>
   </div>
 
   <table class="w-full caption-bottom text-sm">
@@ -82,7 +85,7 @@
       </h1>
       <p class="font-normal mt-3">
         Questa azione non può essere annullata. Questo eliminerà permanentemente
-        il slot e rimuoverà i dati dai nostri server.
+        la risorsa e rimuoverà i dati dai nostri server.
       </p>
     </div>
     <div class="flex flex-row justify-end space-x-2 mt-9">
@@ -97,6 +100,38 @@
         (click)="delete()"
       >
         Elimina
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  [style.display]="!isExportComplete ? 'none' : 'flex'"
+  class="bg-black/80 absolute left-0 top-0 w-full h-full flex justify-center items-center"
+>
+  <div class="w-2/4 rounded-lg bg-white p-6">
+    <div class="flex flex-col space-y-2 text-left">
+      <h1 class="text-lg font-semibold">
+        Sei sicuro di voler eseguire l'export sul server?
+      </h1>
+      <p class="font-normal mt-3">
+        Questa azione non può essere annullata. Questo esportera tutte le risose che sono salvate sul server in un file excel sul server.
+        Nota la modale si chiudere ad operazione completata.
+        <span class="text-red-400">{{exportErrorMessage}}</span>
+      </p>
+    </div>
+    <div class="flex flex-row justify-end space-x-2 mt-9">
+      <button
+        class="bg-white border h-11 pr-3 pl-3 rounded-md w-fit"
+        (click)="closeModal()"
+      >
+        Annulla
+      </button>
+      <button
+        class="bg-zinc-950 h-11 pr-3 pl-3 text-white rounded-md w-fit"
+        (click)="executeExport()"
+      >
+        Esegui
       </button>
     </div>
   </div>

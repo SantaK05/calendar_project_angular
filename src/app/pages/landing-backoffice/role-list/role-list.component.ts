@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Role } from '../../landing-calendario/interfaces/backoffice';
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -9,7 +9,8 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list-role',
-  imports: [NavbarComponent, FormsModule, CommonModule],
+  standalone:true,
+  imports: [NavbarComponent, FormsModule, CommonModule, RouterModule],
   templateUrl: './role-list.component.html',
   styleUrl: './role-list.component.css',
 })

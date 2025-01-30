@@ -14,6 +14,8 @@ import { catchError, switchMap, throwError } from 'rxjs';
 export class SlotsComponent {
   arraySlot: Slot[] | null = null;
   isOpen: boolean = false;
+  isExportComplete: boolean = false;
+  exportErrorMessage: string = '';
   currentItemOnModal: number | undefined;
 
   constructor(private slotService: SlotsService) {
@@ -24,6 +26,16 @@ export class SlotsComponent {
 
   closeModal() {
     this.isOpen = false;
+    this.isExportComplete = false;
+  }
+
+  openSucsessExportModal() {
+    window.scroll({
+      top: 0,
+      left: 0,
+    });
+
+    this.isExportComplete = true;
   }
 
   openModal(id: number) {
@@ -34,6 +46,17 @@ export class SlotsComponent {
 
     this.isOpen = true;
     this.currentItemOnModal = id;
+  }
+
+  executeExport() {
+    this.slotService.doExport().subscribe((data) => {
+      if (data.ok) {
+        this.isExportComplete = false;
+      } else {
+        this.exportErrorMessage =
+          'Mi spiace ma il server ha riscontrato un errore, operazione non eseguita!';
+      }
+    });
   }
 
   delete() {

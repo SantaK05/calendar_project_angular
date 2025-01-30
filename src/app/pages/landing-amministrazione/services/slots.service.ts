@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Slot } from '../models/slot.model';
 import { Observable } from 'rxjs';
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SlotsService {
-  BASE_URL: string = 'http://localhost:8080/api/amministrazione-service/v1';
+  BASE_URL: string = 'http://localhost:8080/api/amministrazione-service';
 
   constructor(private http: HttpClient) {}
 
@@ -30,5 +30,9 @@ export class SlotsService {
 
   doSingle(id: number): Observable<Slot> {
     return this.http.get<Slot>(`${this.BASE_URL}/slots/${id}`);
+  }
+
+  doExport(): Observable<HttpResponse<Slot>> {
+    return this.http.get<HttpResponse<Slot>>(`${this.BASE_URL}/slots/export`);
   }
 }

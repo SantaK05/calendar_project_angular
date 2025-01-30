@@ -13,6 +13,8 @@ import { ResourcesService } from '../services/resources.service';
 export class ResourcesComponent {
   arrayResources: Resource[] | null = null;
   isOpen: boolean = false;
+  isExportComplete: boolean = false;
+  exportErrorMessage: string = '';
   currentItemOnModal: number | undefined;
 
   constructor(private resourceService: ResourcesService) {
@@ -23,6 +25,16 @@ export class ResourcesComponent {
 
   closeModal() {
     this.isOpen = false;
+    this.isExportComplete = false;
+  }
+
+  openSucsessExportModal() {
+    window.scroll({
+      top: 0,
+      left: 0,
+    });
+
+    this.isExportComplete = true;
   }
 
   openModal(id: number) {
@@ -33,6 +45,17 @@ export class ResourcesComponent {
 
     this.isOpen = true;
     this.currentItemOnModal = id;
+  }
+
+  executeExport() {
+    this.resourceService.doExport().subscribe((data) => {
+      if (data.ok) {
+        this.isExportComplete = false;
+      } else {
+        this.exportErrorMessage =
+          'Mi spiace ma il server ha riscontrato un errore, operazione non eseguita!';
+      }
+    });
   }
 
   delete() {
