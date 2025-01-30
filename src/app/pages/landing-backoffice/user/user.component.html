@@ -12,7 +12,7 @@
       <!-- Form per nome, cognome, email, password e username -->
       <div class="col-md-4 mb-4">
         <div class="bg-white p-4 p-md-5 rounded shadow-sm">
-          <form>
+          <form (ngSubmit)="save()"> 
             <div class="mb-3">
               <label for="nome" class="form-label">Nome:</label>
               <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="current.nome" required/>
@@ -86,6 +86,22 @@
             </div>
           </form>
         </div>
+      </div>
+
+      <!--Messaggio di errore test 1-->
+      <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="errorModalLabel">Errore</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Errore. Nome utente già presente. Provare con un altra combinazione</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+            </div>
       </div>
 
     <!-- Bottone Salva -->
