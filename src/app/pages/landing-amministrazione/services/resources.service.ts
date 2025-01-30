@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ResourcesService {
-  BASE_URL: string = 'http://localhost:8080/api/amministrazione-service/v1';
+  BASE_URL: string = 'http://localhost:8080/api/amministrazione-service';
 
   constructor(private http: HttpClient) {}
 
@@ -29,5 +29,9 @@ export class ResourcesService {
 
   doSingle(id: number): Observable<Resource> {
     return this.http.get<Resource>(`${this.BASE_URL}/resources/${id}`);
+  }
+
+  doExport(): Observable<HttpResponse<Resource>> {
+    return this.http.get<HttpResponse<Resource>>(`${this.BASE_URL}/resources/export`);
   }
 }
