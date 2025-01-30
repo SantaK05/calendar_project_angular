@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SlotsService {
-  BASE_URL: string = 'http://localhost:8080/api/amministrazione-service';
+  BASE_URL: string = 'http://localhost:8080/amministrazione';
 
   constructor(private http: HttpClient) {}
 
