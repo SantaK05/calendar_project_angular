@@ -17,19 +17,19 @@ import { ForgotPasswordComponent } from './pages/landing-autenticazione/forgot-p
 
 export const routes: Routes = [
   { path: '', redirectTo: '/calendario', pathMatch: 'full' },
-    {
-        path: 'calendario', component: LandingCalendarioComponent,
-        children: [
-            { path: ':year/:month/:day', component: CellComponent },
-        ]
-    },
+  {
+    path: 'calendario', component: LandingCalendarioComponent,
+    children: [
+      { path: ':year/:month/:day', component: CellComponent },
+    ]
+  },
   { path: 'email-list', component: EmailListComponent },
-    { path: 'template', component: TemplateComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: 'resetpassword/:uuid', component: ResetPasswordComponent },
-    { path: 'verify/:uuid', component: VerifyEmailComponent },
-    { path: 'forgotpassword', component: ForgotPasswordComponent },
+  { path: 'template', component: TemplateComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'resetpassword/:uuid', component: ResetPasswordComponent },
+  { path: 'verify/:uuid', component: VerifyEmailComponent },
+  { path: 'forgotpassword', component: ForgotPasswordComponent },
   {
     path: 'amministrazione',
     component: LandingAmministrazioneComponent,
@@ -47,3 +47,4 @@ export const routes: Routes = [
       { path: 'slots/:id/edit', component: SlotEditComponent },
     ],
   },
+]

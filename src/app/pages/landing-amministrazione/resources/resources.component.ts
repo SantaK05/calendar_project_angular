@@ -54,4 +54,7 @@ export class ResourcesComponent {
       this.isOpen = false;
     }
   }
+  exportExcel() {
+    this.resourceService.exportExcel();
+  }
 }

@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SlotsService {
-  BASE_URL: string = 'http://localhost:8400/v1';
+  BASE_URL: string = 'http://localhost:8080/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   doSave(data: Slot): Observable<Slot> {
     return this.http.post<Slot>(`${this.BASE_URL}/slots`, data);
@@ -30,5 +30,9 @@ export class SlotsService {
 
   doSingle(id: number): Observable<Slot> {
     return this.http.get<Slot>(`${this.BASE_URL}/slots/${id}`);
+  }
+
+  exportExcel(): void {
+    this.http.get(`${this.BASE_URL}/slots/export`);
   }
 }

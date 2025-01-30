@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class ResourcesService {
   BASE_URL: string = 'http://localhost:8400/v1';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   doSave(data: Resource): Observable<Resource> {
     return this.http.post<Resource>(`${this.BASE_URL}/resources`, data);
@@ -30,4 +30,9 @@ export class ResourcesService {
   doSingle(id: number): Observable<Resource> {
     return this.http.get<Resource>(`${this.BASE_URL}/resources/${id}`);
   }
+
+  exportExcel(): void {
+    this.http.get(`${this.BASE_URL}/resources/export`);
+  }
+
 }
