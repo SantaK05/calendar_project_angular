@@ -31,10 +31,12 @@ export class LoginService {
   subject = new Subject<void>();
 
   checkTokenIsExpired() {
-    let jwtJSON = localStorage.getItem("jwt")
-    if (jwtJSON) {
-      let jwt = JSON.parse(jwtJSON);
-      if (jwt.exp - Math.floor(Date.now() / 1000) <= 0) {
+    let jwt = localStorage.getItem("jwt")
+    if (jwt) {
+      let payload = jwt.split('.')[1];
+      let decodedPayload = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+      let jwtJSON = JSON.parse(decodedPayload);
+      if (jwtJSON.exp - Math.floor(Date.now() / 1000) <= 0) {
         //token scaduto
         localStorage.removeItem("jwt");
       }
