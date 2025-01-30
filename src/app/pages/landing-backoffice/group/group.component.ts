@@ -151,7 +151,7 @@ export class GroupsComponent {
     if (this.selectedUser.has(user.id)) {
       this.selectedUser.delete(user.id);
     } else {
-      this.selectedUser.add(user.id); 
+      this.selectedUser.add(user.id);
     }
   }
 
@@ -162,7 +162,7 @@ export class GroupsComponent {
         user.username.toLowerCase().includes(term)
       );
     } else {
-      this.filteredUsers = [...this.avaibleUsers];
+      this.filteredUsers = this.avaibleUsers;
     }
   }
 }
