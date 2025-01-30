@@ -8,6 +8,10 @@ import { UserComponent } from "./user/user.component";
 
 export const BackofficeRoutes: Routes = [
   {
+    path:'',
+    component:ListUserComponent,
+  },
+  {
     path: 'user-list',
     component: ListUserComponent,
   },
