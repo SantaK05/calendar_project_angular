@@ -13,6 +13,7 @@ import { filter } from 'rxjs';
 export class AppComponent {
 
   showBar = false;
+  isAmministrazione: boolean = false;
 
   constructor(private router: Router) {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))

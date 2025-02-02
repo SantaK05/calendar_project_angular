@@ -1,52 +1,54 @@
 <main class="ml-3 mr-3">
   <div class="flex justify-between w-full items-baseline">
-    <h1 class="text-3xl font-bold mt-7">Slot di Prenotazione</h1>
-    <button class="bg-zinc-950 h-11 pr-3 pl-3 text-white rounded-md" [routerLink]="['/amministrazione/slots/null/edit']">
-      Nuovo Slot
-    </button>
-    <button class="bg-zinc-950 h-11 pr-3 pl-3 text-white rounded-md" (click)="openSucsessExportModal()">
-      Task Export
-    </button>
+    <h1 class="text-xl font-bold mt-3">Slot di Prenotazione</h1>
+    <div>
+      <button class="bg-zinc-950 h-9 pr-3 pl-3 mr-2 text-white rounded-md" [routerLink]="['/amministrazione/slots/null/edit']">
+        Nuovo Slot
+      </button>
+      <button class="bg-zinc-950 h-9 pr-3 pl-3 text-white rounded-md" (click)="openSucsessExportModal()">
+        Task Export
+      </button>
+    </div>
   </div>
 
   <table class="w-full caption-bottom text-sm">
     <thead class="[&_tr]:border-b">
       <tr>
-        <th class="h-12 px-4 text-left align-middle font-medium">ID</th>
-        <th class="h-12 px-4 text-left align-middle font-medium">Titolo</th>
-        <th class="h-12 px-4 text-left align-middle font-medium">
+        <th class="h-12 px-1 text-left align-middle font-medium">ID</th>
+        <th class="h-12 px-1 text-left align-middle font-medium">Titolo</th>
+        <th class="h-12 px-1 text-left align-middle font-medium">
           Data inizio
         </th>
-        <th class="h-12 px-4 text-left align-middle font-medium">Data fine</th>
-        <th class="h-12 px-4 text-left align-middle font-medium">Note</th>
-        <th class="h-12 px-4 text-left align-middle font-medium">Libero</th>
-        <th class="h-12 px-4 text-left align-middle font-medium">Risorsa</th>
-        <th class="h-12 px-4 text-left align-middle font-medium">Azioni</th>
+        <th class="h-12 px-1 text-left align-middle font-medium">Data fine</th>
+        <th class="h-12 px-1 text-left align-middle font-medium">Note</th>
+        <th class="h-12 px-1 text-left align-middle font-medium">Libero</th>
+        <th class="h-12 px-1 text-left align-middle font-medium">Risorsa</th>
+        <th class="h-12 px-1 text-left align-middle font-medium">Azioni</th>
       </tr>
     </thead>
     <tbody class="[&_tr:last-child]:border-0">
       @for (slot of arraySlot; track $index) {
       <tr>
-        <td class="p-4 align-middle">{{ slot.id }}</td>
-        <td class="p-4 align-middle">{{ slot.title }}</td>
-        <td class="p-4 align-middle">{{ slot.dateStart | date: 'dd/MM/yyyy hh:mm' }}</td>
-        <td class="p-4 align-middle">{{ slot.dateEnd | date: 'dd/MM/yyyy hh:mm' }}</td>
-        <td class="p-4 align-middle">{{ slot.note }}</td>
-        <td class="p-4 align-middle">
+        <td class="p-1 align-middle">{{ slot.id }}</td>
+        <td class="p-1 align-middle">{{ slot.title }}</td>
+        <td class="p-1 align-middle">{{ slot.dateStart | date: 'dd/MM/yyyy hh:mm' }}</td>
+        <td class="p-1 align-middle">{{ slot.dateEnd | date: 'dd/MM/yyyy hh:mm' }}</td>
+        <td class="p-1 align-middle">{{ slot.note }}</td>
+        <td class="p-1 align-middle">
           {{ slot.free ? "Libero" : "Non libero" }}
         </td>
-        <td class="p-4 align-middle">
+        <td class="p-1 align-middle">
           {{ slot.resource.title }}
         </td>
-        <td class="p-4 align-middle flex">
+        <td class="p-1 align-middle flex">
           <button
-            class="bg-white border rounded-md inline-flex h-9 items-center px-3 mr-2"
+            class="bg-zinc-950 h-8 pr-3 pl-3 mr-2 text-white rounded-md"
             [routerLink]="['/amministrazione/slots', slot.id, 'edit']"
           >
             Modifica
           </button>
           <button
-            class="bg-red-500 rounded-md text-white inline-flex h-9 items-center px-3 mr-2"
+            class="bg-red-500 h-8 pr-3 pl-3 mr-2 text-white rounded-md"
             (click)="openModal(slot.id)"
           >
             Elimina
@@ -62,7 +64,7 @@
   [style.display]="!isOpen ? 'none' : 'flex'"
   class="bg-black/80 absolute left-0 top-0 w-full h-full flex justify-center items-center"
 >
-  <div class="w-2/4 rounded-lg bg-white p-6">
+  <div class="w-2/4 rounded-lg bg-white p-6 text-black">
     <div class="flex flex-col space-y-2 text-left">
       <h1 class="text-lg font-semibold">
         Sei sicuro di voler eliminare questo slot?
@@ -93,7 +95,7 @@
   [style.display]="!isExportComplete ? 'none' : 'flex'"
   class="bg-black/80 absolute left-0 top-0 w-full h-full flex justify-center items-center"
 >
-  <div class="w-2/4 rounded-lg bg-white p-6">
+  <div class="w-2/4 rounded-lg bg-white p-6 text-black">
     <div class="flex flex-col space-y-2 text-left">
       <h1 class="text-lg font-semibold">
         Sei sicuro di voler eseguire l'export sul server?
