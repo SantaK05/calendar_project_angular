@@ -53,6 +53,6 @@ export const routes: Routes = [
       { path: 'resources/:id/edit', component: ResourceEditComponent },
       { path: 'slots/:id/edit', component: SlotEditComponent },
     ],
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
 ];

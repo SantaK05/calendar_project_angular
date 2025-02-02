@@ -1,13 +1,15 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Slot } from '../models/slot.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { slots } from '../moks/slots.mok';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SlotsService {
   BASE_URL: string = 'http://localhost:8080/amministrazione';
+  slots = slots;
 
   constructor(private http: HttpClient) {}
 
@@ -25,11 +27,13 @@ export class SlotsService {
   }
 
   doAll(): Observable<Slot[]> {
-    return this.http.get<Slot[]>(`${this.BASE_URL}/slots`);
+    //return this.http.get<Slot[]>(`${this.BASE_URL}/slots`);
+    return of(this.slots);
   }
 
   doSingle(id: number): Observable<Slot> {
-    return this.http.get<Slot>(`${this.BASE_URL}/slots/${id}`);
+    //return this.http.get<Slot>(`${this.BASE_URL}/slots/${id}`);
+    return of(this.slots.find(s => s.id === id)!)
   }
 
   doExport(): Observable<HttpResponse<Slot>> {

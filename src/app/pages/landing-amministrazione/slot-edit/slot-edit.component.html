@@ -1,104 +1,113 @@
 <main class="ml-3 mr-3">
-  <h1 class="text-3xl font-bold mt-7 mb-7">{{currentTypeOfFrom}} Slot di Prenotazione</h1>
+  <h1 class="text-3xl font-bold mt-7 mb-7">
+    {{ currentTypeOfFrom }} Slot di Prenotazione
+  </h1>
 
   @if (slotForm) {
   <form [formGroup]="slotForm" (ngSubmit)="saveSlot()">
-    <div class="flex flex-col mb-5">
-      <label class="font-medium" for="id">ID</label>
-      <input
-        class="font-medium border-2 rounded-md px-3 py-2"
-        type="number"
-        name="id"
-        id="id"
-        formControlName="id"
-      />
-    </div>
-    <div class="flex flex-col mb-5">
-      <label class="font-medium" for="title">Titolo</label>
-      <input
-        class="font-medium border-2 rounded-md px-3 py-2"
-        type="text"
-        name="title"
-        id="title"
-        formControlName="title"
-      />
-    </div>
-    <div class="flex flex-col mb-5">
-      <label class="font-medium" for="dateStart">Data Inizio</label>
-      <input
-        class="font-medium border-2 rounded-md px-3 py-2"
-        type="datetime-local"
-        name="dateStart"
-        id="dateStart"
-        formControlName="dateStart"
-      />
-    </div>
-    <div class="flex flex-col mb-5">
-      <label class="font-medium" for="dateEnd">Data Fine</label>
-      <input
-        class="font-medium border-2 rounded-md px-3 py-2"
-        type="datetime-local"
-        name="dateEnd"
-        id="dateEnd"
-        formControlName="dateEnd"
-      />
-    </div>
-    <div class="flex flex-col mb-5">
-      <label class="font-medium" for="note">Note</label>
-      <input
-        class="font-medium border-2 rounded-md px-3 py-2"
-        type="text"
-        name="note"
-        id="note"
-        formControlName="note"
-      />
-    </div>
-    <div class="flex flex-col mb-5">
-      <label class="font-medium" for="free">Libero</label>
-      <select
-        class="font-medium border-2 rounded-md px-3 py-2"
-        type="text"
-        name="free"
-        id="free"
-        formControlName="free"
-      >
-        <option value="true">Si</option>
-        <option value="false">No</option>
-      </select>
-    </div>
-    <div class="flex flex-col mb-5">
-      <label class="font-medium" for="resource">Risorse</label>
-      <input
-        #resSearc
-        class="font-medium border-2 rounded-md px-3 py-2"
-        type="text"
-        name="resource"
-        id="resource"
-        formControlName="resource"
-        autocomplete="off"
-        (keyup)="searchResource()"
-      />
-      <div
-        class="p-3 border-2 rounded-md mt-2"
-        [hidden]="autocompleteClosed === true"
-      >
-        @for (res of resourcesResults; track $index) {
-        <div
-          class="hover:bg-slate-100 p-2 rounded-md"
-          (click)="setSelectedValue(res)"
-        >
-          {{ res.title }}
-        </div>
-        }
+    <div class="flex flex-row justify-between">
+      <div class="flex flex-col mb-2 w-full mr-4">
+        <label for="id">ID</label>
+        <input
+          class="rounded-md px-2 py-2 text-black"
+          type="number"
+          name="id"
+          id="id"
+          formControlName="id"
+        />
+      </div>
+      <div class="flex flex-col mb-2 w-full">
+        <label for="title">Titolo</label>
+        <input
+          class="rounded-md px-2 py-2 text-black"
+          type="text"
+          name="title"
+          id="title"
+          formControlName="title"
+        />
       </div>
     </div>
 
+    <div class="flex flex-row justify-between">
+      <div class="flex flex-col mb-2 w-full mr-4">
+        <label for="dateStart">Data Inizio</label>
+        <input
+          class="rounded-md px-2 py-2 text-black"
+          type="datetime-local"
+          name="dateStart"
+          id="dateStart"
+          formControlName="dateStart"
+        />
+      </div>
+      <div class="flex flex-col mb-2 w-full mr-4">
+        <label for="dateEnd">Data Fine</label>
+        <input
+          class="rounded-md px-2 py-2 text-black"
+          type="datetime-local"
+          name="dateEnd"
+          id="dateEnd"
+          formControlName="dateEnd"
+        />
+      </div>
+    </div>
+
+    <div class="flex flex-row justify-between">
+      <div class="flex flex-col mb-2 w-full mr-4">
+        <label for="note">Note</label>
+        <input
+          class="rounded-md px-2 py-2 text-black"
+          type="text"
+          name="note"
+          id="note"
+          formControlName="note"
+        />
+      </div>
+      <div class="flex flex-col mb-2 w-full mr-4">
+        <label for="free">Libero</label>
+        <select
+          class="rounded-md px-2 py-2 text-black"
+          type="text"
+          name="free"
+          id="free"
+          formControlName="free"
+        >
+          <option value="true">Si</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div class="flex flex-col mb-2 w-full">
+        <label for="resource">Risorse</label>
+        <input
+          #resSearc
+          class="rounded-md px-2 py-2 text-black"
+          type="text"
+          name="resource"
+          id="resource"
+          formControlName="resource"
+          autocomplete="off"
+          (keyup)="searchResource()" (focusout)="closeAutoComplete()"
+        />
+        <div
+          class="p-3 border-2 rounded-md mt-2"
+          [hidden]="autocompleteClosed === true"
+        >
+          @for (res of resourcesResults; track $index) {
+          <div
+            class="hover:border-2 p-2 rounded-md"
+            (click)="setSelectedValue(res)"
+          >
+            {{ res.title }}
+          </div>
+          }
+        </div>
+      </div>
+    </div>
     <button
-      class="bg-zinc-950 h-11 px-6 text-white rounded-md mb-32"
+      class="bg-zinc-950 h-9 pr-3 pl-3 mr-2 text-white rounded-md"
       type="submit"
       [disabled]="!slotForm.valid"
     >
-      {{currentTypeOfFrom}}
+      {{ currentTypeOfFrom }}
     </button>
   </form>
   }
