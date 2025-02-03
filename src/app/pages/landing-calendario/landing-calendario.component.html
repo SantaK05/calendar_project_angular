@@ -82,10 +82,10 @@
                                             </button>
                                         </div>
 
-                                        @for (prenotazione of calendario?.listaCelle?.[giornoIndex + (settIndex * 7)]?.prenotazioneList; track $index) {
+                                        @for (prenotazione of calendario?.listaCelle?.[giornoIndex + (settIndex * 7)]?.prenotazioneList?.slice(0, 4); track $index) {
                                             @if ($index < 3) {
                                                 <div class="prenotazione-cella" id = "idDiv">
-                                                    {{ prenotazione.oraInizio.substring(11) }} - {{ prenotazione.oraFine.substring(11) }} - {{ getSlot(calendario?.listaCelle?.[giornoIndex + (settIndex * 7)]?.slotPrenotazioneList, prenotazione.idSlotPrenotazione)?.risorsa?.nome }}
+                                                        {{ prenotazione.oraInizio.substring(11) }} - {{ prenotazione.oraFine.substring(11) }} - {{ getResourceTitle(calendario?.listaCelle?.[giornoIndex + (settIndex * 7)]?.slotPrenotazioneList, prenotazione.idSlotPrenotazione) }}
                                                 </div>
                                             
                                             } @else {

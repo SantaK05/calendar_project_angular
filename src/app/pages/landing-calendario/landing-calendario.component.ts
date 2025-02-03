@@ -122,11 +122,7 @@ export class LandingCalendarioComponent {
         this.visMenu = !this.visMenu;
     }
 
-    getSlot(listSlot: SlotPrenotazioneList[] | undefined, id: number) {
-        console.log(id);
-        console.log(listSlot);
-        return listSlot?.find(slot => slot.id === id);
+    getResourceTitle(listSlot: SlotPrenotazioneList[] | undefined, id: number) {
+        return listSlot?.find(slot => slot.id === id)?.resource.title;
     }
-
-    
 }

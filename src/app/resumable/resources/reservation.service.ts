@@ -13,9 +13,9 @@ export class ReservationService {
     listSlotPrenotazioni: Array<SlotPrenotazioneList> = [];
     private slotSingoloSubject = new BehaviorSubject<SlotPrenotazioneList>({
         id: 0,
-        risorsa: {
+        resource: {
             id: 0,
-            nome: '',
+            title: '',
             descrizione: '',
             prenotabile: false,
             accessoRemoto: true,
