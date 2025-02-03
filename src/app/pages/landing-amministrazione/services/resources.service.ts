@@ -1,13 +1,15 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Resource } from '../models/resource.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { resources } from '../moks/resources.mok';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ResourcesService {
   BASE_URL: string = 'http://localhost:8080/amministrazione';
+  resources = resources;
 
   constructor(private http: HttpClient) {}
 
@@ -24,11 +26,13 @@ export class ResourcesService {
   }
 
   doAll(): Observable<Resource[]> {
-    return this.http.get<Resource[]>(`${this.BASE_URL}/resources`);
+    //return this.http.get<Resource[]>(`${this.BASE_URL}/resources`);
+    return of(this.resources);
   }
 
   doSingle(id: number): Observable<Resource> {
-    return this.http.get<Resource>(`${this.BASE_URL}/resources/${id}`);
+    //return this.http.get<Resource>(`${this.BASE_URL}/resources/${id}`);
+    return of(this.resources.find(r => r.id === id)!);
   }
 
   doExport(): Observable<HttpResponse<Resource>> {

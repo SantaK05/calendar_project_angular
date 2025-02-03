@@ -27,7 +27,7 @@ export class SlotEditComponent {
   currentSlot: Slot | undefined;
   slotForm: FormGroup | undefined;
   findedResource: Resource | undefined;
-  autocompleteClosed: boolean = false;
+  autocompleteClosed: boolean = true;
 
   constructor(
     private router: ActivatedRoute,
@@ -182,4 +182,8 @@ export class SlotEditComponent {
     }
     return null; // Valido se non ci sono problemi
   };
+
+  closeAutoComplete() {
+    this.autocompleteClosed = true;
+  }
 }

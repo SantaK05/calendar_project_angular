@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { Calendario } from './interfaces/calendario';
+import { Calendario, SlotPrenotazioneList } from './interfaces/calendario';
 import { SquareBtnComponent } from "../../resumable/square-btn/square-btn.component";
 import { CalendarioService } from './calendario.service';
 import { CommonModule } from '@angular/common';
@@ -17,13 +17,13 @@ export class LandingCalendarioComponent {
     calendario!: Calendario | null;
     monthLong: string = '';
     year: number = 0;
-    listGiorni: Array<Map<number, [boolean[], number[]]>> = [];  
+    listGiorni: Array<Map<number, [boolean[], number[]]>> = [];
     
     tipoVis: string | null = '';
     date: string | null = '';
 
     showTabRes: boolean = false;
-
+    
     constructor(private readonly service: CalendarioService, private readonly router: Router) { 
         this.service.calendario$.subscribe((updatedCalendario) => {
             if (this.tipoVis != "GIORNALIERO" || updatedCalendario?.provenienza !== 'visualBtn') {
@@ -121,4 +121,12 @@ export class LandingCalendarioComponent {
     selectVis(): void {
         this.visMenu = !this.visMenu;
     }
+
+    getSlot(listSlot: SlotPrenotazioneList[] | undefined, id: number) {
+        console.log(id);
+        console.log(listSlot);
+        return listSlot?.find(slot => slot.id === id);
+    }
+
+    
 }
