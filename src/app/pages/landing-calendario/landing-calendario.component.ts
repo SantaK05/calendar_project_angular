@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { AfterContentInit, Component, HostListener } from '@angular/core';
 import { Calendario, SlotPrenotazioneList } from './interfaces/calendario';
 import { SquareBtnComponent } from "../../resumable/square-btn/square-btn.component";
 import { CalendarioService } from './calendario.service';
@@ -13,7 +13,7 @@ import { CellComponent } from './cell/cell.component';
   styleUrl: './landing-calendario.component.css'
 })
 
-export class LandingCalendarioComponent {
+export class LandingCalendarioComponent implements AfterContentInit {
     calendario!: Calendario | null;
     monthLong: string = '';
     year: number = 0;
@@ -23,6 +23,27 @@ export class LandingCalendarioComponent {
     date: string | null = '';
 
     showTabRes: boolean = false;
+    
+    ngAfterContentInit() {this.bho();}
+    bho() : void {
+        var divs = document.getElementsByClassName('prenotazione-cella');
+        if (divs) {
+            for (let i = 0; i < divs.length; i++) {
+                (divs[i] as HTMLElement).style.backgroundColor = this.randomColor();
+            }
+        }
+    }
+    hexaColor = ["1", "2", "3", "4", "5", "6", "7"]; 
+    randomColor = () => {
+        let color = "#";
+        for (let i = 0; i < 4; i++) {
+        let randomIndex = Math.floor(Math.random() * this.hexaColor.length);
+        let randomHexa = this.hexaColor[randomIndex];
+        color += randomHexa;
+        }
+        color+= "FF";  
+        return color;
+    }
     
     constructor(private readonly service: CalendarioService, private readonly router: Router) { 
         this.service.calendario$.subscribe((updatedCalendario) => {
