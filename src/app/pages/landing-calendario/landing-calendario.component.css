@@ -161,6 +161,10 @@
     }
 }
 
+.main-rdp-head_cell {
+    text-align: center;
+}
+
 /* *alert message* */
 .alert-sec {
     position: absolute;
