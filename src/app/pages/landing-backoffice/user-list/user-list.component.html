@@ -1,9 +1,9 @@
 <div class="bg-user-list">
   <app-navbar></app-navbar>
-  <div class="row">
-    <div class="row justify-content-center mt-5" >
+  <div class="row mt-5">
+    <div class="row justify-content-center mt-5">
       <div class="col-md-10 col-lg-10 mb-4 ">
-        <div class="bg-white p-2 p-md-3 rounded shadow-sm" style="height: 452px; overflow-y: auto;">
+        <div class="bg-white p-2 p-md-3 rounded shadow-sm  ">
           <div class="row">
             <div class="col-auto">
               <a class="btn btn-primary mb-3 mt-3 ms-3" href="/backoffice/user">
@@ -17,7 +17,7 @@
               <input type="search" class="form-control mb-3 mt-3 me-3" [(ngModel)]="searchTerm" (input)="searchUsers()" style="width: 300px;" placeholder="🔍"/>
             </div>
           </div>
-          <div>
+          <div class="table-responsive">
             <table class="table table-striped w-100">
               <thead>
                 <tr>
@@ -27,7 +27,6 @@
                   <th class="fs-5">Username</th>
                   <th class="fs-5">Ruoli</th>
                   <th class="fs-5">Gruppi</th>
-                  <th class="fs-5">Azioni</th>
                 </tr>
               </thead>
               <tbody>
