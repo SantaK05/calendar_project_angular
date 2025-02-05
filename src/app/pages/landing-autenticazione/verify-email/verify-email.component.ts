@@ -22,7 +22,7 @@ export class VerifyEmailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.client.post("http://localhost:8082/verify/" + this.uuid, {}).pipe(
+    this.client.post("http://localhost:8080/auth/verify/" + this.uuid, {}).pipe(
       catchError((err) => {
         if (err.status == 401) {
           this.messageService.publishError("Link scaduto");

@@ -52,7 +52,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   confirm() {
-    this.client.post("http://localhost:8082/auth/resetPassword/update", { password: this.password, token: this.uuid }).pipe(
+    this.client.post("http://localhost:8080/auth/resetPassword/update", { password: this.password, token: this.uuid }).pipe(
       catchError((err) => {
         if (err.status == 401) {
           this.messageService.publishError("Link scaduto, ripeti la procedura di recupero password");
