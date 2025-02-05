@@ -60,6 +60,7 @@ export class RoleComponent {
         return this.service.findAll();
       }),
       tap((data: any) => {
+        this.messageService.publishInfo('Ruolo salvato con successo');
         this.router.navigateByUrl('/backoffice/role-list');
       })
     ).subscribe();
