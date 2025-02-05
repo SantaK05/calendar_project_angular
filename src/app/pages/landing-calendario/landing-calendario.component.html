@@ -67,9 +67,9 @@
                         </tr>
                     </thead>
                     <tbody class="main-rdp-body">
-                        @for (settimana of listGiorni; track $index) {
+                        @for (settimana of listGiorni; track $index; let settIndex = $index) {
                             <tr class="main-rdp-body_row">
-                                @for (giorno of settimana; track $index) {
+                                @for (giorno of settimana; track $index; let giornoIndex = $index) {
                                     <td class="main-rdp-cell">
                                         <div class="container-btn-svg">
                                             <button class="btn-svg"  
@@ -81,6 +81,22 @@
                                                 </div>
                                             </button>
                                         </div>
+
+                                        @for (prenotazione of calendario?.listaCelle?.[giornoIndex + (settIndex * 7)]?.prenotazioneList?.slice(0, 4); track $index) {
+                                            @if ($index < 3) {
+                                                <div #prenotazioneCella class="prenotazione-cella" id = "idDiv">
+                                                        {{ prenotazione.oraInizio.substring(11) }} - {{ prenotazione.oraFine.substring(11) }} - {{ getResourceTitle(calendario?.listaCelle?.[giornoIndex + (settIndex * 7)]?.slotPrenotazioneList, prenotazione.idSlotPrenotazione) }}
+                                                </div>
+                                            
+                                            } @else {
+                                                <div #prenotazioneCella style="text-align: center;" class="prenotazione-cella">
+                                                    <button style="background-color: transparent; color: white;"
+                                                    (click)="visualCella(giorno[0], giorno[1][1][0], giorno[1][1][1])">
+                                                        Altro...
+                                                    </button>
+                                                </div>
+                                            }
+                                        }
                                     </td>
                                 }
                             </tr>

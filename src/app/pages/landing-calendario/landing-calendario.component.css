@@ -161,9 +161,23 @@
     }
 }
 
+.main-rdp-head_cell {
+    text-align: center;
+}
+
 /* *alert message* */
 .alert-sec {
     position: absolute;
     bottom: 20px;
     right: 20px;
+}
+
+.prenotazione-cella {
+    /* background-color: rgb(2, 109, 204); */
+    color: white;
+    font-size: x-small;
+
+    border-radius: 5px;
+    padding-left: 3px;
+    margin-bottom: 2px;
 }

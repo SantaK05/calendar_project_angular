@@ -1,5 +1,5 @@
-import { Component, HostListener } from '@angular/core';
-import { Calendario } from './interfaces/calendario';
+import { AfterViewInit, Component, ElementRef, HostListener, QueryList, ViewChildren } from '@angular/core';
+import { Calendario, SlotPrenotazioneList } from './interfaces/calendario';
 import { SquareBtnComponent } from "../../resumable/square-btn/square-btn.component";
 import { CalendarioService } from './calendario.service';
 import { CommonModule } from '@angular/common';
@@ -13,17 +13,43 @@ import { CellComponent } from './cell/cell.component';
   styleUrl: './landing-calendario.component.css'
 })
 
-export class LandingCalendarioComponent {
+export class LandingCalendarioComponent implements AfterViewInit {
     calendario!: Calendario | null;
     monthLong: string = '';
     year: number = 0;
-    listGiorni: Array<Map<number, [boolean[], number[]]>> = [];  
+    listGiorni: Array<Map<number, [boolean[], number[]]>> = [];
     
     tipoVis: string | null = '';
     date: string | null = '';
 
     showTabRes: boolean = false;
 
+    ngAfterViewInit() {
+        this.applyColors();
+
+        this.divs.changes.subscribe(() => {
+            this.applyColors();
+        });
+    }
+
+    @ViewChildren('prenotazioneCella') divs!: QueryList<ElementRef>;
+
+    applyColors() : void {
+        if (this.divs) {
+            this.divs.forEach(div => {
+                div.nativeElement.style.backgroundColor = this.randomColor();
+            });
+        }
+    }
+
+    randomColor(): string {
+        const r = Math.floor(Math.random() * 100); // Rosso basso (0-100)
+        const g = Math.floor(Math.random() * 50);  // Verde molto basso (0-50)
+        const b = Math.floor(150 + Math.random() * 105); // Blu alto (150-255)
+
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+    
     constructor(private readonly service: CalendarioService, private readonly router: Router) { 
         this.service.calendario$.subscribe((updatedCalendario) => {
             if (this.tipoVis != "GIORNALIERO" || updatedCalendario?.provenienza !== 'visualBtn') {
@@ -120,5 +146,9 @@ export class LandingCalendarioComponent {
     
     selectVis(): void {
         this.visMenu = !this.visMenu;
+    }
+
+    getResourceTitle(listSlot: SlotPrenotazioneList[] | undefined, id: number) {
+        return listSlot?.find(slot => slot.id === id)?.resource.title;
     }
 }

@@ -17,7 +17,7 @@
 
         <div class="info">
             <label for="resource" class="form-lbl">Risorsa:</label>
-            <input type="text" id="resource" name="resource" class="form-inp" disabled [(ngModel)]="currentSlot.risorsa.nome">
+            <input type="text" id="resource" name="resource" class="form-inp" disabled [(ngModel)]="currentSlot.resource.title">
         </div>
 
         <!-- <div class="res-select">
@@ -42,12 +42,12 @@
 
         <div class="info">
             <label for="note" class="form-lbl">Note:</label>
-            <textarea rows="4" id="note" name="note" class="form-txt" disabled [(ngModel)]="currentSlot.risorsa.descrizione"></textarea>
+            <textarea rows="4" id="note" name="note" class="form-txt" disabled [(ngModel)]="currentSlot.resource.descrizione"></textarea>
         </div>
         
         <div class="info">
             <label for="descrizione" class="form-lbl">Descrizione:</label>
-            <textarea rows="3" id="descrizione" name="descrizione" class="form-txt" disabled [(ngModel)]="currentSlot.risorsa.descrizione"></textarea>
+            <textarea rows="3" id="descrizione" name="descrizione" class="form-txt" disabled [(ngModel)]="currentSlot.resource.descrizione"></textarea>
         </div>
 
         <div class="form-btn">

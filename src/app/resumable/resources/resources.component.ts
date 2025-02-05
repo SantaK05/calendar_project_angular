@@ -18,9 +18,9 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     listSlotPrenotazioni: Array<SlotPrenotazioneList> = [];
     currentSlot: SlotPrenotazioneList = {
         id: 0,
-        risorsa: {
+        resource: {
             id: 0,
-            nome: '',
+            title: '',
             descrizione: '',
             prenotabile: true,
             accessoRemoto: true,

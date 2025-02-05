@@ -1,12 +1,10 @@
 <div class="bg-group">
   <app-navbar></app-navbar>
-  <div class="container mt-5">
     <div class="mt-4 mb-4 d-flex justify-content-start">
       <button class="btn btn-primary">
         <a [routerLink]="'/backoffice/group-list'" class="text-white text-decoration-none">Indietro</a>
       </button>
     </div>
-  </div>
   <div class="container">
     <div class="row justify-content-center gap-5">
       <!-- Form per il nome e gli utenti -->
@@ -39,7 +37,7 @@
             <div>
               <label for="utenti" class="form-label">Utenti:</label>
             </div>
-            <div class="mb-5" style="height: 160px; overflow-y: auto;">
+            <div class="mb-5" style="height: 100px; overflow-y: auto;">
               @for (user of filteredUsers; track $index) {
               <div>
                 <input
