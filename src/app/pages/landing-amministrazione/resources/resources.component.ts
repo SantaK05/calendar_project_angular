@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { catchError, delay, switchMap, throwError, timer } from 'rxjs';
 import { Resource } from '../models/resource.model';
 import { ResourcesService } from '../services/resources.service';
@@ -49,12 +49,23 @@ export class ResourcesComponent {
 
   executeExport() {
     this.resourceService.doExport().subscribe((data) => {
-      if (data.ok) {
-        this.isExportComplete = false;
-      } else {
-        this.exportErrorMessage =
-          'Mi spiace ma il server ha riscontrato un errore, operazione non eseguita!';
-      }
+      const blob = new Blob([data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `export-risorse-${new Date().toLocaleDateString()}.xlsx`; // Nome personalizzato
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // Rilascia memoria
+      window.URL.revokeObjectURL(url);
+
+      this.isExportComplete = false;
     });
   }
 

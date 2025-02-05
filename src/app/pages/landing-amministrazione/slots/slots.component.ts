@@ -50,12 +50,23 @@ export class SlotsComponent {
 
   executeExport() {
     this.slotService.doExport().subscribe((data) => {
-      if (data.ok) {
-        this.isExportComplete = false;
-      } else {
-        this.exportErrorMessage =
-          'Mi spiace ma il server ha riscontrato un errore, operazione non eseguita!';
-      }
+      const blob = new Blob([data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `export-slots-${new Date().toLocaleDateString()}.xlsx`; // Nome personalizzato
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // Rilascia memoria
+      window.URL.revokeObjectURL(url);
+
+      this.isExportComplete = false;
     });
   }
 
