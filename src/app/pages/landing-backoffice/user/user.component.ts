@@ -1,24 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Group, Stato, User, Role } from '../../landing-calendario/interfaces/backoffice';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { catchError, of, switchMap, tap, throwError } from 'rxjs';
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { GroupService } from '../services/group.service';
 import { MessageService } from '../services/message.service';
 import { RoleService } from '../services/role.service';
 import { UserService } from '../services/user.service';
+import { MessageComponent } from "../message/message.component";
 
 @Component({
   selector: 'app-user',
   standalone:true,
-  imports: [FormsModule, CommonModule, NavbarComponent, RouterModule],
+  imports: [FormsModule, CommonModule, NavbarComponent, RouterModule, MessageComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
 })
 export class UserComponent {
+  @ViewChild('errorModal') errorModal: any;
+
   avaibleRoles: Role[] = [];
   avaibleGroups: Group[] = [];
   groups: any[] = [];
@@ -42,6 +45,7 @@ export class UserComponent {
   selectedRole: Set<number> = new Set();
   selectedGroup: Set<number> = new Set();
   isEditing: boolean = false;
+  errorMessage: string = '';
 
   constructor(
     private service: UserService,
@@ -49,7 +53,8 @@ export class UserComponent {
     private groupService: GroupService,
     private roleService: RoleService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private modalService: NgbModal
   ) {
     this.initializeComponent();
   }
@@ -92,20 +97,12 @@ export class UserComponent {
     });
   }
 
-  save() {
-
-    if (
-      this.current.nome == '' ||
-      this.current.cognome == '' ||
-      this.current.username == '' ||
-      this.current.password == '' ||
-      this.current.email == '' ||
-      this.current.gruppi == null||
-      this.current.ruoli == null
-    ) {
+  save(userForm: any) {
+    if (userForm.invalid) {
       this.messageService.publishError('Errore salvataggio dati.');
       return;
     }
+
     this.current.ruoli = this.avaibleRoles.filter((role) =>
       this.selectedRole.has(role.id)
     );
@@ -117,14 +114,28 @@ export class UserComponent {
     this.service
       .save(this.current)
       .pipe(
-        switchMap((response) => {
-          return this.service.findAll();
-        }),
-        tap((data: any) => {
-          this.router.navigateByUrl('/backoffice/user-list');
+        catchError((err) => {
+          if (err.status == 409) {
+            if (err.error.message.includes('username')) {
+              this.errorMessage = 'L\'username inserito esiste già nel database. Per favore, scegli un altro username.';
+            } else if (err.error.message.includes('email')) {
+              this.errorMessage = 'L\'email inserita esiste già nel database. Per favore, scegli un\'altra email.';
+            } else {
+              this.errorMessage = 'Errore durante il salvataggio dei dati.';
+            }
+            this.messageService.publishError(this.errorMessage);
+            this.modalService.open(this.errorModal);
+          } else {
+            console.error('Errore durante il salvataggio:', err);
+          }
+          return throwError(() => err);
         })
       )
-      .subscribe();
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/backoffice/user-list']);
+        }
+      });
   }
 
   toggleRole(role: any) {

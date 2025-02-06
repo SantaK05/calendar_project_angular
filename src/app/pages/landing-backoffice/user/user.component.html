@@ -1,96 +1,107 @@
-<div class="bg-user">
+<div class="bg-user" style="height: 160px; overflow-y: auto; scrollbar-width: none;" >
   <app-navbar></app-navbar>
-    <div class="mt-4 mb-4 d-flex justify-content-start">
-      <button class="btn btn-primary">
-        <a [routerLink]="'/backoffice/user-list'" class="text-white text-decoration-none">Indietro</a>
+  <div class="container mt-3">
+    <div class="mb-4 d-flex justify-content-start">
+      <button class="btn btn-primary btn-md">
+        <a href="/backoffice/user-list" class="text-white text-decoration-none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+          </svg>
+        </a>
       </button>
     </div>
-  <div class="container">
-    <div class="row">
-      <!-- Form per nome, cognome, email, password e username -->
-      <div class="col-md-4 mb-4">
-        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
-          <form>
-            <div class="mb-3">
-              <label for="nome" class="form-label">Nome:</label>
-              <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="current.nome" required/>
+    <div class="container">
+      <form #userForm="ngForm" (ngSubmit)="save(userForm)">
+        <div class="row">
+          <!-- Form per nome, cognome, email, password e username -->
+          <div class="col-md-4 mb-4">
+            <div class="bg-secondary p-4 p-md-5 rounded shadow-sm">
+              <div class="mb-3">
+                <label for="nome" class="form-label text-white">Nome:</label>
+                <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="current.nome"/>
+              </div>
+              <div class="mb-3">
+                <label for="cognome" class="form-label text-white">Cognome: </label>
+                <input type="text" id="cognome" name="cognome" class="form-control" [(ngModel)]="current.cognome" />
+              </div>
+              <div class="mb-3">
+                <label for="username" class="form-label text-white">Username: <span style="color: red;">*</span></label>
+                <input type="text" id="username" name="username" class="form-control" [(ngModel)]="current.username" required/>
+                <div *ngIf="userForm.submitted && !userForm.controls['username']?.valid" class="text-danger error-message">
+                  Username obbligatorio.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label text-white">Email: <span style="color: red;">*</span></label>
+                <input type="email" id="email" name="email" class="form-control" [(ngModel)]="current.email" required/>
+                <div *ngIf="userForm.submitted && !userForm.controls['email']?.valid" class="text-danger error-message">
+                  E-mail obbligatoria.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label text-white">Password: <span style="color: red;">*</span></label>
+                <input type="password" id="password" name="password" class="form-control" [(ngModel)]="current.password" required/>
+                <div *ngIf="userForm.submitted && !userForm.controls['password']?.valid" class="text-danger error-message">
+                  Password obbligatoria.
+                </div>
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="cognome" class="form-label">Cognome:</label>
-              <input type="text" id="cognome" name="cognome" class="form-control" [(ngModel)]="current.cognome" required/>
+          </div>
+      
+          <!-- Form per l'inserimento dei ruoli -->
+          <div class="col-md-4 mb-4">
+            <div class="bg-secondary p-4 p-md-5 rounded shadow-sm">
+              <div>
+                <h5><label for="ruoli" class="form-label text-white">Ruoli:</label></h5>
+              </div>
+              <div class="mb-3" *ngFor="let role of avaibleRoles">
+                <input
+                  type="checkbox"
+                  id="ruoli-{{ role.id }}"
+                  name="ruoli"
+                  class="form-check-input"
+                  [checked]="selectedRole.has(role.id)"
+                  (change)="toggleRole(role)"
+                  required
+                />
+                <label class="form-check-label ms-2 text-white" for="ruoli-{{ role.id }}">
+                  {{ role.nome }}
+                </label>
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email:</label>
-              <input type="text" id="email" name="email" class="form-control" [(ngModel)]="current.email" required/>
+          </div>
+
+          <!-- Form per l'inserimento dei gruppi -->
+          <div class="col-md-4 mb-4">
+            <div class="bg-secondary p-4 p-md-5 rounded shadow-sm">
+              <div>
+                <h5><label for="gruppi" class="form-label text-white">Gruppi:</label></h5>
+              </div>
+              <div class="mb-3" *ngFor="let group of avaibleGroups">
+                <input
+                  type="checkbox"
+                  id="gruppi-{{ group.id }}"
+                  name="gruppi"
+                  class="form-check-input"
+                  [checked]="selectedGroup.has(group.id)"
+                  (change)="toggleGroup(group)"
+                  required
+                />
+                <label class="form-check-label ms-2 text-white" for="gruppi-{{ group.id }}">
+                  {{ group.nome }}
+                </label>
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password:</label>
-              <input type="password" id="password" name="password" class="form-control" [(ngModel)]="current.password" required/>
-            </div>
-            <div class="mb-3">
-              <label for="username" class="form-label">Username:</label>
-              <input type="text" id="username" name="username" class="form-control" [(ngModel)]="current.username" required/>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
 
-      <!-- Form per l'inserimento dei ruoli -->
-      <div class="col-md-4 mb-4">
-        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
-          <form>
-            <div>
-              <label for="ruoli" class="form-label">Ruoli:</label>
-            </div>
-
-            <div class="mb-3" *ngFor="let role of avaibleRoles">
-              <input
-                type="checkbox"
-                id="ruoli-{{ role.id }}"
-                name="ruoli"
-                class="form-check-input"
-                [checked]="selectedRole.has(role.id)"
-                (change)="toggleRole(role)"
-                required
-              />
-              <label class="form-check-label ms-2" for="ruoli-{{ role.id }}">
-                {{ role.nome }}
-              </label>
-            </div>
-          </form>
+        <!-- Bottone di salvataggio -->
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-center">
+            <button type="submit" class="btn btn-success w-100 btn-lg">Salva</button>
+          </div>
         </div>
-      </div>
-
-      <!-- Form per l'inserimento dei gruppi -->
-      <div class="col-md-4 mb-4">
-        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
-          <form>
-            <div>
-              <label for="gruppi" class="form-label">Gruppi:</label>
-            </div>
-            <div class="mb-3" *ngFor="let group of avaibleGroups">
-              <input
-                type="checkbox"
-                id="gruppi-{{ group.id }}"
-                name="gruppi"
-                class="form-check-input"
-                [checked]="selectedGroup.has(group.id)"
-                (change)="toggleGroup(group)"
-                required
-              />
-              <label class="form-check-label ms-2" for="gruppi-{{ group.id }}">
-                {{ group.nome }}
-              </label>
-            </div>
-          </form>
-        </div>
-      </div>
-
-    <!-- Bottone Salva -->
-    <div class="row mt-4">
-      <div class="col-12 text-center">
-        <button class="btn btn-primary btn-lg w-50  mb-5" type="button" (click)="save()">Salva</button>
-      </div>
+      </form>
     </div>
   </div>
 </div>

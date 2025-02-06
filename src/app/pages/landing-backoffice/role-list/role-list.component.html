@@ -1,13 +1,13 @@
-<div class="bg-dark text-light min-vh-100 bg-role-list">
+<div class="bg-role-list" style="height: 160px; overflow-y: auto; scrollbar-width: none;">
   <app-navbar></app-navbar>
   <div class="row mt-3">
     <div class="row justify-content-center mt-3">
-      <div class="col-md-12 col-lg-8 mb-3">
+      <div class="col-md-12 col-lg-10 mb-3">
         <div class="bg-secondary p-2 p-md-3 rounded shadow-sm">
           <div class="row">
             <div class="col-auto">
-              <a class="btn btn-sm btn-dark mt-2 mb-2 ms-2" [routerLink]="'/backoffice/role'">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-add-fill" viewBox="0 0 512 512">
+              <a class="btn btn-xs btn-primary mt-2 mb-2 ms-2" [routerLink]="'/backoffice/role'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-add-fill" viewBox="0 0 512 512">
                   <path d="M96 0C60.7 0 32 28.7 32 64l0 384c0 35.3 28.7 64 64 64l288 0c35.3 0 64-28.7 64-64l0-384c0-35.3-28.7-64-64-64L96 0zM208 288l64 0c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16l-192 0c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/>
                 </svg>
               </a>
@@ -16,23 +16,23 @@
               <input type="search" class="form-control form-control-sm mb-2 mt-2 me-2 bg-dark text-light border-light" [(ngModel)]="searchTerm" (input)="searchRole()" style="width: 200px" placeholder="🔍"/>
             </div>
           </div>
-          <table class="table table-dark table-striped table-sm">
+          <table class="table table-dark table-striped table-sm w-100" style="max-height: 70vh; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ffffff #6C757D;">
             <thead>
               <tr>
-                <th class="fs-6">Id</th>
-                <th class="fs-6">Nome</th>
-                <th class="fs-6">Descrizione</th>
-                <th class="fs-6 text-end">Azioni</th>
+                <th class="text-center">Id</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Descrizione</th>
+                <th class="text-center">Azioni</th>
               </tr>
             </thead>
             <tbody>
               @for(role of filteredRole; track $index){
                 <tr>
-                  <td class="fs-7">{{ role.id }}</td>
-                  <td class="fs-7">{{ role.nome }}</td>
-                  <td class="fs-7">{{ role.descrizione }}</td>
-                  <td class="fs-7 text-end">
-                    <button class="btn btn-xs btn-outline-light me-2" type="button" (click)="edit(role)">
+                  <td class="text-center">{{ role.id }}</td>
+                  <td class="text-center">{{ role.nome }}</td>
+                  <td class="text-center">{{ role.descrizione }}</td>
+                  <td class="text-center">
+                    <button class="btn btn-xs btn-outline-primary me-2" type="button" (click)="edit(role)">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
