@@ -48,7 +48,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     private subscription!: Subscription;
 
 
-    constructor(private readonly service: ReservationService, private readonly cell: CellComponent, private readonly cal: LandingCalendarioComponent) { }
+    constructor(private readonly service: ReservationService) { }
     
     ngOnInit(): void {
         this.listSlotPrenotazioni = this.service.listSlotPrenotazioni;
@@ -71,9 +71,6 @@ export class ResourcesComponent implements OnInit, OnDestroy {
                 console.log('salvataggio')
             })
         ).subscribe()
-
-        this.cell.showTabRes = false;
-        this.cal.showTabRes = false;
     }
 
     onSlotChange() {

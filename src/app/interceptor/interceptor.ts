@@ -17,7 +17,6 @@ export class Interceptor implements HttpInterceptor {
 
     // Aggiungi il token alle richieste non escluse
     const token = localStorage.getItem('jwt');
-    console.log(`token: ${token}`);
 
     if (token) {
       request = request.clone({

@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, HostListener } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, ElementRef, HostListener, QueryList, ViewChildren } from '@angular/core';
 import { Calendario, SlotPrenotazioneList } from './interfaces/calendario';
 import { SquareBtnComponent } from "../../resumable/square-btn/square-btn.component";
 import { CalendarioService } from './calendario.service';
@@ -13,7 +13,7 @@ import { CellComponent } from './cell/cell.component';
   styleUrl: './landing-calendario.component.css'
 })
 
-export class LandingCalendarioComponent implements AfterContentInit {
+export class LandingCalendarioComponent implements AfterViewInit, AfterContentChecked {
     calendario!: Calendario | null;
     monthLong: string = '';
     year: number = 0;
@@ -23,29 +23,57 @@ export class LandingCalendarioComponent implements AfterContentInit {
     date: string | null = '';
 
     showTabRes: boolean = false;
-    
-    ngAfterContentInit() {this.bho();}
-    bho() : void {
-        var divs = document.getElementsByClassName('prenotazione-cella');
-        if (divs) {
-            for (let i = 0; i < divs.length; i++) {
-                (divs[i] as HTMLElement).style.backgroundColor = this.randomColor();
-            }
+
+    ngAfterViewInit() {
+        this.applyColors();
+
+        this.divs.changes.subscribe(() => {
+            this.applyColors();
+        });
+    }
+
+    @ViewChildren('prenotazioneCella') divs!: QueryList<ElementRef>;
+
+    applyColors() : void {
+        if (this.divs) {
+            this.divs.forEach(div => {
+                div.nativeElement.style.backgroundColor = this.randomColor();
+            });
         }
     }
-    hexaColor = ["1", "2", "3", "4", "5", "6", "7"]; 
-    randomColor = () => {
-        let color = "#";
-        for (let i = 0; i < 4; i++) {
-        let randomIndex = Math.floor(Math.random() * this.hexaColor.length);
-        let randomHexa = this.hexaColor[randomIndex];
-        color += randomHexa;
+
+    randomColor(): string {
+        const r = Math.floor(Math.random() * 100); // Rosso basso (0-100)
+        const g = Math.floor(Math.random() * 50);  // Verde molto basso (0-50)
+        const b = Math.floor(150 + Math.random() * 105); // Blu alto (150-255)
+
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+    
+    ngAfterContentChecked(): void {
+        if (this.date == null) {
+            this.date = localStorage.getItem('today');
         }
-        color+= "FF";  
-        return color;
     }
     
     constructor(private readonly service: CalendarioService, private readonly router: Router) { 
+        // Recupera la vista selezionata
+        if (this.tipoVis == '') {
+            this.tipoVis = localStorage.getItem('selectedView');
+        }
+
+        if (this.tipoVis === 'MENSILE' || (this.tipoVis == 'GIORNALIERO' && !this.calendario)) {
+            this.service.getCalendarioCompleto(this.service.yearNum, this.service.monthNum, '');            
+        }
+
+        this.service.selectedView.subscribe((view) => {
+            this.tipoVis = view;
+        });
+
+        if (this.tipoVis == 'MENSILE') {
+            this.service.getCalendarioCompleto(this.service.yearNum, this.service.monthNum, '');
+        }
+
         this.service.calendario$.subscribe((updatedCalendario) => {
             if (this.tipoVis != "GIORNALIERO" || updatedCalendario?.provenienza !== 'visualBtn') {
                 this.calendario = updatedCalendario;
@@ -56,27 +84,22 @@ export class LandingCalendarioComponent implements AfterContentInit {
                     this.listGiorni = updatedListGiorni;
                 });
             }
-            
-            if (updatedCalendario?.data) {
-                console.info(`Calendario aggiornato: ${updatedCalendario.data}`);
-            }
         });
-
-        // Recupera la vista selezionata
-        this.tipoVis = localStorage.getItem('selectedView');
-        this.service.selectedView.subscribe((view) => {
-            this.tipoVis = view;
-        });
-
+        
+        
         this.date = localStorage.getItem('today');
         if (this.date && this.tipoVis == 'GIORNALIERO') {
             const [yearStr, monthStr, dayStr] = this.date.split('/');
             const year = parseInt(yearStr, 10);
             const month = parseInt(monthStr, 10);
             const day = parseInt(dayStr, 10);
-
+            
             // Richiama il metodo visualCella
             this.visualCella(day, month, year);
+        }
+
+        if (this.calendario?.data) {
+            console.info(`Calendario aggiornato: ${this.calendario.data}`);
         }
     }
 
@@ -89,7 +112,6 @@ export class LandingCalendarioComponent implements AfterContentInit {
     }
 
     changeTabRes() {
-        console.log(this.showTabRes)
         this.showTabRes = !this.showTabRes;
         this.service.changeTabRes(this.showTabRes);
     }
