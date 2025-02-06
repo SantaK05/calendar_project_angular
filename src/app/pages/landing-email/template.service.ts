@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class TemplateService {
-  BASE_URL: string = "http://localhost:8080/api/email-service/template";
+  BASE_URL: string = "http://localhost:8080/email/template";
 
   currentTemplateSubject: Subject<Template> = new Subject();
 
