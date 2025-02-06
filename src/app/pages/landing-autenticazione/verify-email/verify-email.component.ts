@@ -25,15 +25,15 @@ export class VerifyEmailComponent implements OnInit {
     this.client.post("http://localhost:8080/auth/verify/" + this.uuid, {}).pipe(
       catchError((err) => {
         if (err.status == 401) {
-          this.messageService.publishError("Link scaduto");
-          this.router.navigateByUrl("/register");
+          this.messageService.publishError("Link scaduto!");
         } else {
           this.messageService.publishError("Problema interno, riprova più tardi");
         }
+        this.router.navigateByUrl("/register");
         return throwError(() => err);
       }),
       tap(() => {
-        this.messageService.publishInfo("Email verificata con successo");
+        this.messageService.publishInfo("Email verificata con successo!");
         this.router.navigateByUrl("/login");
       })
     ).subscribe();
