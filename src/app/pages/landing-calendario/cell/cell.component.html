@@ -1,4 +1,4 @@
-@if (isLoaded) {
+<!-- @if (isLoaded) { -->
     <main class="cell-container">
         <section class="cell-sec">
             <table class="main-rdp">
@@ -14,10 +14,10 @@
                                 <td class="num-rdp-cell">
                                     {{ (slot.dataInizio | date:'shortTime') !== '9:00 AM' ? (slot.dataInizio | date:'shortTime') : '' }}
                                 </td>
-                                <td class="main-rdp-cell" (click)="getSlotPrenotazioneSing(slot.id)">
+                                <td class="main-rdp-cell">
                                     <div class="info-pren">
                                         <ul>
-                                            <li *ngFor="let prenotazione of listSlotPrenotazioni" >
+                                            <li *ngFor="let prenotazione of listPrenotazioni" >
                                                 Prenotazione ID: {{ prenotazione.id }},
                                                 Utente: {{ prenotazione.idUtente }},
                                                 Orario: {{ prenotazione.oraInizio | date: 'shortTime' }} - 
@@ -33,10 +33,10 @@
             </table>
         </section>
         
-        @if (showTabRes) {
+        <!-- @if (showTabRes) {
             <section>
                 <resources></resources>
             </section>
-        }
+        } -->
     </main>
-}
+<!-- } -->

@@ -47,9 +47,11 @@ export class CalendarioService  {
         
         this.selectedView.subscribe((view) => {
             localStorage.setItem('selectedView', view); // Salva la vista selezionata
+            
+            if (view == 'MENSILE') {
+                this.getCalendarioCompleto(this.yearNum, this.monthNum, '');
+            }
         });
-        
-        this.getCalendarioCompleto(this.yearNum, this.monthNum, '');
     }
 
     getCalendarioCompleto(year: number, month: number, prov: string) {
@@ -81,7 +83,8 @@ export class CalendarioService  {
         this.obsCalendar = this.getGiornoJSON(year, month, day);
         this.obsCalendar.subscribe((data) => {
             this.result = data;
-            console.log(this.result)
+            this.result.provenienza = 'visualCella';
+            this.calendarioSubject.next(this.result); // Notifica i cambiamenti
         });
 
         return this.result;

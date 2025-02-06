@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, HostListener } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, Component, HostListener } from '@angular/core';
 import { Calendario, SlotPrenotazioneList } from './interfaces/calendario';
 import { SquareBtnComponent } from "../../resumable/square-btn/square-btn.component";
 import { CalendarioService } from './calendario.service';
@@ -13,7 +13,7 @@ import { CellComponent } from './cell/cell.component';
   styleUrl: './landing-calendario.component.css'
 })
 
-export class LandingCalendarioComponent implements AfterContentInit {
+export class LandingCalendarioComponent implements AfterContentInit, AfterContentChecked {
     calendario!: Calendario | null;
     monthLong: string = '';
     year: number = 0;
@@ -44,8 +44,31 @@ export class LandingCalendarioComponent implements AfterContentInit {
         color+= "FF";  
         return color;
     }
+
+    ngAfterContentChecked(): void {
+        if (this.date == null) {
+            this.date = localStorage.getItem('today');
+        }
+    }
     
     constructor(private readonly service: CalendarioService, private readonly router: Router) { 
+        // Recupera la vista selezionata
+        if (this.tipoVis == '') {
+            this.tipoVis = localStorage.getItem('selectedView');
+        }
+
+        if (this.tipoVis === 'MENSILE' || (this.tipoVis == 'GIORNALIERO' && !this.calendario)) {
+            this.service.getCalendarioCompleto(this.service.yearNum, this.service.monthNum, '');            
+        }
+
+        this.service.selectedView.subscribe((view) => {
+            this.tipoVis = view;
+        });
+
+        if (this.tipoVis == 'MENSILE') {
+            this.service.getCalendarioCompleto(this.service.yearNum, this.service.monthNum, '');
+        }
+
         this.service.calendario$.subscribe((updatedCalendario) => {
             if (this.tipoVis != "GIORNALIERO" || updatedCalendario?.provenienza !== 'visualBtn') {
                 this.calendario = updatedCalendario;
@@ -56,27 +79,22 @@ export class LandingCalendarioComponent implements AfterContentInit {
                     this.listGiorni = updatedListGiorni;
                 });
             }
-            
-            if (updatedCalendario?.data) {
-                console.info(`Calendario aggiornato: ${updatedCalendario.data}`);
-            }
         });
-
-        // Recupera la vista selezionata
-        this.tipoVis = localStorage.getItem('selectedView');
-        this.service.selectedView.subscribe((view) => {
-            this.tipoVis = view;
-        });
-
+        
+        
         this.date = localStorage.getItem('today');
         if (this.date && this.tipoVis == 'GIORNALIERO') {
             const [yearStr, monthStr, dayStr] = this.date.split('/');
             const year = parseInt(yearStr, 10);
             const month = parseInt(monthStr, 10);
             const day = parseInt(dayStr, 10);
-
+            
             // Richiama il metodo visualCella
             this.visualCella(day, month, year);
+        }
+
+        if (this.calendario?.data) {
+            console.info(`Calendario aggiornato: ${this.calendario.data}`);
         }
     }
 
@@ -89,7 +107,6 @@ export class LandingCalendarioComponent implements AfterContentInit {
     }
 
     changeTabRes() {
-        console.log(this.showTabRes)
         this.showTabRes = !this.showTabRes;
         this.service.changeTabRes(this.showTabRes);
     }
