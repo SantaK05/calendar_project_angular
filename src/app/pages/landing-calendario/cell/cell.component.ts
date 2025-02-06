@@ -41,34 +41,6 @@ export class CellComponent implements AfterContentInit {
                 this.dayLong = '';
             }
         });
-        
-        // Inizializza la lista delle prenotazioni con 3 elementi fittizi
-        this.listPrenotazioni = [
-            {
-                id: 1,
-                data: '2025-02-06',
-                idSlotPrenotazione: this.listSlotPrenotazioni[0]?.id || 1,
-                idUtente: 101,
-                oraInizio: '09:00',
-                oraFine: '10:00'
-            },
-            {
-                id: 2,
-                data: '2025-02-06',
-                idSlotPrenotazione: this.listSlotPrenotazioni[1]?.id || 2,
-                idUtente: 102,
-                oraInizio: '10:00',
-                oraFine: '11:00'
-            },
-            {
-                id: 3,
-                data: '2025-02-06',
-                idSlotPrenotazione: this.listSlotPrenotazioni[2]?.id || 3,
-                idUtente: 103,
-                oraInizio: '11:00',
-                oraFine: '12:00'
-            }
-        ];
     }
 
     ngAfterContentInit(): void {
@@ -80,8 +52,9 @@ export class CellComponent implements AfterContentInit {
                 this.listSlotPrenotazioni = this.giorno.listaCelle[0].slotPrenotazioneList || [];
                 
                 // Definisce l'orario di inizio e fine della giornata
-                const orarioInizio = new Date('2025-02-06T09:00:00');
-                const orarioFine = new Date('2025-02-06T18:00:00');
+                const orarioInizio = new Date('2025-02-06T10:00:00');
+                const orarioFine = new Date('2025-02-06T19:00:00');
+                console.log(orarioInizio.toISOString())
                 
                 // Ordina gli slot esistenti per data di inizio
                 this.listSlotPrenotazioni.sort((a, b) => new Date(a.dataInizio).getTime() - new Date(b.dataInizio).getTime());
@@ -125,7 +98,7 @@ export class CellComponent implements AfterContentInit {
                 }
                 
                 // Riempie eventuali slot fino alle 18
-                while (orarioCorrente < orarioFine && nuoviSlot.length + this.listSlotPrenotazioni.length < 8) {
+                while (orarioCorrente < orarioFine && nuoviSlot.length + this.listSlotPrenotazioni.length < 9) {
                     let fineSlot = new Date(orarioCorrente.getTime() + 60 * 60 * 1000);
                     if (fineSlot > orarioFine) break;
                     
@@ -157,5 +130,35 @@ export class CellComponent implements AfterContentInit {
             }
             console.log(this.listSlotPrenotazioni)
         });
+
+        if (this.listSlotPrenotazioni) {
+            // Inizializza la lista delle prenotazioni con 3 elementi fittizi
+            this.listPrenotazioni = [
+                {
+                    id: 1,
+                    data: '2025-02-06',
+                    idSlotPrenotazione: this.listSlotPrenotazioni[0]?.id || 1,
+                    idUtente: 101,
+                    oraInizio: '2025-02-06T09:00:00',
+                    oraFine: '2025-02-06T10:00:00'
+                },
+                {
+                    id: 2,
+                    data: '2025-02-06',
+                    idSlotPrenotazione: this.listSlotPrenotazioni[1]?.id || 2,
+                    idUtente: 102,
+                    oraInizio: '2025-02-06T10:00:00',
+                    oraFine: '2025-02-06T11:00:00'
+                },
+                {
+                    id: 3,
+                    data: '2025-02-06',
+                    idSlotPrenotazione: this.listSlotPrenotazioni[2]?.id || 3,
+                    idUtente: 103,
+                    oraInizio: '2025-02-06T11:00:00',
+                    oraFine: '2025-02-06T12:00:00'
+                }
+            ];
+        } 
     }
 }
