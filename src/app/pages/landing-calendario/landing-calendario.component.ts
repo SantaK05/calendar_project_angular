@@ -58,21 +58,17 @@ export class LandingCalendarioComponent implements AfterViewInit, AfterContentCh
     
     constructor(private readonly service: CalendarioService, private readonly router: Router) { 
         // Recupera la vista selezionata
-        if (this.tipoVis == '') {
+        if (this.tipoVis == null) {
             this.tipoVis = localStorage.getItem('selectedView');
         }
-
-        if (this.tipoVis === 'MENSILE' || (this.tipoVis == 'GIORNALIERO' && !this.calendario)) {
+        console.log(this.tipoVis);
+        if (this.tipoVis === 'MENSILE' || this.tipoVis === '' || (this.tipoVis == 'GIORNALIERO' && !this.calendario)) {
             this.service.getCalendarioCompleto(this.service.yearNum, this.service.monthNum, '');            
         }
 
         this.service.selectedView.subscribe((view) => {
             this.tipoVis = view;
         });
-
-        if (this.tipoVis == 'MENSILE') {
-            this.service.getCalendarioCompleto(this.service.yearNum, this.service.monthNum, '');
-        }
 
         this.service.calendario$.subscribe((updatedCalendario) => {
             if (this.tipoVis != "GIORNALIERO" || updatedCalendario?.provenienza !== 'visualBtn') {

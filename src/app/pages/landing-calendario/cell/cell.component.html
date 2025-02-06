@@ -11,14 +11,14 @@
                     @for (slot of listSlotPrenotazioni; track $index) {
                         <tr class="main-rdp-body_row">    
                             <td class="num-rdp-cell">
-                                {{ (slot.dataInizio | date:'shortTime') != '6:00 PM' ? (slot.dataInizio | date:'shortTime') : '' }}
+                                {{ (slot.dataInizio | date:'shortTime') != '9:00 AM' && (slot.dataInizio | date:'shortTime') != '6:00 PM' ? (slot.dataInizio | date:'shortTime') : '' }}
                             </td>
-                            <td class="main-rdp-cell">
+                            <td class="main-rdp-cell" (click)="getSlotPrenotazioneSing(slot.id)">
                                 <div class="info-pren">
                                     <ul>
                                         @for (prenotazione of listPrenotazioni; track $index) {
                                             @if (prenotazione.idSlotPrenotazione == slot.id) {
-                                                <li>
+                                                <li class="rdp-cell-prenotazione">
                                                     Prenotazione ID: {{ prenotazione.id }},
                                                     Utente: {{ prenotazione.idUtente }},
                                                     Orario: {{ prenotazione.oraInizio | date: 'shortTime' }} - 
@@ -35,10 +35,10 @@
             </table>
         </section>
         
-        <!-- @if (showTabRes) {
+        @if (showTabRes) {
             <section>
                 <resources></resources>
             </section>
-        } -->
+        }
     </main>
 <!-- } -->

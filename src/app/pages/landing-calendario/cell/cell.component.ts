@@ -1,10 +1,12 @@
-import { AfterContentChecked, AfterContentInit, Component } from '@angular/core';
+import { AfterContentInit, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarioService } from '../calendario.service';
 import { Calendario, PrenotazioneList, SlotPrenotazioneList } from '../interfaces/calendario';
+import { ResourcesComponent } from '../../../resumable/resources/resources.component';
+import { ReservationService } from '../../../resumable/resources/reservation.service';
 @Component({
   selector: 'calendar-cell',
-  imports: [CommonModule],
+  imports: [CommonModule, ResourcesComponent],
   templateUrl: './cell.component.html',
   styleUrl: './cell.component.css'
 })
@@ -20,7 +22,9 @@ export class CellComponent implements AfterContentInit {
     listSlotPrenotazioni: SlotPrenotazioneList[] = [];
     listPrenotazioni: PrenotazioneList[] = [];
 
-    constructor(private readonly serviceCalendario: CalendarioService) { 
+    showTabRes: boolean = false;
+
+    constructor(private readonly serviceCalendario: CalendarioService, private readonly serviceReservation: ReservationService) { 
         this.serviceCalendario.path$.subscribe((url: string) => {
             this.match = url.match(this.GETURL);
             
@@ -41,6 +45,10 @@ export class CellComponent implements AfterContentInit {
                 this.dayLong = '';
             }
         });
+
+        this.serviceCalendario.showTabRes.subscribe(value => {
+            this.showTabRes = value;
+        })
     }
 
     ngAfterContentInit(): void {
@@ -50,10 +58,11 @@ export class CellComponent implements AfterContentInit {
         
                 // Recupera la lista degli slot già presenti
                 this.listSlotPrenotazioni = this.giorno.listaCelle[0].slotPrenotazioneList || [];
-                
+                this.listPrenotazioni = this.giorno.listaCelle[0].prenotazioneList || [];
+
                 // Definisce l'orario di inizio e fine della giornata
-                const orarioInizio = new Date('2025-02-06T10:00:00');
-                const orarioFine = new Date('2025-02-06T19:00:00');
+                const orarioInizio = new Date('2025-02-06T09:00:00');
+                const orarioFine = new Date('2025-02-06T18:00:00');
                 console.log(orarioInizio.toISOString())
                 
                 // Ordina gli slot esistenti per data di inizio
@@ -106,8 +115,8 @@ export class CellComponent implements AfterContentInit {
                         id: this.listSlotPrenotazioni.length + nuoviSlot.length + 1,
                         resource: {
                             id: 0,
-                            title: '',
-                            descrizione: '',
+                            title: 'risorsa 1',
+                            descrizione: 'ex 1',
                             prenotabile: true,
                             accessoRemoto: false,
                             info1: '',
@@ -128,37 +137,16 @@ export class CellComponent implements AfterContentInit {
                 
                 this.listSlotPrenotazioni = [...this.listSlotPrenotazioni, ...nuoviSlot];
             }
-            console.log(this.listSlotPrenotazioni)
-        });
 
-        if (this.listSlotPrenotazioni) {
-            // Inizializza la lista delle prenotazioni con 3 elementi fittizi
-            this.listPrenotazioni = [
-                {
-                    id: 1,
-                    data: '2025-02-06',
-                    idSlotPrenotazione: this.listSlotPrenotazioni[0]?.id || 1,
-                    idUtente: 101,
-                    oraInizio: '2025-02-06T09:00:00',
-                    oraFine: '2025-02-06T10:00:00'
-                },
-                {
-                    id: 2,
-                    data: '2025-02-06',
-                    idSlotPrenotazione: this.listSlotPrenotazioni[1]?.id || 2,
-                    idUtente: 102,
-                    oraInizio: '2025-02-06T10:00:00',
-                    oraFine: '2025-02-06T11:00:00'
-                },
-                {
-                    id: 3,
-                    data: '2025-02-06',
-                    idSlotPrenotazione: this.listSlotPrenotazioni[2]?.id || 3,
-                    idUtente: 103,
-                    oraInizio: '2025-02-06T11:00:00',
-                    oraFine: '2025-02-06T12:00:00'
-                }
-            ];
-        } 
+            if (this.listSlotPrenotazioni) {
+                this.serviceReservation.findAllSlots(this.listSlotPrenotazioni);
+            }
+        });
     }
+
+    getSlotPrenotazioneSing(index: number): void {
+        this.serviceCalendario.changeTabRes(true);
+        this.serviceReservation.load(index);
+    }
+
 }

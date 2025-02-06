@@ -44,11 +44,6 @@
             <label for="note" class="form-lbl">Note:</label>
             <textarea rows="4" id="note" name="note" class="form-txt" disabled [(ngModel)]="currentSlot.resource.descrizione"></textarea>
         </div>
-        
-        <div class="info">
-            <label for="descrizione" class="form-lbl">Descrizione:</label>
-            <textarea rows="3" id="descrizione" name="descrizione" class="form-txt" disabled [(ngModel)]="currentSlot.resource.descrizione"></textarea>
-        </div>
 
         <div class="form-btn">
             <button type="submit" (click)="save()">Prenota</button>

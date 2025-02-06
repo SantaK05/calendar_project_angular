@@ -3,9 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { PrenotazioneList, SlotPrenotazioneList } from '../../pages/landing-calendario/interfaces/calendario';
 import { ReservationService } from './reservation.service';
 import { CommonModule } from '@angular/common';
-import { Subscription, tap } from 'rxjs';
-import { CellComponent } from '../../pages/landing-calendario/cell/cell.component';
-import { LandingCalendarioComponent } from '../../pages/landing-calendario/landing-calendario.component';
+import { Subscription, tap, timer } from 'rxjs';
 
 @Component({
   selector: 'resources',
@@ -47,13 +45,13 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     }
     private subscription!: Subscription;
 
-
     constructor(private readonly service: ReservationService) { }
     
     ngOnInit(): void {
         this.listSlotPrenotazioni = this.service.listSlotPrenotazioni;
         this.subscription = this.service.slotSingolo$.subscribe(
             (slot) => {
+                console.log(slot);
                 this.currentSlot = slot;
             }
         );
@@ -66,6 +64,24 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     }
 
     save() {
+        let id: number = 0;
+        let data = localStorage.getItem("jwt");
+        if (data) {
+            let payload64 = data.split('.')[1];
+            let payloadJSON = payload64.replace(/-/g, '+').replace(/_/g, '/');
+            let jwt = JSON.parse(atob(payloadJSON))
+            id = JSON.parse(jwt.user).id;
+        }
+        this.currentPrenotazione = {
+            id: 0, 
+            data: this.currentSlot.dataInizio.substring(0, 19),   
+            idSlotPrenotazione: this.currentSlot.id,                  
+            idUtente: id,
+            oraInizio: this.currentSlot.dataInizio.substring(0, 19),
+            oraFine: this.currentSlot.dataFine.substring(0, 19)
+        };
+
+        console.log(this.currentPrenotazione);
         this.service.save(this.currentPrenotazione).pipe(
             tap((data:any) => {
                 console.log('salvataggio')

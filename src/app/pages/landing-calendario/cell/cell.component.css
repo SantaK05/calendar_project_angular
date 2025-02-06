@@ -57,12 +57,13 @@
                 padding-right: 0.2rem;
                 font-size: 11px;
                 text-wrap: nowrap;
-                transform: translateY(50%);
+                transform: translateY(-50%);
             }
     
             .main-rdp-cell {
                 border-bottom: var(--divider-border);
                 width: calc(100% - 5rem);
+                z-index: 0;
 
                 &:hover {
                     border-radius: 10px;
@@ -83,7 +84,7 @@
         padding: 0;
     }
 
-    li {
+    .rdp-cell-prenotazione {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -93,5 +94,11 @@
         text-align: center;
         background-color: var(--color-grey);
         border-radius: 5px;
+        z-index: 2;
+
+        &:hover {
+            background-color: var(--color-text-dark);
+            cursor: pointer;
+        }
     }
 }
