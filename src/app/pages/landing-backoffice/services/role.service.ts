@@ -80,6 +80,12 @@ export class RoleService {
     if (index > -1) {
       if (confirm(`Sei sicuro di voler eliminare l'elemento?`)) {
         return this.httpClient.delete<Role>(`${this.BASE_URL}/${role.id}`).pipe(
+          tap(() => {
+            // Rimuove l'elemento dall'array locale
+            this.arrayRole.splice(index, 1);
+            // Aggiorna la lista utenti richiamando findAll()
+            this.findAll().subscribe();
+          }),
           catchError((err) => {
             this.messageService.publishError('Errore cancellazione item');
             return throwError(() => err);

@@ -92,6 +92,12 @@ export class UserService {
     if (index > -1) {
       if (confirm(`Sei sicuro di voler eliminare l'elemento?`)) {
         return this.httpClient.delete<User>(`${this.BASE_URL}/${user.id}`).pipe(
+          tap(() => {
+            // Rimuove l'elemento dall'array locale
+            this.arrayUser.splice(index, 1);
+            // Aggiorna la lista utenti richiamando findAll()
+            this.findAll().subscribe();
+          }),
           catchError((err) => {
             this.messageService.publishError('Errore cancellazione user');
             return throwError(() => err);
