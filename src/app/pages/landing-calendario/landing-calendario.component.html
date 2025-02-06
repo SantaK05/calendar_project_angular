@@ -84,12 +84,12 @@
 
                                         @for (prenotazione of calendario?.listaCelle?.[giornoIndex + (settIndex * 7)]?.prenotazioneList?.slice(0, 4); track $index) {
                                             @if ($index < 3) {
-                                                <div class="prenotazione-cella" id = "idDiv">
+                                                <div #prenotazioneCella class="prenotazione-cella" id = "idDiv">
                                                         {{ prenotazione.oraInizio.substring(11) }} - {{ prenotazione.oraFine.substring(11) }} - {{ getResourceTitle(calendario?.listaCelle?.[giornoIndex + (settIndex * 7)]?.slotPrenotazioneList, prenotazione.idSlotPrenotazione) }}
                                                 </div>
                                             
                                             } @else {
-                                                <div style="text-align: center;" class="prenotazione-cella">
+                                                <div #prenotazioneCella style="text-align: center;" class="prenotazione-cella">
                                                     <button style="background-color: transparent; color: white;"
                                                     (click)="visualCella(giorno[0], giorno[1][1][0], giorno[1][1][1])">
                                                         Altro...

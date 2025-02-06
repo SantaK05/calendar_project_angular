@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterContentInit, Component, HostListener } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, ElementRef, HostListener, QueryList, ViewChildren } from '@angular/core';
 import { Calendario, SlotPrenotazioneList } from './interfaces/calendario';
 import { SquareBtnComponent } from "../../resumable/square-btn/square-btn.component";
 import { CalendarioService } from './calendario.service';
@@ -13,7 +13,7 @@ import { CellComponent } from './cell/cell.component';
   styleUrl: './landing-calendario.component.css'
 })
 
-export class LandingCalendarioComponent implements AfterContentInit, AfterContentChecked {
+export class LandingCalendarioComponent implements AfterViewInit, AfterContentChecked {
     calendario!: Calendario | null;
     monthLong: string = '';
     year: number = 0;
@@ -23,28 +23,33 @@ export class LandingCalendarioComponent implements AfterContentInit, AfterConten
     date: string | null = '';
 
     showTabRes: boolean = false;
-    
-    ngAfterContentInit() {this.bho();}
-    bho() : void {
-        var divs = document.getElementsByClassName('prenotazione-cella');
-        if (divs) {
-            for (let i = 0; i < divs.length; i++) {
-                (divs[i] as HTMLElement).style.backgroundColor = this.randomColor();
-            }
-        }
-    }
-    hexaColor = ["1", "2", "3", "4", "5", "6", "7"]; 
-    randomColor = () => {
-        let color = "#";
-        for (let i = 0; i < 4; i++) {
-        let randomIndex = Math.floor(Math.random() * this.hexaColor.length);
-        let randomHexa = this.hexaColor[randomIndex];
-        color += randomHexa;
-        }
-        color+= "FF";  
-        return color;
+
+    ngAfterViewInit() {
+        this.applyColors();
+
+        this.divs.changes.subscribe(() => {
+            this.applyColors();
+        });
     }
 
+    @ViewChildren('prenotazioneCella') divs!: QueryList<ElementRef>;
+
+    applyColors() : void {
+        if (this.divs) {
+            this.divs.forEach(div => {
+                div.nativeElement.style.backgroundColor = this.randomColor();
+            });
+        }
+    }
+
+    randomColor(): string {
+        const r = Math.floor(Math.random() * 100); // Rosso basso (0-100)
+        const g = Math.floor(Math.random() * 50);  // Verde molto basso (0-50)
+        const b = Math.floor(150 + Math.random() * 105); // Blu alto (150-255)
+
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+    
     ngAfterContentChecked(): void {
         if (this.date == null) {
             this.date = localStorage.getItem('today');

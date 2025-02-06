@@ -61,6 +61,7 @@ export class PasswordFormComponent implements OnInit {
         Validators.minLength(8),
         CustomValidators.containsLowerCase(),
         CustomValidators.containsUpperCase(),
+        CustomValidators.containsNumber(),
         CustomValidators.containsSpecialCharacter()
       ])]],
       confirmPassword: ['', [Validators.required]]

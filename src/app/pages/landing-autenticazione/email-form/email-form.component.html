@@ -6,7 +6,7 @@
             <div class="form-floating mt-4 mb-4">
                 <input formControlName="email" type="email" class="form-control" id="email" placeholder="" name="email"
                     required [(ngModel)]="email"> <label for="email">Email*</label>
-                <span [ngClass]="form.get('email')?.pending ? 'spinner-border spinner-border-sm' : ''"></span>
+                <span [ngClass]="form.get('email')?.pending ? 'spinner-border spinner-border-sm text-light' : ''"></span>
                 <div class="container d-flex validation-message-container align-items-center"
                     [class.show]="emailErrors?.['emailExists'] && form.get('email')?.dirty">
                     <i class="bx bxs-error-circle" style="color:#fa0101;"></i>
@@ -15,7 +15,7 @@
                 <div class="container d-flex validation-message-container align-items-center"
                     [class.show]="emailErrors?.['serverError'] && form.get('email')?.dirty">
                     <i class="bx bxs-error-circle" style="color:#fa0101;"></i>
-                    <p class="text-danger m-0">Errore interno, riproava più tardi</p>
+                    <p class="text-danger m-0">Errore interno, riprova più tardi</p>
                 </div>
                 <div class="container d-flex validation-message-container align-items-center"
                     [class.show]="(emailErrors?.['email'] || emailErrors?.['required'])&& form.get('email')?.dirty">

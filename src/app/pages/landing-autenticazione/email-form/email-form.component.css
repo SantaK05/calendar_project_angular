@@ -7,6 +7,23 @@
 	opacity: 0;
 }
 
+.form-floating label {
+	color: #888;
+}
+
+.form-control {
+	background-color: #2d2d2d;
+	color: #ffffff;
+	border: 1px solid #444;
+}
+
+.form-control:focus {
+	background-color: #2d2d2d;
+	color: #ffffff;
+	border-color: #666;
+	box-shadow: 0 0 0 0.2rem rgba(100, 100, 100, 0.25);
+}
+
 .validation-message-container.show {
 	max-height: 50px;
 	opacity: 1;
@@ -17,7 +34,12 @@
 	max-width: 800px;
 	padding: 2rem;
 	border-radius: 10px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	background-color: #1e1e1e;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.card-title, .text-start {
+	color: #ffffff;
 }
 
 .custom-link {
@@ -43,14 +65,6 @@
 	margin: 0;
 	font: inherit;
 	cursor: pointer;
-}
-
-.register-card {
-	width: 100%;
-	max-width: 800px;
-	padding: 2rem;
-	border-radius: 10px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .invisible-button:disabled {

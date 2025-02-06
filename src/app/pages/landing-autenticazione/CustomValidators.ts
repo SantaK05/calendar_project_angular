@@ -20,6 +20,13 @@ export class CustomValidators {
         };
     }
 
+    static containsNumber(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const value = control.value || '';
+            return /\d/.test(value) ? null : { containsNumber: true };
+        };
+    }
+
     // Deve contenere almeno un carattere speciale
     static containsSpecialCharacter(): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
