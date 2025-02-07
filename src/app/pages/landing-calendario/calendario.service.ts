@@ -32,7 +32,7 @@ export class CalendarioService  {
     gruppo: Map<number, [boolean[], number[]]> = new Map<number, [boolean[], number[]]>();
     listGiorni: Array<Map<number, [boolean[], number[]]>> = [];
 
-    constructor(private readonly http: HttpClient, private router: Router, private readonly messageService: MessageCalendarioService) {
+    constructor(private readonly http: HttpClient, private readonly router: Router, private readonly messageService: MessageCalendarioService) {
         this.pathSubject = new BehaviorSubject<string>(this.router.url);
         this.path$ = this.pathSubject.asObservable();
         this.monthNum = this.dataObj.getUTCMonth() + 1;
