@@ -53,12 +53,13 @@ export class CellComponent implements AfterContentInit {
 
     ngAfterContentInit(): void {
         this.serviceCalendario.calendario$.subscribe(updatedeCaledarioGiornaliero => {
-            if (updatedeCaledarioGiornaliero?.provenienza == 'visualCella') {
                 this.giorno = updatedeCaledarioGiornaliero;
         
                 // Recupera la lista degli slot già presenti
-                this.listSlotPrenotazioni = this.giorno.listaCelle[0].slotPrenotazioneList || [];
-                this.listPrenotazioni = this.giorno.listaCelle[0].prenotazioneList || [];
+                this.listSlotPrenotazioni = this.giorno?.listaCelle[0].slotPrenotazioneList || [];
+                this.listPrenotazioni = this.giorno?.listaCelle[0].prenotazioneList || [];
+
+                console.log(this.listSlotPrenotazioni);
 
                 // Definisce l'orario di inizio e fine della giornata
                 const orarioInizio = new Date('2025-02-06T09:00:00');
@@ -136,7 +137,8 @@ export class CellComponent implements AfterContentInit {
                 }
                 
                 this.listSlotPrenotazioni = [...this.listSlotPrenotazioni, ...nuoviSlot];
-            }
+                console.log(this.listSlotPrenotazioni);
+            
 
             if (this.listSlotPrenotazioni) {
                 this.serviceReservation.findAllSlots(this.listSlotPrenotazioni);

@@ -3,7 +3,6 @@ import { Group, Stato, User, Role } from '../../landing-calendario/interfaces/ba
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { catchError, of, switchMap, tap, throwError } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { GroupService } from '../services/group.service';
@@ -54,7 +53,6 @@ export class UserComponent {
     private roleService: RoleService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private modalService: NgbModal
   ) {
     this.initializeComponent();
   }
@@ -124,7 +122,6 @@ export class UserComponent {
               this.errorMessage = 'Errore durante il salvataggio dei dati.';
             }
             this.messageService.publishError(this.errorMessage);
-            this.modalService.open(this.errorModal);
           } else {
             console.error('Errore durante il salvataggio:', err);
           }
