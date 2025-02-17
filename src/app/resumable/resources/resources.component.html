@@ -8,9 +8,9 @@
     <form class="form-container">
         <div class="res-select">
             <label for="resource" class="form-lbl">Slot:</label>
-            <select name="slot" id="slot" [(ngModel)]="currentSlot.nome" (change)="onSlotChange()">
+            <select name="slot" id="slot" [(ngModel)]="currentSlot.title" (change)="onSlotChange()">
                 @for (slot of listSlotPrenotazioni; track $index) {
-                    <option value="{{ slot.nome }}">{{ slot.nome }}</option>
+                    <option value="{{ slot.title }}">{{ slot.title }}</option>
                 }
             </select>
         </div>

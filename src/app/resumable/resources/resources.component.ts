@@ -28,7 +28,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
             info4: '',
             info5: ''
         },
-        nome: '',
+        title: '',
         dataInizio: '',
         dataFine: '',
         libero: true,
@@ -90,7 +90,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     }
 
     onSlotChange() {
-        const slot = this.listSlotPrenotazioni.find(e => e.nome === this.currentSlot.nome);
+        const slot = this.listSlotPrenotazioni.find(e => e.title === this.currentSlot.title);
 
         if (slot) {
             // Aggiorna l'oggetto `current` con lo slot trovato
@@ -100,7 +100,7 @@ export class ResourcesComponent implements OnInit, OnDestroy {
             this.currentPrenotazione.oraInizio = this.currentSlot.dataInizio;
             this.currentPrenotazione.oraFine = this.currentSlot.dataFine;
         } else {
-            console.warn('Slot non trovato per il nome selezionato:', this.currentSlot.nome);
+            console.warn('Slot non trovato per il nome selezionato:', this.currentSlot.title);
         }
     }
 }

@@ -25,7 +25,7 @@ export class ReservationService {
             info4: '',
             info5: ''
         },
-        nome: '',
+        title: '',
         dataInizio: '',
         dataFine: '',
         libero: false,

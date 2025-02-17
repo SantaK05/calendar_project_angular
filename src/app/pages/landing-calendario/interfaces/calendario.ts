@@ -14,7 +14,7 @@ export interface ListaCelle {
 export interface SlotPrenotazioneList {
     id: number
     resource: Risorsa
-    nome: string
+    title: string
     dataInizio: string
     dataFine: string
     libero: boolean

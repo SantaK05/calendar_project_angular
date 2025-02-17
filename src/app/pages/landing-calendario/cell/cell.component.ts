@@ -94,7 +94,7 @@ export class CellComponent implements AfterContentInit {
                                 info4: '',
                                 info5: ''
                             },
-                            nome: `Slot Fittizio`,
+                            title: `Slot Fittizio`,
                             dataInizio: orarioCorrente.toISOString(),
                             dataFine: fineSlot.toISOString(),
                             libero: true,
@@ -126,7 +126,7 @@ export class CellComponent implements AfterContentInit {
                         info4: '',
                         info5: ''
                     },
-                    nome: `Slot Fittizio`,
+                    title: `Slot Fittizio`,
                     dataInizio: orarioCorrente.toISOString(),
                     dataFine: fineSlot.toISOString(),
                     libero: true,
