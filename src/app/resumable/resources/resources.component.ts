@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { PrenotazioneList, SlotPrenotazioneList } from '../../pages/landing-calendario/interfaces/calendario';
 import { ReservationService } from './reservation.service';
 import { CommonModule } from '@angular/common';
-import { Subscription, tap } from 'rxjs';
+import { Subscription, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'resources',
@@ -64,27 +64,27 @@ export class ResourcesComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        let id: number = 0;
-        let data = localStorage.getItem("jwt");
-        if (data) {
-            let payload64 = data.split('.')[1];
-            let payloadJSON = payload64.replace(/-/g, '+').replace(/_/g, '/');
-            let jwt = JSON.parse(atob(payloadJSON))
-            id = JSON.parse(jwt.user).id;
-        }
         this.currentPrenotazione = {
             id: 0, 
             data: this.currentSlot.dateStart.substring(0, 19),   
             idSlotPrenotazione: this.currentSlot.id,                  
-            idUtente: id,
+            idUtente: 0,
             oraInizio: this.currentSlot.dateStart.substring(0, 19),
             oraFine: this.currentSlot.dateEnd.substring(0, 19)
         };
 
-        console.log(this.currentPrenotazione);
+        console.log(this.currentPrenotazione.data);
+        const [yearStr, monthStr, dayStr] = this.currentPrenotazione.data.split("T")[0].split('-');
+        const year = parseInt(yearStr, 10);
+        const month = parseInt(monthStr, 10);
+        const day = parseInt(dayStr, 10);
+
         this.service.save(this.currentPrenotazione).pipe(
+            switchMap((response) => {
+                return this.service.findAllPrenotazioni(year, month, day);
+            }),
             tap((data:any) => {
-                console.log('salvataggio')
+                console.log('salvataggio');
             })
         ).subscribe()
     }

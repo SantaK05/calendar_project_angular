@@ -37,6 +37,19 @@ export class ReservationService {
 
     constructor(private http: HttpClient, private messageService: MessageCalendarioService) { }
 
+    findAllPrenotazioni(anno: number, mese: number, giorno: number): Observable<PrenotazioneList[]> {
+        return this.http.get<PrenotazioneList[]>(`${this.BASE_URL}/data/${anno}/${mese}/${giorno}`).pipe(
+            tap(data => {
+                console.log("Dati find all:");
+                console.log(data);
+            }),
+            catchError(err => {
+                this.messageService.publishError('Errore find all reservation');
+                return throwError(() => err);
+            })
+        )
+    }
+
     findAllSlots(listSP: Array<SlotPrenotazioneList>): void {
         this.listSlotPrenotazioni = listSP;
     }
@@ -82,13 +95,15 @@ export class ReservationService {
             // devo creare il nuovo oggetto da inserire nella lista
             prenotazione = {
                 id: 0,
-                data: '',
-                idSlotPrenotazione: 0,
+                data: current.data,
+                idSlotPrenotazione: current.idSlotPrenotazione,
                 idUtente: 0,
-                oraInizio: '',
-                oraFine: ''
+                oraInizio: current.oraInizio,
+                oraFine: current.oraFine
             }
             console.log('inserisco evento di salvataggio');
+
+
             
             return this.http.post<PrenotazioneList>(`${this.BASE_URL}`, prenotazione).pipe(
                 catchError(err => {
