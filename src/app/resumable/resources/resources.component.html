@@ -20,29 +20,21 @@
             <input type="text" id="resource" name="resource" class="form-inp" disabled [(ngModel)]="currentSlot.resource.title">
         </div>
 
-        <!-- <div class="res-select">
-            <select name="resource" id="resource" [(ngModel)]="current.risorsa.nome">
-                @for (slot of listSlotPrenotazioni; track $index) {
-                    <option value="{{ slot.risorsa.nome }}" [disabled]="slot.risorsa.prenotabile" (click)="load(slot.risorsa.id)">{{ slot.risorsa.nome }}</option>
-                }
-            </select>
-        </div> -->
-
         <div class="orario-info">
             <div class="info">
-                <label for="dataInizio" class="form-lbl">Orario inizio:</label>
-                <input type="text" id="dataInizio" name="dataInizio" class="form-inp" [value]="currentSlot.dataInizio | date:'shortTime'" disabled>
+                <label for="dateStart" class="form-lbl">Orario inizio:</label>
+                <input type="text" id="dateStart" name="dateStart" class="form-inp" [value]="currentSlot.dateStart | date:'shortTime'" disabled>
             </div>
 
             <div class="info">
-                <label for="dataFine" class="form-lbl">Orario fine:</label>
-                <input type="text" id="dataFine" name="dataFine" class="form-inp" [value]="currentSlot.dataFine | date:'shortTime'" disabled>
+                <label for="dateEnd" class="form-lbl">Orario fine:</label>
+                <input type="text" id="dateEnd" name="dateEnd" class="form-inp" [value]="currentSlot.dateEnd | date:'shortTime'" disabled>
             </div>
         </div>
 
         <div class="info">
             <label for="note" class="form-lbl">Note:</label>
-            <textarea rows="4" id="note" name="note" class="form-txt" disabled [(ngModel)]="currentSlot.resource.descrizione"></textarea>
+            <textarea rows="4" id="note" name="note" class="form-txt" disabled [(ngModel)]="currentSlot.note"></textarea>
         </div>
 
         <div class="form-btn">

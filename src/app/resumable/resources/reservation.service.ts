@@ -26,9 +26,9 @@ export class ReservationService {
             info5: ''
         },
         title: '',
-        dataInizio: '',
-        dataFine: '',
-        libero: false,
+        dateStart: '',
+        dateEnd: '',
+        free: false,
         note: ''
     });
     public slotSingolo$ = this.slotSingoloSubject.asObservable();

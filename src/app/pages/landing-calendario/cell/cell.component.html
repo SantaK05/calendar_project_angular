@@ -11,7 +11,7 @@
                     @for (slot of listSlotPrenotazioni; track $index) {
                         <tr class="main-rdp-body_row">    
                             <td class="num-rdp-cell">
-                                {{ (slot.dataInizio | date:'shortTime') != '9:00 AM' && (slot.dataInizio | date:'shortTime') != '6:00 PM' ? (slot.dataInizio | date:'shortTime') : '' }}
+                                {{ (slot.dateStart | date:'shortTime') != '9:00 AM' && (slot.dateStart | date:'shortTime') != '6:00 PM' ? (slot.dateStart | date:'shortTime') : '' }}
                             </td>
                             <td class="main-rdp-cell" (click)="getSlotPrenotazioneSing(slot.id)">
                                 <div class="info-pren">

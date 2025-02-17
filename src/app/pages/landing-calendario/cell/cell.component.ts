@@ -67,14 +67,14 @@ export class CellComponent implements AfterContentInit {
             console.log(orarioInizio.toISOString())
 
             // Ordina gli slot esistenti per data di inizio
-            this.listSlotPrenotazioni.sort((a, b) => new Date(a.dataInizio).getTime() - new Date(b.dataInizio).getTime());
+            this.listSlotPrenotazioni.sort((a, b) => new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime());
 
             let orarioCorrente = orarioInizio;
             const nuoviSlot = [];
 
             // Scansiona gli slot esistenti e riempie i gap
             for (const slot of this.listSlotPrenotazioni) {
-                let inizioSlot = new Date(slot.dataInizio);
+                let inizioSlot = new Date(slot.dateStart);
                 if (orarioCorrente < inizioSlot) {
                     while (orarioCorrente < inizioSlot && orarioCorrente < orarioFine) {
                         let fineSlot = new Date(orarioCorrente.getTime() + 60 * 60 * 1000);
@@ -95,16 +95,16 @@ export class CellComponent implements AfterContentInit {
                                 info5: ''
                             },
                             title: `Slot Fittizio`,
-                            dataInizio: orarioCorrente.toISOString(),
-                            dataFine: fineSlot.toISOString(),
-                            libero: true,
+                            dateStart: orarioCorrente.toISOString(),
+                            dateEnd: fineSlot.toISOString(),
+                            free: true,
                             note: 'Slot generato automaticamente'
                         });
 
                         orarioCorrente = fineSlot;
                     }
                 }
-                orarioCorrente = new Date(slot.dataFine);
+                orarioCorrente = new Date(slot.dateEnd);
             }
 
             // Riempie eventuali slot fino alle 18
@@ -127,9 +127,9 @@ export class CellComponent implements AfterContentInit {
                         info5: ''
                     },
                     title: `Slot Fittizio`,
-                    dataInizio: orarioCorrente.toISOString(),
-                    dataFine: fineSlot.toISOString(),
-                    libero: true,
+                    dateStart: orarioCorrente.toISOString(),
+                    dateEnd: fineSlot.toISOString(),
+                    free: true,
                     note: 'Slot generato automaticamente'
                 });
 

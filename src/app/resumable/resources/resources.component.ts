@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { PrenotazioneList, SlotPrenotazioneList } from '../../pages/landing-calendario/interfaces/calendario';
 import { ReservationService } from './reservation.service';
 import { CommonModule } from '@angular/common';
-import { Subscription, tap, timer } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'resources',
@@ -29,9 +29,9 @@ export class ResourcesComponent implements OnInit, OnDestroy {
             info5: ''
         },
         title: '',
-        dataInizio: '',
-        dataFine: '',
-        libero: true,
+        dateStart: '',
+        dateEnd: '',
+        free: true,
         note: ''
     }
 
@@ -74,11 +74,11 @@ export class ResourcesComponent implements OnInit, OnDestroy {
         }
         this.currentPrenotazione = {
             id: 0, 
-            data: this.currentSlot.dataInizio.substring(0, 19),   
+            data: this.currentSlot.dateStart.substring(0, 19),   
             idSlotPrenotazione: this.currentSlot.id,                  
             idUtente: id,
-            oraInizio: this.currentSlot.dataInizio.substring(0, 19),
-            oraFine: this.currentSlot.dataFine.substring(0, 19)
+            oraInizio: this.currentSlot.dateStart.substring(0, 19),
+            oraFine: this.currentSlot.dateEnd.substring(0, 19)
         };
 
         console.log(this.currentPrenotazione);
@@ -95,10 +95,10 @@ export class ResourcesComponent implements OnInit, OnDestroy {
         if (slot) {
             // Aggiorna l'oggetto `current` con lo slot trovato
             this.currentSlot = { ...slot };
-            this.currentPrenotazione.data = this.currentSlot.dataInizio.split('T')[0];
+            this.currentPrenotazione.data = this.currentSlot.dateStart.split('T')[0];
             this.currentPrenotazione.idSlotPrenotazione = this.currentSlot.id;
-            this.currentPrenotazione.oraInizio = this.currentSlot.dataInizio;
-            this.currentPrenotazione.oraFine = this.currentSlot.dataFine;
+            this.currentPrenotazione.oraInizio = this.currentSlot.dateStart;
+            this.currentPrenotazione.oraFine = this.currentSlot.dateEnd;
         } else {
             console.warn('Slot non trovato per il nome selezionato:', this.currentSlot.title);
         }

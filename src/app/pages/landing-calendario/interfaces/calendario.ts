@@ -15,9 +15,9 @@ export interface SlotPrenotazioneList {
     id: number
     resource: Risorsa
     title: string
-    dataInizio: string
-    dataFine: string
-    libero: boolean
+    dateStart: string
+    dateEnd: string
+    free: boolean
     note: string
 }
   
