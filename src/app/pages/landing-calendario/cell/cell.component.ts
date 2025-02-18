@@ -49,6 +49,10 @@ export class CellComponent implements AfterContentInit {
         this.serviceCalendario.showTabRes.subscribe(value => {
             this.showTabRes = value;
         })
+
+        this.serviceReservation.prenotazioni$.subscribe(value => {
+            // this.listPrenotazioni = value || [];
+        })
     }
 
     ngAfterContentInit(): void {

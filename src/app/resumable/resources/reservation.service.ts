@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageCalendarioService } from '../../pages/landing-calendario/message-calendario/message-calendario.service';
 import { PrenotazioneList, SlotPrenotazioneList } from '../../pages/landing-calendario/interfaces/calendario';
-import { BehaviorSubject, catchError, Observable, skip, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, skip, Subject, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,9 @@ import { BehaviorSubject, catchError, Observable, skip, tap, throwError } from '
 
 export class ReservationService {
     listPrenotazioni: Array<PrenotazioneList> = [];
+    private readonly prenotazioniSubject = new BehaviorSubject<PrenotazioneList[] | null>(null);
+    prenotazioni$ = this.prenotazioniSubject.asObservable();
+
     listSlotPrenotazioni: Array<SlotPrenotazioneList> = [];
     private slotSingoloSubject = new BehaviorSubject<SlotPrenotazioneList>({
         id: 0,
@@ -40,8 +43,7 @@ export class ReservationService {
     findAllPrenotazioni(anno: number, mese: number, giorno: number): Observable<PrenotazioneList[]> {
         return this.http.get<PrenotazioneList[]>(`${this.BASE_URL}/data/${anno}/${mese}/${giorno}`).pipe(
             tap(data => {
-                console.log("Dati find all:");
-                console.log(data);
+                this.prenotazioniSubject.next(data);
             }),
             catchError(err => {
                 this.messageService.publishError('Errore find all reservation');
